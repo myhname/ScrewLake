@@ -52,14 +52,18 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
                 }
             },
 
-            minify: 'terser', // 必须启用：terserOptions配置才会有效
-            // 生产环境取消 console
-            terserOptions: {
-                compress: {
-                    drop_console: true,
-                    drop_debugger: true
-                }
-            }
+            
+            // minify: 'terser', // 必须启用：terserOptions配置才会有效
+            // // 生产环境取消 console
+            // terserOptions: {
+            //     compress: {
+            //         drop_console: true,
+            //         drop_debugger: true
+            //     }
+            // }
+        },
+        esbuild: {
+          drop: ["console", "debugger"],
         },
         envPrefix: 'VITE_', // 'APP_',
         preview: {
