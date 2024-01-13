@@ -3,6 +3,8 @@ import { ref } from 'vue'
 
 defineProps<{ msg: string }>()
 
+console.log("环境：",import.meta.env)
+
 const count = ref(0)
 </script>
 

@@ -1,0 +1,107 @@
+{
+  "id": "4370560",
+  "name": "my-blog",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2471346",
+      "name": "登录",
+      "font_class": "denglu",
+      "unicode": "e66b",
+      "unicode_decimal": 58987
+    },
+    {
+      "icon_id": "3161597",
+      "name": "管理员_角色管理",
+      "font_class": "guanliyuan_jiaoseguanli",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "5387780",
+      "name": "服务管理_o",
+      "font_class": "fuwuguanli_o",
+      "unicode": "eb53",
+      "unicode_decimal": 60243
+    },
+    {
+      "icon_id": "7193681",
+      "name": "组件",
+      "font_class": "zujian",
+      "unicode": "e730",
+      "unicode_decimal": 59184
+    },
+    {
+      "icon_id": "12084141",
+      "name": "开发组件",
+      "font_class": "kaifazujian",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "12753474",
+      "name": "编辑文章",
+      "font_class": "bianjiwenzhang_huaban",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "36327177",
+      "name": "设备管理",
+      "font_class": "icon_computer",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "36327179",
+      "name": "区域管理",
+      "font_class": "icon_location",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "36327180",
+      "name": "全部流程",
+      "font_class": "icon_allProcess",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "36327181",
+      "name": "考勤管理",
+      "font_class": "icon_clocking",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "36327182",
+      "name": "店员信息",
+      "font_class": "icon_people",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "36327183",
+      "name": "新建流程",
+      "font_class": "icon_newProcess",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "36327184",
+      "name": "待办流程",
+      "font_class": "icon_backlog",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "36327186",
+      "name": "首页",
+      "font_class": "icon_home",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    }
+  ]
+}
