@@ -7,7 +7,7 @@ const router = createRouter({
     {
       name: "index",
       path: "/",
-      component: () => import("@/views/Index.vue"),
+      component: () => import("@/views/index.vue"),
       meta: {
         title: "首页",
       },
@@ -17,24 +17,24 @@ const router = createRouter({
     {
       name: "login",
       path: "/login",
-      component: () => import("@/views/login/Login.vue"),
+      component: () => import("@/views/login/login.vue"),
       meta: {
         title: "登录",
       },
     },
-    {
-      name: "modules",
-      path: "/modules",
-      component: () => import("@/views/modules/ModulesIndex.vue"),
-      meta: {
-        title: "组件库",
-      },
-      children: [],
-    },
+    // {
+    //   name: "modules",
+    //   path: "/modules",
+    //   component: () => import("@/views/modules/ModulesIndex.vue"),
+    //   meta: {
+    //     title: "组件库",
+    //   },
+    //   children: [],
+    // },
     {
       name: "notes",
       path: "/notes",
-      component: () => import("@/views/note/NotesIndex.vue"),
+      component: () => import("@/views/note/notesIndex.vue"),
       meta: {
         title: "笔记",
       },
