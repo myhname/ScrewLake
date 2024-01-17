@@ -1,73 +1,59 @@
 [
-    {
-        "id": 1,
-        "parentId": 0,
-        "name": "index",
-        "path": "/",
-        "component": "/Index",
-        "meta": {
-           "title": "首页" 
-        },
-        "icon": "icon_home",
-        "redirect": "/cover",
-        "children": [
-            {
-                "id": 5,
-                "parentId": 1,
-                "name": "cover",
-                "path": "/cover",
-                "component": "login/Cover",
-                "meta": {
-                   "title": "封面" 
-                },
-                "icon": "",
-                "redirect": null,
-                "children": [],
-                "level": 1
-            }
-        ],
-        "level": 1
+  {
+    "id": 1,
+    "parentId": 0,
+    "name": "index",
+    "path": "/",
+    "component": "/index",
+    "meta": {
+      "title": "首页"
     },
-    {
-        "id": 2,
-        "parentId": 0,
-        "name": "login",
-        "path": "/login",
-        "component": "login/Login",
-        "meta": {
-           "title": "登录" 
-        },
-        "icon": "denglu",
-        "redirect": null,
-        "children": [],
-        "level": 1
-    },
-    {
+    "icon": "icon_home",
+    "redirect": "/notes",
+    "children": [
+      {
         "id": 3,
         "parentId": 0,
         "name": "modules",
         "path": "/modules",
-        "component": "modules/ModulesIndex",
+        "component": "modules/modulesIndex",
         "meta": {
-           "title": "组件库" 
+          "title": "组件库"
         },
         "icon": "kaifazujian",
         "redirect": null,
         "children": [],
         "level": 1
-    },
-    {
+      },
+      {
         "id": 4,
         "parentId": 0,
         "name": "notes",
         "path": "/notes",
-        "component": "note/NotesIndex",
+        "component": "note/notesIndex",
         "meta": {
-           "title": "笔记" 
+          "title": "笔记"
         },
         "icon": "icon_allProcess",
         "redirect": null,
         "children": [],
         "level": 1
-    }
+      }
+    ],
+    "level": 1
+  },
+  {
+    "id": 2,
+    "parentId": 0,
+    "name": "login",
+    "path": "/login",
+    "component": "login/login",
+    "meta": {
+      "title": "登录"
+    },
+    "icon": "denglu",
+    "redirect": null,
+    "children": [],
+    "level": 1
+  }
 ]

@@ -7,12 +7,13 @@ import menuListData from "@/data/menuList.json"
 
 //路由守卫
 //白名单
-const whiteList = ["/login", "/notFound"]
+// done: 一期不要登录，其实白名单也不必，但是需要动态注册路由，所以token和路由注册放一起，这样即使没目录页可以跳转会首页注册目录，所以白名单加入首页和首页重定向
+const whiteList = ["/login", "/notFound", "/"]
 // let isSetRouter = false;
 router.beforeEach((to, from, next) => {
   // note: 这里使用NProgress的主要目的是起到刷新路由配置的作用，因为动态注册进去的路由不能直接使用，原因应该是当前路由表指向的问题，新的路由表已经注册，但是跳转访问的仍是旧的路由表
   npStart()
-  if (from.path === "/login") {
+  if (from.path === "/login" || from.path === "/"  || from.path === "/notes") {
     localStorage.setItem("menuList", JSON.stringify(menuListData))
     console.log("从登录界面跳转，注册动态路由", localStorage.getItem("menuList"))
     if (menuList != localStorage.getItem("menuList")) {
@@ -43,7 +44,8 @@ router.beforeEach((to, from, next) => {
     if (whiteList.includes(to.path)) {
       next() // 放行
     } else {
-      next("/login") // 跳转登录页面
+      // next("/login") // 跳转登录页面
+      next("/")
     }
   }
 })
@@ -77,6 +79,7 @@ const bindRoute = (menuList: any) => {
     router.addRoute(route)
   })
   // console.log("这是最终结果：", newRoutes)
+  localStorage.setItem("token", "getToken")
 }
 // 菜单转成路由
 const modules = import.meta.glob("../views/**/*.vue")

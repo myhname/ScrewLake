@@ -11,8 +11,27 @@ const router = createRouter({
       meta: {
         title: "首页",
       },
-      redirect: "/login",
-      children: [],
+      redirect: "notes",
+      children: [
+        {
+          name: "modules",
+          path: "/modules",
+          component: () => import("@/views/modules/ModulesIndex.vue"),
+          meta: {
+            title: "组件库",
+          },
+          children: [],
+        },
+        {
+          name: "notes",
+          path: "/notes",
+          component: () => import("@/views/note/notesIndex.vue"),
+          meta: {
+            title: "笔记",
+          },
+          children: [],
+        },
+      ],
     },
     {
       name: "login",
@@ -21,24 +40,6 @@ const router = createRouter({
       meta: {
         title: "登录",
       },
-    },
-    // {
-    //   name: "modules",
-    //   path: "/modules",
-    //   component: () => import("@/views/modules/ModulesIndex.vue"),
-    //   meta: {
-    //     title: "组件库",
-    //   },
-    //   children: [],
-    // },
-    {
-      name: "notes",
-      path: "/notes",
-      component: () => import("@/views/note/notesIndex.vue"),
-      meta: {
-        title: "笔记",
-      },
-      children: [],
     },
   ],
 })
