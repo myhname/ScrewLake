@@ -11,8 +11,17 @@ const router = createRouter({
       meta: {
         title: "首页",
       },
-      redirect: "notes",
+      redirect: "/cover",
       children: [
+        {
+          name: "cover",
+          path: "/cover",
+          component: () => import("@/components/layout/Cover.vue"),
+          meta: {
+            title: "封面",
+          },
+          children: [],
+        },
         {
           name: "modules",
           path: "/modules",

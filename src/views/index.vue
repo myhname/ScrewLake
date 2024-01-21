@@ -4,20 +4,13 @@
       <top-menu />
     </div>
     <div class="main" @scroll="containerScrolling">
-      <div class="cover">
-        <div class="cover-text"></div>
-        <div class="cover-avatar"></div>
-      </div>
-      <div class="container">
-        <RouterView />
-      </div>
+      <RouterView />
     </div>
   </div>
-  <!-- <script src="https://cdn.jsdelivr.net/gh/Ukenn2112/UkennWeb@3.0/index/web.js"></script> -->
 </template>
 
 <script setup lang="ts">
-  import { ref } from "vue"
+  import { ref, onMounted } from "vue"
   import TopMenu from "@/components/menu/TopMenu.vue"
   import { RouterView } from "vue-router"
 
@@ -31,6 +24,7 @@
       topHeight.value = false
     }
   }
+
 </script>
 
 <style scoped lang="less">
@@ -101,30 +95,4 @@
     }
   }
 
-  .cover {
-    height: 100%;
-    width: 100%;
-    position: relative;
-    left: 0;
-    top: 0;
-    padding: 0 15%;
-
-    background-image: url("../assets/image/ta.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center top;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-
-    
-  }
-
-  .container {
-    height: 100%;
-    width: 100%;
-    position: relative;
-  }
 </style>
