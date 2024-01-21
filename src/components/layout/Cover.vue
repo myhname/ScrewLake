@@ -2,9 +2,9 @@
   <div class="cover">
     <div class="cover-text"></div>
     <div class="cover-avatar"></div>
-    <el-icon class="to-container"><ArrowDownBold /></el-icon>
+    <el-icon class="to-container" @click="toNotesToc"><ArrowDownBold /></el-icon>
   </div>
-  <div class="container">
+  <div ref="notesToc" class="container">
     <notes-index />
   </div>
 </template>
@@ -13,15 +13,15 @@
   import { ref, onMounted } from "vue"
   import notesIndex from "@/views/note/notesIndex.vue"
   import loadJs from "@/utils/loadJS"
+  import emitter from '@/utils/eventBus'
 
-  const topHeight = ref(false)
+  const notesToc = ref<HTMLElement>()
 
-  const containerScrolling = (event: any) => {
-    // console.log("滚动", event, event.target.scrollTop)
-    if (event.target.scrollTop) {
-      topHeight.value = true
-    } else {
-      topHeight.value = false
+  const toNotesToc = () => {
+    if(notesToc.value) {
+      // note: offsetTop是相对于父元素，scrollHeight是相对于屏幕，scrollTop是浏览器自带的滚动条滚动的距离
+     console.log("位置",notesToc.value.offsetTop, notesToc.value.scrollHeight, notesToc.value.scrollTop)
+     emitter.emit("scroll-to-notes", notesToc.value.offsetTop)
     }
   }
 
@@ -65,7 +65,8 @@
       left: 50%;
       color: #fff;
       transform: translateX(-18px) translateY(0);
-      font-size: 36px;
+      font-size: 40px;
+      cursor: pointer;
       animation: pullDown 2s infinite;
     }
   }
@@ -81,7 +82,7 @@
       transform: translateX(-18px) translateY(0);
     }
     50% {
-      transform: translateX(-18px) translateY(-5px);
+      transform: translateX(-18px) translateY(-10px);
     }
     100% {
       transform: translateX(-18px) translateY(0);

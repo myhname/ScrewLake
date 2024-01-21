@@ -4,7 +4,7 @@ export default mitt()
 
 // 示例
 /*
-import emitter from '@/untils/eventBus'
+import emitter from '@/utils/eventBus'
 
 emitter.emit('fileControlMsgToEditor', "newFile")
 onMounted(() => {

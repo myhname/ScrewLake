@@ -1,30 +1,97 @@
 <template>
   <div class="common-layout">
-    <div class="top-menu-box" :class="{ 'top-flat': topHeight }">
+    <transition name="backToTop" enter-active-class="animate__animated animate__bounceInDown" leave-active-class="animate__animated animate__backOutUp">
+      <div v-if="isScrolling" class="back-top" key="boctTop">
+        <div class="rope"></div>
+        <div class="figure" @click="backToTop"></div>
+      </div>
+    </transition>
+    <div class="top-menu-box" :class="{ 'top-flat': isScrolling }">
       <top-menu />
     </div>
-    <div class="main" @scroll="containerScrolling">
+    <div class="main" ref="mainBox" @scroll="containerScrolling">
       <RouterView />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref, onMounted } from "vue"
+  import { ref, onMounted, onBeforeUnmount } from "vue"
   import TopMenu from "@/components/menu/TopMenu.vue"
   import { RouterView } from "vue-router"
+  import emitter from "@/utils/eventBus"
 
-  const topHeight = ref(false)
+  const isScrolling = ref(false)
+  const mainBox = ref<HTMLElement>()
+  const scrollTimer = ref()
 
   const containerScrolling = (event: any) => {
-    // console.log("滚动", event, event.target.scrollTop)
+    // console.log("滚动", event, event.target.scrollTop, mainBox.value?.scrollTop)
     if (event.target.scrollTop) {
-      topHeight.value = true
+      isScrolling.value = true
     } else {
-      topHeight.value = false
+      isScrolling.value = false
     }
+    // emitter.emit("start-scrolling", topHeight.value)
   }
 
+  /**
+   * 滚动条滚动操作
+   * @param target 滚动目标位置，offsetTop or scrollHeight or scrollTop
+   * @param speed 滚动速度，requestAnimationFrame函数一般默认是每秒60帧
+   */
+  const scrollToLocation = (target: number, speed: number) => {
+    if (scrollTimer.value) {
+      cancelAnimationFrame(scrollTimer.value)
+    }
+    // console.log("滚动条:", document.body.scrollTop, document.documentElement.scrollTop)
+    scrollTimer.value = requestAnimationFrame(function fn() {
+      // console.log("执行", mainBox.value)
+      if (mainBox.value) {
+        let oTop = mainBox.value.scrollTop
+        // console.log("执行", oTop)
+        if (oTop === target) {
+          return
+        }
+        // 向下滚动
+        if (target > oTop) {
+          if (target - oTop > speed) {
+            // document.body.scrollTop = document.documentElement.scrollTop = oTop - 50
+            mainBox.value.scrollTop = oTop + speed
+            scrollTimer.value = requestAnimationFrame(fn)
+          } else {
+            mainBox.value.scrollTop = target
+            cancelAnimationFrame(scrollTimer.value)
+          }
+        } else {
+          // 向上滚动
+          if (oTop - target > speed) {
+            mainBox.value.scrollTop = oTop - speed
+            scrollTimer.value = requestAnimationFrame(fn)
+          } else {
+            mainBox.value.scrollTop = target
+            cancelAnimationFrame(scrollTimer.value)
+          }
+        }
+      }
+    })
+  }
+
+  const backToTop = () => {
+    console.log(mainBox.value?.scrollTop)
+    scrollToLocation(0, 50)
+  }
+
+  onMounted(() => {
+    emitter.on("scroll-to-notes", (value: any) => {
+      // console.log("点击：", value)
+      scrollToLocation(value, 50)
+    })
+  })
+
+  onBeforeUnmount(() => {
+    emitter.off("scroll-to-notes")
+  })
 </script>
 
 <style scoped lang="less">
@@ -36,6 +103,35 @@
     width: 100vw;
     height: 100vh;
     position: relative;
+
+    .back-top {
+      width: 100px;
+      height: 90%;
+      position: absolute;
+      top: -50px;
+      right: 50px;
+      z-index: 9;
+      // background-color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+
+      .rope {
+        flex: 1;
+        width: 20px;
+        background-image: url("../assets/img/绳子.png");
+        background-size: cover;
+      }
+
+      .figure {
+        width: 80px;
+        height: 80px;
+        background-image: url("../assets/img/克拉拉.jpg");
+        background-size: cover;
+        cursor: pointer;
+      }
+    }
 
     .top-menu-box {
       width: 100%;
@@ -95,4 +191,8 @@
     }
   }
 
+  .animate__animated.animate__bounceInDown,
+  .animate__animated.animate__backOutUp {
+    --animate-duration: 2s;
+  }
 </style>
