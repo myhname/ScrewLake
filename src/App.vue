@@ -23,6 +23,7 @@
   import "dayjs/locale/zh-cn"
   dayjs.locale("zh-cn")
   import emitter from '@/utils/eventBus'
+  import { createStarCanvas, stopMouseMoveStar } from "@/utils/mouseMoveStar"
 
   const locale = zhCn
   const antLocale = antZhCn
@@ -37,11 +38,15 @@
     emitter.on('is-login-out',()=>{
       isLoginIn.value = false
     })
+
+    createStarCanvas()
   })
 
   onBeforeUnmount(()=>{
     emitter.off('is-login-in')
     emitter.off('is-login-out')
+
+    stopMouseMoveStar()
   })
 </script>
 

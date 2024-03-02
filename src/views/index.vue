@@ -1,5 +1,5 @@
 <template>
-  <div class="common-layout">
+  <div class="common-layout" @click="clickCommonLayoutContainer">
     <transition name="backToTop" enter-active-class="animate__animated animate__bounceInDown" leave-active-class="animate__animated animate__backOutUp">
       <div v-if="isScrolling" class="back-top" key="boctTop">
         <div class="rope"></div>
@@ -20,6 +20,7 @@
   import TopMenu from "@/components/menu/TopMenu.vue"
   import { RouterView } from "vue-router"
   import emitter from "@/utils/eventBus"
+  import { createHeartCanvas, stopMouseEffect, mouseClick } from "@/utils/mouseClickHeart"
 
   const isScrolling = ref(false)
   const mainBox = ref<HTMLElement>()
@@ -82,15 +83,23 @@
     scrollToLocation(0, 50)
   }
 
+  const clickCommonLayoutContainer = (event: PointerEvent) => {
+    mouseClick(event.clientX, event.clientY)
+  }
+
   onMounted(() => {
     emitter.on("scroll-to-notes", (value: any) => {
       // console.log("点击：", value)
       scrollToLocation(value, 50)
     })
+
+    createHeartCanvas()
   })
 
   onBeforeUnmount(() => {
     emitter.off("scroll-to-notes")
+
+    stopMouseEffect()
   })
 </script>
 

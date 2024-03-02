@@ -24,8 +24,14 @@
 <style scoped lang="less">
   .notes-container {
     width: 100%;
+    height: 100%;
     min-height: 500px;
     position: relative;
 
+    background-image: url("../../assets//image/玫瑰凛.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-attachment: scroll
   }
 </style>
