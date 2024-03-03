@@ -2,12 +2,12 @@
   <!-- note: 一方面我不是很会用组件，另一方面想要花哨一点改起来确实不方便，综上：自己写原生 -->
   <div class="blog-title-menu">
     <template v-for="item in state.menuList" :key="item.path">
-      <div v-if="!item.children || !item.children.length" class="menu-item" :class="{ 'menu-selected': state.selectedKeys[0] === item.path}" @click="menuClick(item)">
+      <div v-if="!item.children || !item.children.length" class="menu-item" :class="{ 'menu-selected': state.selectedKeys[0] === item.path }" @click="menuClick(item)">
         <MyIcons :icon="item.icon" :style="myIconsFont" />
         <span class="menu-title"> {{ item.meta.title }} </span>
       </div>
       <!-- tag: 先不考虑多级和嵌套那些，以目前的情况来说封装一级就够了，之后在拓展原生吧，连悬浮窗都写就有点太麻烦了 -->
-      <div v-else class="menu-groups" :class="{ 'menu-selected': state.selectedKeys[0] === item.path}">
+      <div v-else class="menu-groups" :class="{ 'menu-selected': state.selectedKeys[0] === item.path }">
         <MyIcons :icon="item.icon" :style="myIconsFont" />
         <span class="menu-title"> {{ item.meta.title }} </span>
       </div>
@@ -52,8 +52,8 @@
     menuList: [
       {
         key: 1,
-        name: "index",
-        path: "/",
+        name: "cover",
+        path: "/cover",
         meta: {
           title: "首页",
         },
@@ -109,18 +109,18 @@
     console.log(selectedMenu)
     state.selectedKeys = []
     state.selectedKeys.push(selectedMenu.path)
-    if(selectedMenu.children && selectedMenu.children.length){
-      selectedMenu.children.forEach(item => {
+    if (selectedMenu.children && selectedMenu.children.length) {
+      selectedMenu.children.forEach((item) => {
         addSelectedMenu(item)
       })
     }
     router.push(selectedMenu.path)
   }
 
-  const addSelectedMenu = (menu: MenuList)=>{
+  const addSelectedMenu = (menu: MenuList) => {
     state.selectedKeys.push(menu.path)
-    if(menu.children && menu.children.length){
-      menu.children.forEach(item => {
+    if (menu.children && menu.children.length) {
+      menu.children.forEach((item) => {
         addSelectedMenu(item)
       })
     }
@@ -134,7 +134,7 @@
 </script>
 
 <style lang="less" scoped>
-  @highlightColor: #82cbf2;
+  @highlightColor: #3da4db;
 
   .blog-title-menu {
     display: flex;
@@ -148,11 +148,10 @@
       flex-direction: row;
       align-items: center;
       column-gap: 3px;
-      color: #fff;
-      cursor: url("../../../assets/cursor_link.cur"), auto;
+      color: #000;
 
       .menu-title {
-        font-size: 17px;
+        font-size: 18px;
       }
 
       &:hover {

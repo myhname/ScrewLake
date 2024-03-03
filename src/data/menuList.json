@@ -12,25 +12,11 @@
     "redirect": "/notes",
     "children": [
       {
-        "id": 3,
-        "parentId": 0,
-        "name": "modules",
-        "path": "/modules",
-        "component": "modules/modulesIndex",
-        "meta": {
-          "title": "组件库"
-        },
-        "icon": "kaifazujian",
-        "redirect": null,
-        "children": [],
-        "level": 1
-      },
-      {
         "id": 4,
         "parentId": 0,
         "name": "notes",
         "path": "/notes",
-        "component": "note/notesIndex",
+        "component": "notes/notes",
         "meta": {
           "title": "笔记"
         },
@@ -40,20 +26,6 @@
         "level": 1
       }
     ],
-    "level": 1
-  },
-  {
-    "id": 2,
-    "parentId": 0,
-    "name": "login",
-    "path": "/login",
-    "component": "login/login",
-    "meta": {
-      "title": "登录"
-    },
-    "icon": "denglu",
-    "redirect": null,
-    "children": [],
     "level": 1
   }
 ]

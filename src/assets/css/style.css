@@ -122,7 +122,7 @@ body{
 .container .drop .content form .inputBox input[type="submit"] {
   color: #fff;
   text-transform: uppercase;
-  cursor: pointer;
+  /*cursor: pointer;*/
   letter-spacing: 0.1em;
   font-weight: 500;
 

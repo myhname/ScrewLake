@@ -7,48 +7,31 @@ const router = createRouter({
     {
       name: "index",
       path: "/",
-      component: () => import("@/views/index.vue"),
+      component: () => import("@/components/layout/index.vue"),
       meta: {
         title: "首页",
       },
-      redirect: "/cover",
+      redirect: "/notes",
       children: [
-        {
-          name: "cover",
-          path: "/cover",
-          component: () => import("@/components/layout/Cover.vue"),
-          meta: {
-            title: "封面",
-          },
-          children: [],
-        },
-        {
-          name: "modules",
-          path: "/modules",
-          component: () => import("@/views/modules/ModulesIndex.vue"),
-          meta: {
-            title: "组件库",
-          },
-          children: [],
-        },
         {
           name: "notes",
           path: "/notes",
-          component: () => import("@/views/note/notesIndex.vue"),
+          component: () => import("@/views/notes/notes.vue"),
           meta: {
-            title: "笔记",
+            title: "封面",
           },
           children: [],
         },
       ],
     },
     {
-      name: "login",
-      path: "/login",
-      component: () => import("@/views/login/login.vue"),
+      name: "cover",
+      path: "/cover",
+      component: () => import("@/components/layout/cover/cover.vue"),
       meta: {
-        title: "登录",
+        title: "封面",
       },
+      children: [],
     },
   ],
 })

@@ -31,22 +31,11 @@
   const isLoginIn = ref(false)
 
   onMounted(()=>{
-    // 接收登录页面跳转信息，登录页面不显示菜单托盘
-    emitter.on('is-login-in',()=>{
-      isLoginIn.value = true
-    })
-    emitter.on('is-login-out',()=>{
-      isLoginIn.value = false
-    })
-
-    createStarCanvas()
+    // createStarCanvas()
   })
 
   onBeforeUnmount(()=>{
-    emitter.off('is-login-in')
-    emitter.off('is-login-out')
-
-    stopMouseMoveStar()
+    // stopMouseMoveStar()
   })
 </script>
 
@@ -56,6 +45,8 @@
     height: 100vh;
 
     overflow: hidden;
+
+    cursor: url("./assets/cursor.cur"), auto;
   }
 
   // 路由切换特效
