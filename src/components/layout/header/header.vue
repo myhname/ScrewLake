@@ -5,17 +5,17 @@
         <div class="blog-avatar"></div>
         <a href="/">Screw Lake</a>
       </div>
-      <transition name="backToTop" enter-active-class="animate__animated animate__fadeInUp"
-                  leave-active-class="animate__animated animate__fadeOutDown">
+      <transition name="backToTop" enter-active-class="animate__animated animate__fadeIn"
+                  leave-active-class="animate__animated animate__fadeOut">
         <div v-if="props.expand" class="personalized-signature"> {{ personalizedSignature }}</div>
       </transition>
     </div>
-    <div class="blog-menu">
+    <div class="blog-menu" id="blogMenuBox" ref="blogMenu">
       <div class="blog-menu-container">
         <blog-menu-native/>
       </div>
-      <transition name="backToTop" enter-active-class="animate__animated animate__fadeInUp"
-                  leave-active-class="animate__animated animate__fadeOutDown">
+      <transition name="backToTop" enter-active-class="animate__animated animate__fadeIn"
+                  leave-active-class="animate__animated animate__fadeOut">
         <div v-if="props.expand" class="blog-tags">
           <div class="tags">
             <template v-for="(item, index) in tags" :key="index">
@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, reactive} from "vue"
+import {ref, reactive, onMounted} from "vue"
 import BlogMenuNative from "./components/BlogMenuNative.vue"
 import MyIcons from "@/components/MyIcons.vue";
 
@@ -70,9 +70,26 @@ const websiteList = reactive<Array<LabelItem>>([
 
 // 字体大小在父级设置不生效
 const myIconsFont = ref("font-size: 1rem")
+// 获取菜单容器
+const blogMenu = ref<HTMLElement>()
+
+onMounted(()=>{
+  // 使用ref获取到元素对象之后，没有办法直接将修改作用于实际的元素
+  console.log("获取容器：", blogMenu.value?.clientWidth)
+  if(blogMenu.value?.clientWidth) {
+    let currDocument = document.getElementById("blogMenuBox")
+    if(currDocument) {
+      currDocument.style.width = blogMenu.value.clientWidth + 'px'
+    }
+  }
+})
+
 </script>
 
 <style scoped lang="less">
+@transitionTime: .5s;
+@transitionWay: ease-in-out;
+
 .header-container {
   width: 100%;
   height: 100%;
@@ -82,8 +99,8 @@ const myIconsFont = ref("font-size: 1rem")
   backdrop-filter: blur(4px);
 
   will-change: background, height;
-  -webkit-transition: background 0.5s ease-in-out, height 0.5s ease-in-out;
-  transition: background 0.5s ease-in-out, padding-top 0.5s ease-in-out;
+  -webkit-transition: background @transitionTime @transitionWay;
+  transition: background @transitionTime @transitionWay;
 
   padding: 0 7%;
   display: flex;
@@ -92,6 +109,7 @@ const myIconsFont = ref("font-size: 1rem")
   justify-content: space-between;
 
   .blog-title {
+    height: 100%;
     padding-top: 0.3125rem;
     padding-bottom: 0.3125rem;
     margin-right: 1rem;
@@ -103,9 +121,12 @@ const myIconsFont = ref("font-size: 1rem")
     display: flex;
     flex-direction: column;
     align-items: center;
-    //row-gap: 5px;
 
     .avater-name {
+      margin-top: 0;
+      margin-bottom: 0;
+      transition: margin-top @transitionTime @transitionWay, margin-bottom @transitionTime @transitionWay;
+
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -135,11 +156,18 @@ const myIconsFont = ref("font-size: 1rem")
   }
 
   .blog-menu {
+    //width: 270px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     row-gap: 10px;
-    transition: padding-top 0.5s ease-in-out;
+    //transition: padding-top 0.5s @transitionWay;
+
+    .blog-menu-container {
+      margin-top: 15px;
+      transition: margin-top @transitionTime @transitionWay;
+    }
 
     .blog-tags {
       display: flex;
@@ -186,17 +214,23 @@ const myIconsFont = ref("font-size: 1rem")
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 
   will-change: background, height;
-  -webkit-transition: background 0.5s ease-in-out, height 0.5s ease-in-out;
-  transition: background 0.5s ease-in-out;
+  -webkit-transition: background @transitionTime @transitionWay;
+  transition: background @transitionTime @transitionWay;
 
-  .blog-menu {
-    //padding-top: 15px;
-    transition: padding-top 0.5s ease-in-out;
+  .blog-title .avater-name {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    transition: margin-top @transitionTime @transitionWay, margin-bottom @transitionTime @transitionWay;
+  }
+
+  .blog-menu .blog-menu-container {
+    margin-top: 31px;
+    transition: margin-top @transitionTime @transitionWay;
   }
 }
 
-.animate__animated.animate__fadeInUp,
-.animate__animated.animate__fadeOutDown {
-  --animate-duration: .5s;
+.animate__animated.animate__fadeIn,
+.animate__animated.animate__fadeOut {
+  --animate-duration: @transitionTime;
 }
 </style>

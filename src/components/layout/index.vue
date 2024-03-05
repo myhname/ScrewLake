@@ -41,11 +41,13 @@ const containerScrolling = (event: any) => {
   .header-layout {
     height: 50px;
     position: relative;
+    -webkit-transition: height 0.5s ease-in-out;
     transition: height 0.5s ease-in-out;
   }
 
   .expand-header-layout {
     height: 85px;
+    -webkit-transition: height 0.5s ease-in-out;
     transition: height 0.5s ease-in-out;
   }
 
