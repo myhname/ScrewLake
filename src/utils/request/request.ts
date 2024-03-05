@@ -7,7 +7,7 @@ import httpAction from './server'
  * @returns 
  */
 export function getAction(url: string, params: object = {}) {
-  return new Promise((resolve, reject) => {
+  const resPromise: Promise<ResReturn> = new Promise((resolve, reject) => {
     httpAction({
       url: url,
       method: 'get',
@@ -19,12 +19,13 @@ export function getAction(url: string, params: object = {}) {
         'Access-Control-Allow-Methods': '*',
         'Access-Control-Allow-Headers': '*'
       }
-    }).then(response => {
+    }).then((response:any) => {
       resolve(response);
-    }).catch(error => {
+    }).catch((error: any) => {
       reject(error);
     });
   });
+  return resPromise
 }
 
 /**
@@ -34,7 +35,7 @@ export function getAction(url: string, params: object = {}) {
  * @returns 
  */
 export function putAction(url: string, params: object) {
-  return new Promise((resolve, reject) => {
+  const resPromise: Promise<ResReturn> = new Promise((resolve, reject) => {
     httpAction({
       url: url,
       method: 'put',
@@ -46,12 +47,13 @@ export function putAction(url: string, params: object) {
         'Access-Control-Allow-Methods': '*',
         'Access-Control-Allow-Headers': '*'
       }
-    }).then(response => {
+    }).then((response:any) => {
       resolve(response);
-    }).catch(error => {
+    }).catch((error: any) => {
       reject(error);
     });
   });
+  return resPromise
 }
 
 /**
@@ -61,7 +63,7 @@ export function putAction(url: string, params: object) {
  * @returns 
  */
 export function postAction(url: string, params?: object | {} | null) {
-  return new Promise((resolve, reject) => {
+  const resPromise: Promise<ResReturn> = new Promise((resolve, reject) => {
     httpAction({
       url: url,
       method: 'post',
@@ -73,12 +75,13 @@ export function postAction(url: string, params?: object | {} | null) {
         'Access-Control-Allow-Methods': '*',
         'Access-Control-Allow-Headers': '*'
       }
-    }).then(response => {
+    }).then((response:any) => {
       resolve(response);
-    }).catch(error => {
+    }).catch((error: any) => {
       reject(error);
     });
   });
+  return resPromise
 }
 
 /**
@@ -88,7 +91,7 @@ export function postAction(url: string, params?: object | {} | null) {
  * @returns 
  */
 export function deleteAction(url: string, params: object = {}) {
-	return new Promise((resolve, reject) => {
+  const resPromise: Promise<ResReturn> = new Promise((resolve, reject) => {
 	  httpAction({
 		url: url,
 		method: 'delete',
@@ -100,12 +103,13 @@ export function deleteAction(url: string, params: object = {}) {
 		  'Access-Control-Allow-Methods': '*',
 		  'Access-Control-Allow-Headers': '*'
 		}
-	  }).then(response => {
+	  }).then((response:any) => {
 		resolve(response);
-	  }).catch(error => {
+	  }).catch((error: any) => {
 		reject(error);
 	  });
 	});
+  return resPromise
   }
 
 /**
@@ -115,18 +119,19 @@ export function deleteAction(url: string, params: object = {}) {
  * @returns 
  */
 export function fileUploadAction(url: string, params?: object | {} | null) {
-  return new Promise((resolve, reject) => {
+  const resPromise: Promise<ResReturn> = new Promise((resolve, reject) => {
     httpAction({
       url: url,
       method: 'post',
       data: params,
       headers: { 'Content-Type': 'multipart/form-data' }
-    }).then(response => {
+    }).then((response:any) => {
       resolve(response);
-    }).catch(error => {
+    }).catch((error: any) => {
       reject(error);
     });
   });
+  return resPromise
 }
 
 /**
@@ -136,7 +141,7 @@ export function fileUploadAction(url: string, params?: object | {} | null) {
  * @returns 
  */
 export function fileDownLoadAction(url: string, params: object) {
-  return new Promise((resolve, reject) => {
+  const resPromise: Promise<ResReturn> = new Promise((resolve, reject) => {
     httpAction({
       url: url,
       method: 'post',
@@ -149,11 +154,12 @@ export function fileDownLoadAction(url: string, params: object) {
         'Access-Control-Allow-Methods': '*',
         'Access-Control-Allow-Headers': '*'
       }
-    }).then(response => {
+    }).then((response:any) => {
       resolve(response);
-    }).catch(error => {
+    }).catch((error: any) => {
       reject(error);
     });
   });
+  return resPromise
 }
 

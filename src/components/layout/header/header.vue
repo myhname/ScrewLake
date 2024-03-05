@@ -5,28 +5,36 @@
         <div class="blog-avatar"></div>
         <a href="/">Screw Lake</a>
       </div>
-      <div v-if="props.expand" class="personalized-signature"> {{ personalizedSignature }}</div>
+      <transition name="backToTop" enter-active-class="animate__animated animate__fadeInUp"
+                  leave-active-class="animate__animated animate__fadeOutDown">
+        <div v-if="props.expand" class="personalized-signature"> {{ personalizedSignature }}</div>
+      </transition>
     </div>
     <div class="blog-menu">
-      <blog-menu-native/>
-      <div v-if="props.expand" class="blog-tags">
-        <div class="tags">
-          <template v-for="(item, index) in tags" :key="index">
-            <span class="tag-title"> {{ item }} </span>
-            <span v-if="index != (tags.length - 1)" class="separator"> / </span>
-          </template>
-        </div>
-        <div class="search">
-          <el-icon>
-            <Search/>
-          </el-icon>
-        </div>
-        <div class="website">
-          <a v-for="(item, index) in websiteList" :href="item.address" target="_blank" :key="index">
-            <MyIcons :icon="item.icon" :style="myIconsFont"/>
-          </a>
-        </div>
+      <div class="blog-menu-container">
+        <blog-menu-native/>
       </div>
+      <transition name="backToTop" enter-active-class="animate__animated animate__fadeInUp"
+                  leave-active-class="animate__animated animate__fadeOutDown">
+        <div v-if="props.expand" class="blog-tags">
+          <div class="tags">
+            <template v-for="(item, index) in tags" :key="index">
+              <span class="tag-title"> {{ item }} </span>
+              <span v-if="index != (tags.length - 1)" class="separator"> / </span>
+            </template>
+          </div>
+          <div class="search">
+            <el-icon>
+              <Search/>
+            </el-icon>
+          </div>
+          <div class="website">
+            <a v-for="(item, index) in websiteList" :href="item.address" target="_blank" :key="index">
+              <MyIcons :icon="item.icon" :style="myIconsFont"/>
+            </a>
+          </div>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -75,7 +83,7 @@ const myIconsFont = ref("font-size: 1rem")
 
   will-change: background, height;
   -webkit-transition: background 0.5s ease-in-out, height 0.5s ease-in-out;
-  transition: background 0.5s ease-in-out;
+  transition: background 0.5s ease-in-out, padding-top 0.5s ease-in-out;
 
   padding: 0 7%;
   display: flex;
@@ -95,7 +103,7 @@ const myIconsFont = ref("font-size: 1rem")
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: 5px;
+    //row-gap: 5px;
 
     .avater-name {
       display: flex;
@@ -131,6 +139,7 @@ const myIconsFont = ref("font-size: 1rem")
     flex-direction: column;
     align-items: center;
     row-gap: 10px;
+    transition: padding-top 0.5s ease-in-out;
 
     .blog-tags {
       display: flex;
@@ -181,7 +190,13 @@ const myIconsFont = ref("font-size: 1rem")
   transition: background 0.5s ease-in-out;
 
   .blog-menu {
-    padding-top: 15px;
+    //padding-top: 15px;
+    transition: padding-top 0.5s ease-in-out;
   }
+}
+
+.animate__animated.animate__fadeInUp,
+.animate__animated.animate__fadeOutDown {
+  --animate-duration: .5s;
 }
 </style>
