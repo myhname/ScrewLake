@@ -11,9 +11,10 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue"
+import {ref, onMounted, onBeforeUnmount} from "vue"
 import Main from "./main/main.vue"
 import Header from "./header/header.vue"
+import  { startSakura, stopp } from "@/utils/sakuraPlus"
 
 const expandHeader = ref(true)
 
@@ -23,6 +24,13 @@ const containerScrolling = (event: any) => {
   // emitter.emit("start-scrolling", topHeight.value)
 }
 
+onMounted(()=>{
+  startSakura()
+})
+
+onBeforeUnmount(()=>{
+  stopp()
+})
 </script>
 
 <style scoped lang="less">

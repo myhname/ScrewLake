@@ -1,18 +1,23 @@
 <template>
-  <div class="cover-container">
-    <el-icon class="to-container" @click="toNotesToc"><ArrowDownBold /></el-icon>
+  <div class="cover-container" @dblclick="toNotesToc">
+    <el-icon class="to-container" @click="toNotesToc">
+      <ArrowDownBold/>
+    </el-icon>
   </div>
 </template>
 
 <script setup lang="ts">
-  import { onMounted } from 'vue'
-  import loadJs from "@/utils/loadJS"
+import {onMounted, onBeforeUnmount} from 'vue'
+import loadJs from "@/utils/loadJS"
+import router from "@/router";
 
-  const toNotesToc = () => {
+const toNotesToc = () => {
+  router.push("/")
+}
 
-  }
-
-  onMounted(() => {
+onMounted(() => {
+  let sakuraCanvas = document.getElementById("canvas_sakura")
+  if (!sakuraCanvas) {
     loadJs("https://cdn.jsdelivr.net/gh/Ukenn2112/UkennWeb@3.0/index/web.js")
         .then((res: any) => {
           console.log(res, "樱花特效加载成功")
@@ -23,7 +28,21 @@
         .finally(() => {
           console.log("最终结束")
         })
-  })
+  }
+})
+
+onBeforeUnmount(() => {
+  // Tag: 这个算法樱花算法不支持渐变消失，所以引入一个渐变消失的，两者交替
+  let sakuraCanvas = document.getElementById("canvas_sakura")
+  if (sakuraCanvas) {
+    console.log(sakuraCanvas)
+    sakuraCanvas.parentNode?.removeChild(sakuraCanvas)
+    let sakuraScript = document.getElementById("sakura_script")
+    if (sakuraScript) {
+      sakuraScript.parentNode?.removeChild(sakuraScript)
+    }
+  }
+})
 </script>
 
 <style scoped lang="less">
@@ -43,7 +62,6 @@
     color: #fff;
     transform: translateX(-18px) translateY(0);
     font-size: 40px;
-    cursor: pointer;
     animation: pullDown 2s infinite;
   }
 }
