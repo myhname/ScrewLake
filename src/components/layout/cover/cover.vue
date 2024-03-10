@@ -1,5 +1,9 @@
 <template>
   <div class="cover-container" @dblclick="toNotesToc">
+    <!--  先实现功能，具体细节可以回头慢慢调整  -->
+    <div class="cube-box">
+      <Cube/>
+    </div>
     <el-icon class="to-container" @click="toNotesToc">
       <ArrowDownBold/>
     </el-icon>
@@ -10,6 +14,7 @@
 import {onMounted, onBeforeUnmount} from 'vue'
 import loadJs from "@/utils/loadJS"
 import router from "@/router";
+import Cube from "@/components/layout/cover/components/Cube.vue";
 
 const toNotesToc = () => {
   router.push("/")
@@ -54,6 +59,15 @@ onBeforeUnmount(() => {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center top;
+
+  display: flex;
+  justify-content: center;
+
+  .cube-box {
+    position: relative;
+    top: 120px;
+    left: 100px;
+  }
 
   .to-container {
     position: absolute;
