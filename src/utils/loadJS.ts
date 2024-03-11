@@ -1,5 +1,5 @@
 function loadJs(src: string) {
-  return new Promise((resolve,reject)=>{
+  return new Promise<void>((resolve,reject)=>{
     let script = document.createElement('script');
     script.type = "text/javascript";
     script.src= src;
