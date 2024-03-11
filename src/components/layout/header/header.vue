@@ -150,7 +150,7 @@ onMounted(()=>{
 
     .personalized-signature {
       font-size: 12px;
-      color: #86867c;
+      color: #565656;
     }
 
   }
@@ -177,7 +177,8 @@ onMounted(()=>{
 
       .tags {
         font-size: 12px;
-        color: #86867c;
+        color: #565656;
+        //color: #86867c;
       }
 
       .search {
@@ -208,7 +209,7 @@ onMounted(()=>{
 
 .expand-header {
 
-  background-color: transparent;
+  background-color: rgba(198, 198, 198, .5);
   font-size: 0.875rem;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);

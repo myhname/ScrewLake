@@ -1,10 +1,17 @@
 <template>
   <div class="common-layout">
+    <transition name="backToTop" enter-active-class="animate__animated animate__bounceInDown" leave-active-class="animate__animated animate__backOutUp">
+      <div v-if="!expandHeader" class="back-top" key="boctTop">
+        <div class="rope"></div>
+        <div class="figure" @click="backToTop"></div>
+      </div>
+    </transition>
+
     <div class="header-layout" :class="{ 'expand-header-layout': expandHeader}">
       <Header :expand="expandHeader"/>
     </div>
 
-    <div class="main-layout" @scroll="containerScrolling">
+    <div class="main-layout" ref="mainBox" @scroll="containerScrolling">
       <Main/>
     </div>
 
@@ -28,6 +35,8 @@ import Header from "./header/header.vue"
 import {startSakura, stopp} from "@/utils/sakuraPlus"
 
 const expandHeader = ref(true)
+const mainBox = ref<HTMLElement>()
+const scrollTimer = ref()
 
 const backgroundImgList = ref<Array<string>>([
   "/src/assets/image/bg1.jpg",
@@ -61,6 +70,53 @@ const imageCarousel = () => {
   }, 100 * 1000)
 }
 
+/**
+ * 滚动条滚动操作
+ * @param target 滚动目标位置，offsetTop or scrollHeight or scrollTop
+ * @param speed 滚动速度，requestAnimationFrame函数一般默认是每秒60帧
+ */
+const scrollToLocation = (target: number, speed: number) => {
+  if (scrollTimer.value) {
+    cancelAnimationFrame(scrollTimer.value)
+  }
+  // console.log("滚动条:", document.body.scrollTop, document.documentElement.scrollTop)
+  scrollTimer.value = requestAnimationFrame(function fn() {
+    // console.log("执行", mainBox.value)
+    if (mainBox.value) {
+      let oTop = mainBox.value.scrollTop
+      // console.log("执行", oTop)
+      if (oTop === target) {
+        return
+      }
+      // 向下滚动
+      if (target > oTop) {
+        if (target - oTop > speed) {
+          // document.body.scrollTop = document.documentElement.scrollTop = oTop - 50
+          mainBox.value.scrollTop = oTop + speed
+          scrollTimer.value = requestAnimationFrame(fn)
+        } else {
+          mainBox.value.scrollTop = target
+          cancelAnimationFrame(scrollTimer.value)
+        }
+      } else {
+        // 向上滚动
+        if (oTop - target > speed) {
+          mainBox.value.scrollTop = oTop - speed
+          scrollTimer.value = requestAnimationFrame(fn)
+        } else {
+          mainBox.value.scrollTop = target
+          cancelAnimationFrame(scrollTimer.value)
+        }
+      }
+    }
+  })
+}
+
+const backToTop = () => {
+  console.log(mainBox.value?.scrollTop)
+  scrollToLocation(0, 50)
+}
+
 onMounted(() => {
   startSakura()
   imageCarousel()
@@ -84,6 +140,35 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
 
+  .back-top {
+    width: 100px;
+    height: 90%;
+    position: absolute;
+    top: -50px;
+    right: 50px;
+    z-index: 9;
+    // background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    .rope {
+      flex: 1;
+      width: 20px;
+      background-image: url("../../assets/img/绳子.png");
+      background-size: cover;
+    }
+
+    .figure {
+      width: 80px;
+      height: 80px;
+      background-image: url("../../assets/img/克拉拉.jpg");
+      background-size: cover;
+      cursor: pointer;
+    }
+  }
+
   .header-layout {
     height: 50px;
     position: relative;
@@ -99,7 +184,27 @@ onBeforeUnmount(() => {
 
   .main-layout {
     flex: 1;
-    overflow: auto;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      /*滚动条整体样式*/
+      width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
+      height: 1px;
+    }
+    &::-webkit-scrollbar-thumb {
+      /*滚动条里面小方块*/
+      border-radius: 10px;
+      background-color: skyblue;
+      background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+    }
+    &::-webkit-scrollbar-track {
+      /*滚动条里面轨道*/
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      background: #ededed;
+      border-radius: 10px;
+    }
   }
 
   .layout-background-img {
@@ -120,6 +225,8 @@ onBeforeUnmount(() => {
   }
 }
 
+.animate__animated.animate__bounceInDown,
+.animate__animated.animate__backOutUp,
 .animate__animated.animate__fadeIn,
 .animate__animated.animate__fadeOut {
   --animate-duration: 2s;
