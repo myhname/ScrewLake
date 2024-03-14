@@ -2,12 +2,12 @@
   <!-- note: 一方面我不是很会用组件，另一方面想要花哨一点改起来确实不方便，综上：自己写原生 -->
   <div class="blog-title-menu">
     <template v-for="item in state.menuList" :key="item.path">
-      <div v-if="!item.children || !item.children.length" class="menu-item" :class="{ 'menu-selected': state.selectedKeys[0] === item.path }" @click="menuClick(item)">
+      <div v-if="!item.children || !item.children.length" class="menu-item" :class="{ 'menu-selected': state.selectedKeys[0] === item.path, 'menu-font-white': props.menuWhite }" @click="menuClick(item)">
         <MyIcons :icon="item.icon" :style="myIconsFont" />
         <span class="menu-title"> {{ item.meta.title }} </span>
       </div>
       <!-- tag: 先不考虑多级和嵌套那些，以目前的情况来说封装一级就够了，之后在拓展原生吧，连悬浮窗都写就有点太麻烦了 -->
-      <div v-else class="menu-groups" :class="{ 'menu-selected': state.selectedKeys[0] === item.path }">
+      <div v-else class="menu-groups" :class="{ 'menu-selected': state.selectedKeys[0] === item.path, 'menu-font-white': props.menuWhite }">
         <MyIcons :icon="item.icon" :style="myIconsFont" />
         <span class="menu-title"> {{ item.meta.title }} </span>
       </div>
@@ -16,11 +16,17 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, reactive, watch, onMounted } from "vue"
+  import { ref, reactive, watch, onMounted, defineProps } from "vue"
   import { useRouter } from "vue-router"
   import emitter from "@/utils/eventBus"
   import MyIcons from "@/components/MyIcons.vue"
 
+  const props = defineProps({
+    menuWhite: {
+      type: Boolean,
+      default: false
+    }
+  })
   const router = useRouter()
 
   interface MenuList {
@@ -159,9 +165,15 @@
       }
     }
 
+    .menu-item.menu-font-white,
+    .menu-groups.menu-font-white {
+      color: #eeeeee;
+    }
+
     .menu-item.menu-selected,
     .menu-groups.menu-selected {
       color: @highlightColor;
     }
+
   }
 </style>

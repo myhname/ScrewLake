@@ -12,7 +12,7 @@
     </div>
     <div class="blog-menu" id="blogMenuBox" ref="blogMenu">
       <div class="blog-menu-container">
-        <blog-menu-native/>
+        <blog-menu-native :menu-white="!props.expand"/>
       </div>
       <transition name="backToTop" enter-active-class="animate__animated animate__fadeIn"
                   leave-active-class="animate__animated animate__fadeOut">
@@ -144,6 +144,8 @@ onMounted(()=>{
 
       a {
         cursor: url("../../../assets/cursor_link.cur"), auto;
+        color: #eee;
+        transition: color @transitionTime @transitionWay;
       }
 
     }
@@ -177,7 +179,7 @@ onMounted(()=>{
 
       .tags {
         font-size: 12px;
-        color: #565656;
+        color: #2d2c2c;
         //color: #86867c;
       }
 
@@ -209,7 +211,7 @@ onMounted(()=>{
 
 .expand-header {
 
-  background-color: rgba(198, 198, 198, .5);
+  background-color: rgba(196, 196, 196, .5);
   font-size: 0.875rem;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -222,6 +224,11 @@ onMounted(()=>{
     margin-top: 15px;
     margin-bottom: 5px;
     transition: margin-top @transitionTime @transitionWay, margin-bottom @transitionTime @transitionWay;
+
+    a {
+      color: #000000;
+      transition: color @transitionTime @transitionWay;
+    }
   }
 
   .blog-menu .blog-menu-container {
