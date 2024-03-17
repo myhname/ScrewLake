@@ -8,7 +8,9 @@
       <div class="notes-toc-box card-item">
         <template v-for="(note, index) in notesList" :key="note.id">
           <div class="note-item" :style="note.flexDirection">
-            <div class="note-img" :style="'background-image: url(' + note.coverImg + ');'"></div>
+            <div class="note-img">
+              <div class="img-item" :style="'background-image: url(' + note.coverImg + ');'"></div>
+            </div>
             <div class="note-cover">
               <div class="note-msg">
                 <p class="note-title">
@@ -156,11 +158,28 @@ onMounted(()=>{
         display: flex;
         position: relative;
 
+        &:hover {
+          background-color: #ababab4a;
+          box-shadow: 0 0 10px #cbcbcb;
+        }
+
         .note-img {
           width: 40%;
-          background-repeat: no-repeat;
-          background-position: center top;
-          background-size: cover;
+          position: relative;
+          overflow: hidden;
+
+          .img-item {
+            width: 100%;
+            height: 100%;
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-size: cover;
+            transition: transform 1s ease-in-out;
+
+            &:hover {
+              transform: scale(1.2);
+            }
+          }
         }
 
         .note-cover {
