@@ -7,7 +7,7 @@
       <div class="left-person-msg card-item" id="leftPersonMsg"></div>
       <div class="notes-toc-box card-item">
         <template v-for="(note, index) in notesList" :key="note.id">
-          <div class="note-item" :style="note.flexDirection">
+          <div class="note-item" :id="'noteItem' + index" :style="note.flexDirection">
             <div class="note-img">
               <div class="img-item" :style="'background-image: url(' + note.coverImg + ');'"></div>
             </div>
@@ -92,6 +92,106 @@ const notesList = ref<Array<NoteList>>([
       { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
     ],
   },
+  {
+    id: 1,
+    title: "样例1",
+    coverImg: "/src/assets/image/bg1.jpg",
+    description:
+        "布局样式的示例，写两套啊得，不急xwxwhw",
+    createTime: "2024-01-31 10:30:21",
+    updateTime: "2024-01-31 14:28:21",
+    tags: [
+      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
+      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
+    ],
+  },
+  {
+    id: 2,
+    title: "样例2",
+    coverImg: "/src/assets/image/ta.jpg",
+    description: "布局样式的示例，写两套啊得，不急",
+    createTime: "2024-01-31 10:30:21",
+    updateTime: "2024-01-31 14:28:21",
+    tags: [
+      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
+      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
+    ],
+  },
+  {
+    id: 1,
+    title: "样例1",
+    coverImg: "/src/assets/image/bg1.jpg",
+    description:
+        "布局样式的示例，写两套啊得，不急xwxwhw",
+    createTime: "2024-01-31 10:30:21",
+    updateTime: "2024-01-31 14:28:21",
+    tags: [
+      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
+      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
+    ],
+  },
+  {
+    id: 2,
+    title: "样例2",
+    coverImg: "/src/assets/image/ta.jpg",
+    description: "布局样式的示例，写两套啊得，不急",
+    createTime: "2024-01-31 10:30:21",
+    updateTime: "2024-01-31 14:28:21",
+    tags: [
+      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
+      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
+    ],
+  },
+  {
+    id: 1,
+    title: "样例1",
+    coverImg: "/src/assets/image/bg1.jpg",
+    description:
+        "布局样式的示例，写两套啊得，不急xwxwhw",
+    createTime: "2024-01-31 10:30:21",
+    updateTime: "2024-01-31 14:28:21",
+    tags: [
+      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
+      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
+    ],
+  },
+  {
+    id: 2,
+    title: "样例2",
+    coverImg: "/src/assets/image/ta.jpg",
+    description: "布局样式的示例，写两套啊得，不急",
+    createTime: "2024-01-31 10:30:21",
+    updateTime: "2024-01-31 14:28:21",
+    tags: [
+      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
+      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
+    ],
+  },
+  {
+    id: 1,
+    title: "样例1",
+    coverImg: "/src/assets/image/bg1.jpg",
+    description:
+        "布局样式的示例，写两套啊得，不急xwxwhw",
+    createTime: "2024-01-31 10:30:21",
+    updateTime: "2024-01-31 14:28:21",
+    tags: [
+      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
+      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
+    ],
+  },
+  {
+    id: 2,
+    title: "样例2",
+    coverImg: "/src/assets/image/ta.jpg",
+    description: "布局样式的示例，写两套啊得，不急",
+    createTime: "2024-01-31 10:30:21",
+    updateTime: "2024-01-31 14:28:21",
+    tags: [
+      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
+      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
+    ],
+  },
 ])
 
 const initNoteList = () => {
@@ -109,9 +209,42 @@ const clickNoteTag = (tagLabel: string) => {
   console.log("点击标签：", tagLabel)
 }
 
+/**
+ * 监听元素是否进出可视区域
+ */
+const intersectionObserver = new IntersectionObserver((entries, observer)=>{
+  console.log("检测可视区域：", entries, "右侧第二个元素", observer)
+  entries.forEach(item => {
+    console.log("变化：", item.isIntersecting, item.target, item.target.classList )
+    if(item.isIntersecting) {
+      item.target.className += " xx"
+      item.target.style.transform = "matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)"
+      item.target.style.opacity = 1
+      item.target.style.transition = "transform .6s ease-in-out, opacity .6s ease-in-out"
+    } else {
+      item.target.style.transform = "matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 10, 0, 1)"
+      item.target.style.opacity = 0
+    }
+  })
+})
+
 onMounted(()=>{
   initNoteList()
+
+  let targets: HTMLCollectionOf<Element> = document.getElementsByClassName("note-item")
+  console.log("获取元素：", targets, targets[0] )
+  for (let i in targets){
+    console.log(targets[i], targets[i] instanceof HTMLElement)
+    if(targets[i] instanceof HTMLElement) {
+      intersectionObserver.observe(targets[i])
+    }
+  }
 })
+
+onBeforeUnmount(()=>{
+  intersectionObserver.disconnect()
+})
+
 </script>
 
 <style scoped lang="less">
