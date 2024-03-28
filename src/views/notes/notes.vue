@@ -4,7 +4,24 @@
     <div class="ground-effects"></div>
     <!--   目录主体列表   -->
     <div class="toc-main">
-      <div class="left-person-msg card-item" id="leftPersonMsg"></div>
+      <div class="left-person-msg card-item" id="leftPersonMsg">
+        <div class="background-img">
+          <div class="name-and-signature">
+            <span class="user-name">
+              {{ state.userName }}
+            </span>
+            <span class="user-signature">
+              {{ state.userSignature }}
+            </span>
+          </div>
+        </div>
+        <div class="resource-tags">
+          <div class="resource-tag-item" v-for="(tagItem, tagIndex) in state.resourceTagsList" :key="tagIndex">
+            <span class="resource-tag-label"> {{ tagItem.label }} </span>
+            <span class="resource-tag-number"> {{ tagItem.value }} </span>
+          </div>
+        </div>
+      </div>
       <div class="notes-toc-box card-item">
         <template v-for="(note, index) in notesList" :key="note.id">
           <div class="note-item" :id="'noteItem' + index" :style="note.flexDirection">
@@ -58,21 +75,8 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, onBeforeUnmount, ref} from "vue";
+import {onMounted, onBeforeUnmount, ref, reactive} from "vue";
 import { EyeOutlined, MessageOutlined, LikeOutlined, TagsOutlined } from '@ant-design/icons-vue';
-
-interface NoteList {
-  id: number
-  title: string
-  coverImg: string
-  description: string
-  createTime: string
-  updateTime: string
-  tags: Array<LabelData>
-  isOmit?: boolean
-  flexDirection?: string
-  statistics: Array<LabelData>
-}
 
 const notesList = ref<Array<NoteList>>([
   {
@@ -252,6 +256,17 @@ const notesList = ref<Array<NoteList>>([
   },
 ])
 
+const state = reactive({
+  userName: "螺丝湖水怪之家",
+  userSignature: "时代的一粒沙，也想随风向天空去",
+  resourceTagsList: [
+    { label: "笔记", value: 10, },
+    { label: "组件", value: 18, },
+    { label: "项目", value: 101, },
+    { label: "图片", value: 10, },
+  ] as Array<LabelData>,
+})
+
 const initNoteList = () => {
   notesList.value.forEach((note, index) => {
     note.isOmit = note.description.length > 200;
@@ -325,7 +340,68 @@ onBeforeUnmount(()=>{
     //top: 95px;
     left: 8%;
     width: 300px;
-    height: 500px;
+    height: 300px;
+
+    .background-img {
+      height: 80%;
+      background: url("../../assets/image/yanhuanianjie.jpg") no-repeat center center / cover;
+      display: flex;
+      flex-direction: column-reverse;
+
+      .name-and-signature {
+        width: 100%;
+        height: 50px;
+        background-color: rgba(129, 119, 127, 0.60);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .user-name {
+          font-size: 16px;
+          color: #f2ecec;
+        }
+
+        .user-signature {
+          font-size: 10px;
+          color: #c8c8c8;
+          margin-top: 2px;
+        }
+      }
+    }
+
+    .resource-tags {
+      height: 20%;
+      display: flex;
+      flex-direction: row;
+      background-color: #fff;
+      position: relative;
+
+      .resource-tag-item {
+        height: 60%;
+        margin: auto;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        border-right: 1px solid #d3d3d3;
+        color: #443030;
+
+        &:last-child {
+          border-right: none;
+        }
+
+        .resource-tag-label {
+          font-size: 16px;
+        }
+
+        .resource-tag-number {
+          font-size: 14px;
+        }
+      }
+    }
   }
 
   .toc-main {

@@ -37,6 +37,7 @@ interface SelectCondition {
 
 interface TreeType {
     [key: string]: any
+
     // id?: number
     // label?: string,
     children?: TreeType[]
@@ -75,4 +76,17 @@ interface LabelData {
     icon?: string
     color?: string
     backgroundColor?: string
+}
+
+interface NoteList {
+    id: number
+    title: string
+    coverImg: string
+    description: string
+    createTime: string
+    updateTime: string
+    tags: Array<LabelData>
+    isOmit?: boolean
+    flexDirection?: string
+    statistics: Array<LabelData>
 }
