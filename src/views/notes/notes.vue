@@ -12,21 +12,31 @@
               <div class="img-item" :style="'background-image: url(' + note.coverImg + ');'"></div>
             </div>
             <div class="note-cover">
+              <p class="note-title">
+                {{ note.title }}
+              </p>
               <div class="note-msg">
-                <p class="note-title">
-                  {{ note.title }}
-                </p>
-                <span class="create-time"> 创建时间: {{ note.createTime }}</span>
+                <div class="note-time">
+                  <el-icon><Calendar /></el-icon>
+                  <span class="create-time"> {{ note.createTime }}</span>
+                </div>
+                <div class="note-statistics">
+                  <EyeOutlined />
+                  <span> {{ note.statistics[0].value }} |</span>
+                  <MessageOutlined />
+                  <span> {{ note.statistics[1].value }} |</span>
+                  <LikeOutlined />
+                  <span> {{ note.statistics[2].value }} </span>
+                </div>
               </div>
-              <!-- 感觉也没必要弄一个显示 -->
               <div class="note-description">
                 {{ note.description }}
               </div>
               <div class="note-tags">
-                <el-tag v-for="(tag, tagIndex) in note.tags" class="note-tag" :key="tagIndex"
-                        :color="tag.backgroundColor" :style="'color: ' + tag.color + ';'" effect="light" round @click="clickNoteTag(tag.label)">
-                  {{ tag.label }}
-                </el-tag>
+                <TagsOutlined />
+                <template  v-for="(tag, tagIndex) in note.tags" :key="tagIndex">
+                  <span class="tag-item"> #{{ tag.label }} </span>
+                </template>
               </div>
             </div>
           </div>
@@ -49,6 +59,7 @@
 
 <script setup lang="ts">
 import {onMounted, onBeforeUnmount, ref} from "vue";
+import { EyeOutlined, MessageOutlined, LikeOutlined, TagsOutlined } from '@ant-design/icons-vue';
 
 interface NoteList {
   id: number
@@ -57,13 +68,10 @@ interface NoteList {
   description: string
   createTime: string
   updateTime: string
-  tags: Array<{
-    label: string
-    color: string
-    backgroundColor: string
-  }>
+  tags: Array<LabelData>
   isOmit?: boolean
   flexDirection?: string
+  statistics: Array<LabelData>
 }
 
 const notesList = ref<Array<NoteList>>([
@@ -79,6 +87,11 @@ const notesList = ref<Array<NoteList>>([
       { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
       { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
     ],
+    statistics: [
+      { label: "浏览", value: 123, icon: ""},
+      { label: "回复", value: 456, icon: ""},
+      { label: "点赞", value: 111, icon: ""},
+    ],
   },
   {
     id: 2,
@@ -90,6 +103,11 @@ const notesList = ref<Array<NoteList>>([
     tags: [
       { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
       { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
+    ],
+    statistics: [
+      { label: "浏览", value: 123, icon: ""},
+      { label: "回复", value: 456, icon: ""},
+      { label: "点赞", value: 111, icon: ""},
     ],
   },
   {
@@ -104,6 +122,11 @@ const notesList = ref<Array<NoteList>>([
       { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
       { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
     ],
+    statistics: [
+      { label: "浏览", value: 123, icon: ""},
+      { label: "回复", value: 456, icon: ""},
+      { label: "点赞", value: 111, icon: ""},
+    ],
   },
   {
     id: 2,
@@ -115,6 +138,11 @@ const notesList = ref<Array<NoteList>>([
     tags: [
       { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
       { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
+    ],
+    statistics: [
+      { label: "浏览", value: 123, icon: ""},
+      { label: "回复", value: 456, icon: ""},
+      { label: "点赞", value: 111, icon: ""},
     ],
   },
   {
@@ -129,6 +157,11 @@ const notesList = ref<Array<NoteList>>([
       { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
       { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
     ],
+    statistics: [
+      { label: "浏览", value: 123, icon: ""},
+      { label: "回复", value: 456, icon: ""},
+      { label: "点赞", value: 111, icon: ""},
+    ],
   },
   {
     id: 2,
@@ -140,6 +173,11 @@ const notesList = ref<Array<NoteList>>([
     tags: [
       { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
       { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
+    ],
+    statistics: [
+      { label: "浏览", value: 123, icon: ""},
+      { label: "回复", value: 456, icon: ""},
+      { label: "点赞", value: 111, icon: ""},
     ],
   },
   {
@@ -154,6 +192,11 @@ const notesList = ref<Array<NoteList>>([
       { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
       { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
     ],
+    statistics: [
+      { label: "浏览", value: 123, icon: ""},
+      { label: "回复", value: 456, icon: ""},
+      { label: "点赞", value: 111, icon: ""},
+    ],
   },
   {
     id: 2,
@@ -165,6 +208,11 @@ const notesList = ref<Array<NoteList>>([
     tags: [
       { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
       { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
+    ],
+    statistics: [
+      { label: "浏览", value: 123, icon: ""},
+      { label: "回复", value: 456, icon: ""},
+      { label: "点赞", value: 111, icon: ""},
     ],
   },
   {
@@ -179,6 +227,11 @@ const notesList = ref<Array<NoteList>>([
       { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
       { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
     ],
+    statistics: [
+      { label: "浏览", value: 123, icon: ""},
+      { label: "回复", value: 456, icon: ""},
+      { label: "点赞", value: 111, icon: ""},
+    ],
   },
   {
     id: 2,
@@ -190,6 +243,11 @@ const notesList = ref<Array<NoteList>>([
     tags: [
       { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
       { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
+    ],
+    statistics: [
+      { label: "浏览", value: 123, icon: ""},
+      { label: "回复", value: 456, icon: ""},
+      { label: "点赞", value: 111, icon: ""},
     ],
   },
 ])
@@ -317,6 +375,58 @@ onBeforeUnmount(()=>{
 
         .note-cover {
           flex: 1;
+          padding: 0 10px;
+          display: flex;
+          flex-direction: column;
+
+          .note-title {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+            line-height: 30px;
+          }
+
+          .note-msg {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            margin: 5px 0;
+
+            .note-time {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              column-gap: 3px;
+            }
+
+            .note-statistics {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              column-gap: 3px;
+            }
+          }
+
+          .note-description {
+            flex: 1;
+            padding: 5px;
+            text-indent: 2rem;
+          }
+
+          .note-tags {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 5px;
+            font-size: 14px;
+            column-gap: 7px;
+            letter-spacing: 1px;
+
+            .tag-item:hover {
+              color: #5ebbe4;
+            }
+          }
         }
       }
     }

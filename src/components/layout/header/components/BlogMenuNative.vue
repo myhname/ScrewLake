@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, reactive, watch, onMounted, defineProps } from "vue"
+  import { ref, reactive, watch, onMounted } from "vue"
   import { useRouter } from "vue-router"
   import emitter from "@/utils/eventBus"
   import MyIcons from "@/components/MyIcons.vue"

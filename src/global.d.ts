@@ -67,3 +67,12 @@ interface TableData {
     searchValue?: string
     srcList?: Array<string>
 }
+
+// 标签泛型数据
+interface LabelData {
+    label: string
+    value?: number | string
+    icon?: string
+    color?: string
+    backgroundColor?: string
+}
