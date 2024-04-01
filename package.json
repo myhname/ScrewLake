@@ -19,6 +19,7 @@
     "animate.css": "^4.1.1",
     "ant-design-vue": "^4.1.0",
     "dayjs": "^1.11.10",
+    "echarts": "^5.5.0",
     "element-plus": "^2.4.4",
     "less": "^4.2.0",
     "mitt": "^3.0.1",

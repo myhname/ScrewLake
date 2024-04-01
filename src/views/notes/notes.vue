@@ -61,7 +61,17 @@
       </div>
       <!--   右侧粘性定位，座右铭等个性信息   -->
       <div class="right-sticky">
-        <div class="flow-cnt card-item"></div>
+        <div class="recent-dynamic card-item">
+
+        </div>
+        <div class="flow-cnt card-item">
+          <div class="technology-tags">
+            <word-cloud />
+          </div>
+          <div class="technology-title">
+            <art-word-by-echarts :id="'artWordTechnology'" :context="'聚沙成塔'" :font-size="45"/>
+          </div>
+        </div>
         <div class="motto card-item" id="mottoCard"></div>
         <div class="contact-information card-item"></div>
       </div>
@@ -77,6 +87,8 @@
 <script setup lang="ts">
 import {onMounted, onBeforeUnmount, ref, reactive} from "vue";
 import { EyeOutlined, MessageOutlined, LikeOutlined, TagsOutlined } from '@ant-design/icons-vue';
+import WordCloud from "@/views/notes/components/WordCloud.vue";
+import ArtWordByEcharts from "@/views/notes/components/ArtWordByEcharts.vue";
 
 const notesList = ref<Array<NoteList>>([
   {
@@ -321,14 +333,6 @@ onBeforeUnmount(()=>{
 </script>
 
 <style scoped lang="less">
-.card-item {
-  min-height: 400px;
-  //(190, 190, 190, .5)
-  background-color: rgba(51, 54, 61, 0.35);
-  border: 1px solid #e4e7ed;
-  border-radius: 5px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
-}
 
 .notes-container {
   position: relative;
@@ -512,6 +516,22 @@ onBeforeUnmount(()=>{
       display: flex;
       flex-direction: column;
       row-gap: 15px;
+
+      .flow-cnt {
+        height: 250px;
+        display: flex;
+        flex-direction: column;
+
+        .technology-tags {
+          flex: 1;
+        }
+
+        .technology-title {
+          height: 60px;
+          background-color: #fff;
+        }
+
+      }
 
       .contact-information {
         position: sticky;

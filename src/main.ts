@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 
 // 全局css样式
 import './assets/css/normalize.css'
+import './assets/css/generic.css'
 
 // 引入element-plus组件
 import ElementPlus from 'element-plus'
