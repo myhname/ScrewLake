@@ -22,7 +22,7 @@
           </div>
         </div>
       </div>
-      <div class="notes-toc-box card-item">
+      <div class="notes-toc-box card-item" id="noteListBox">
         <template v-for="(note, index) in notesList" :key="note.id">
           <div class="note-item" :id="'noteItem' + index" :style="note.flexDirection">
             <div class="note-img">
@@ -62,7 +62,7 @@
       <!--   右侧粘性定位，座右铭等个性信息   -->
       <div class="right-sticky">
         <div class="recent-dynamic card-item">
-
+          <recent-dynamic />
         </div>
         <div class="flow-cnt card-item">
           <div class="technology-tags">
@@ -72,11 +72,19 @@
             <art-word-by-echarts :id="'artWordTechnology'" :context="'聚沙成塔'" :font-size="45"/>
           </div>
         </div>
-        <div class="motto card-item" id="mottoCard"></div>
-        <div class="contact-information card-item"></div>
+<!--        <div class="motto card-item" id="mottoCard"></div>-->
+<!--        <div class="contact-information card-item"></div>-->
       </div>
     </div>
-    <div class="bottom-msg"></div>
+    <div class="bottom-box">
+      <div class="bottom-msg">
+        <a href="/cover">螺丝湖观光指北</a>
+        &nbsp; | &nbsp;
+        <span> 已运行 {{ runTime }} </span>
+        <br />
+        Copyright  2024-04-02 Night Rain ShanXi ICP Prepared
+      </div>
+    </div>
     <!--   TODO: 右下角桌宠   -->
     <div class="desktop-pet-box"></div>
     <!--   TODO: 左下角音乐播放器   -->
@@ -89,6 +97,12 @@ import {onMounted, onBeforeUnmount, ref, reactive} from "vue";
 import { EyeOutlined, MessageOutlined, LikeOutlined, TagsOutlined } from '@ant-design/icons-vue';
 import WordCloud from "@/views/notes/components/WordCloud.vue";
 import ArtWordByEcharts from "@/views/notes/components/ArtWordByEcharts.vue";
+import RecentDynamic from "@/views/notes/components/RecentDynamic.vue";
+import { computeRunTime } from "@/utils/timeCompute.ts"
+
+const runTime = ref("")
+let timer: null | number = null
+const fromTime = new Date("2024-04-02 00:00:00").getTime()
 
 const notesList = ref<Array<NoteList>>([
   {
@@ -288,6 +302,12 @@ const initNoteList = () => {
       note.flexDirection = "flex-direction: row-reverse;"
     }
   })
+
+  let height = 5 + notesList.value.length * 165
+  let noteTopDom = document.getElementById("noteListBox")
+  if(noteTopDom && height > 1230){
+    noteTopDom.style.height = height + 'px'
+  }
 }
 
 const clickNoteTag = (tagLabel: string) => {
@@ -324,10 +344,19 @@ onMounted(()=>{
       intersectionObserver.observe(targets[i])
     }
   }
+
+  if (!timer) {
+    timer = setInterval(() => {
+      runTime.value = computeRunTime(fromTime)
+    }, 1000)
+  }
 })
 
 onBeforeUnmount(()=>{
   intersectionObserver.disconnect()
+  if (timer) {
+    clearInterval(timer)
+  }
 })
 
 </script>
@@ -414,6 +443,7 @@ onBeforeUnmount(()=>{
     padding-top: 10px;
     display: flex;
     column-gap: 15px;
+    padding-bottom: 65px;
     //background-color: rgba(129, 119, 127, 0.40);
 
     .notes-toc-box {
@@ -423,6 +453,7 @@ onBeforeUnmount(()=>{
       display: flex;
       flex-direction: column;
       row-gap: 15px;
+      //color: #ddd;
 
       .note-item {
         height: 150px;
@@ -517,6 +548,15 @@ onBeforeUnmount(()=>{
       flex-direction: column;
       row-gap: 15px;
 
+      .card-item:last-child {
+        position: sticky;
+        top: 10px;
+      }
+
+      .recent-dynamic {
+        height: 310px;
+      }
+
       .flow-cnt {
         height: 250px;
         display: flex;
@@ -532,18 +572,27 @@ onBeforeUnmount(()=>{
         }
 
       }
-
-      .contact-information {
-        position: sticky;
-        top: 10px;
-      }
     }
   }
 
-  .bottom-msg {
+  .bottom-box {
     height: 50px;
-    margin-top: 15px;
-    background-color: black;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background-color: #3a323296;
+    color: #e4e7ed;
+
+    .bottom-msg {
+      width: 500px;
+      text-align: center;
+      margin: 0 auto;
+      line-height: 25px;
+
+      a {
+        color: #990055;
+      }
+    }
   }
 }
 
