@@ -18,7 +18,16 @@ const router = createRouter({
           path: "/notes",
           component: () => import("@/views/notes/notes.vue"),
           meta: {
-            title: "封面",
+            title: "笔记目录",
+          },
+          children: [],
+        },
+        {
+          name: "personal",
+          path: "/personal",
+          component: () => import("@/views/personal/personalData.vue"),
+          meta: {
+            title: "个人介绍",
           },
           children: [],
         },

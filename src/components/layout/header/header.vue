@@ -2,7 +2,7 @@
   <div class="header-container" :class="{ 'expand-header': props.expand}">
     <div class="blog-title">
       <div class="avater-name">
-        <div class="blog-avatar"></div>
+        <div class="blog-avatar" @click="routerToPersonal"></div>
         <a href="/">Screw Lake</a>
       </div>
       <transition name="backToTop" enter-active-class="animate__animated animate__fadeIn"
@@ -43,6 +43,7 @@
 import {ref, reactive, onMounted} from "vue"
 import BlogMenuNative from "./components/BlogMenuNative.vue"
 import MyIcons from "@/components/MyIcons.vue";
+import { useRouter } from "vue-router"
 
 interface LabelItem {
   name: string
@@ -59,6 +60,8 @@ const props = defineProps({
   }
 })
 
+const router = useRouter()
+
 const personalizedSignature = ref("人生顺遂，且逐心安处")
 const tags = reactive([
   "二次元", "花里胡哨", "随笔", "记录成长"
@@ -72,6 +75,10 @@ const websiteList = reactive<Array<LabelItem>>([
 const myIconsFont = ref("font-size: 1rem")
 // 获取菜单容器
 const blogMenu = ref<HTMLElement>()
+
+const routerToPersonal = () => {
+  router.push("/personal")
+}
 
 onMounted(()=>{
   // 使用ref获取到元素对象之后，没有办法直接将修改作用于实际的元素

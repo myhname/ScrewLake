@@ -20,12 +20,20 @@ import router from "./router";
 // 引入身份认证，路由权限，水印
 import './router/permission'
 
+// 引入指令
+import VTypewriter from "@/directives/typewriter"
+
 import App from './App.vue'
 
 const app = createApp(App)
 app.use(ElementPlus)
 app.use(Antd)
 app.use(router)
+
+app.use(VTypewriter, {
+    type: "effect",
+    debug: false
+})
 
 app.mount('#app')
 
