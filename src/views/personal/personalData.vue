@@ -7,13 +7,47 @@
         <div class="ripple-effect"></div>
       </div>
       <p v-typewriter="{ delay: 100}"> 虽生如草芥，也愿随风而起，追云逐日，俯瞰山海 </p>
+      <h3 class="personalized-details-title title-font">个人资料</h3>
+      <div class="personalized-details">
+        <template v-for="(item, index) in personalizedDetailsList" :key="key">
+          <div class="personalized-details-item">
+            <p class="detail-title">{{ item.title }}</p>
+            <p class="detail-context">{{ item.context }}</p>
+          </div>
+        </template>
+      </div>
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, reactive } from "vue";
+
+const personalizedDetailsList = reactive<
+    Array<{
+      title: string
+      context: string
+    }>
+>([
+  {
+    title: "职业",
+    context: "web前端",
+  },
+  {
+    title: "星座",
+    context: "天秤",
+  },
+  {
+    title: "爱好",
+    context: "卡通、动漫",
+  },
+])
+
+</script>
 
 <style scoped lang="less">
+@titleColor: #50bfe3;
+
 .personal-data-container {
   //min-height: 1350px;
   position: relative;
@@ -26,7 +60,7 @@
     margin: 0 auto;
     padding: 30px;
     text-align: center;
-    text-shadow: 0 0 15px #fff, 0 0 30px #fff;
+    //text-shadow: 0 0 15px #fff, 0 0 30px #fff;
 
     .avatar-container {
       width: 126px;
@@ -83,6 +117,38 @@
         box-shadow: 1px 1px 30px #000;
       }
     }
+
+    .personalized-signature {
+      font-size: 17px;
+      margin: 30px 5%;
+      padding-bottom: 30px;
+      border-bottom: dashed 2px #6a6363;
+    }
+
+    .personalized-details {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+      margin: 30px 5%;
+
+      .personalized-details-item {
+        p {
+          margin: 0;
+          padding: 5px;
+        }
+
+        .detail-title {
+          padding: 5px 80px;
+          border-bottom: solid 2px #605e5e;
+          font-size: 14px;
+        }
+
+        .detail-context {
+          font-size: 18px;
+        }
+      }
+    }
   }
 
   .card-item {
@@ -91,6 +157,20 @@
     border-radius: 5px;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
   }
+}
+
+.title-font {
+  color: @titleColor;
+  font-size: 19px;
+  font-weight: 600;
+  padding-bottom: 10px;
+  border-bottom: solid 2px;
+  width: 150px;
+  margin: auto;
+}
+
+.text-shadow {
+  text-shadow: 0 0 15px #fff, 0 0 30px #fff;
 }
 
 @keyframes warn {

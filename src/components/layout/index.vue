@@ -1,6 +1,7 @@
 <template>
-  <div class="common-layout">
-    <transition name="backToTop" enter-active-class="animate__animated animate__bounceInDown" leave-active-class="animate__animated animate__backOutUp">
+  <div class="common-layout" ref="commonLayoutRef">
+    <transition name="backToTop" enter-active-class="animate__animated animate__bounceInDown"
+                leave-active-class="animate__animated animate__backOutUp">
       <div v-if="!expandHeader" class="back-top" key="boctTop">
         <div class="rope"></div>
         <div class="figure" @click="backToTop"></div>
@@ -34,9 +35,24 @@ import Main from "./main/main.vue"
 import Header from "./header/header.vue"
 import {startSakura, stopp} from "@/utils/sakuraPlus"
 
+const commonLayoutRef = ref<HTMLElement>()
 const expandHeader = ref(true)
 const mainBox = ref<HTMLElement>()
 const scrollTimer = ref()
+// live2D相关
+const live2dDom = ref<HTMLElement | null>()
+const live2dLocation = reactive({
+  bottom: 0,
+  left: 0,
+  maxY: 0,
+  maxX: 0,
+  startX: 0,
+  startY: 0,
+  endX: 0,
+  endY: 0,
+  width: 0,
+  height: 0,
+})
 
 const backgroundImgList = ref<Array<string>>([
   "/src/assets/image/bg1.jpg",
@@ -117,13 +133,63 @@ const backToTop = () => {
   scrollToLocation(0, 50)
 }
 
+const initLive2d = () => {
+  live2dDom.value!.style.display = "flex"
+  live2dLocation.width = live2dDom.value!.offsetWidth
+  live2dLocation.height = live2dDom.value!.offsetHeight
+  live2dDom.value!.style.opacity = "1"
+  live2dLocation.bottom = 0
+  live2dLocation.left = 0
+  live2dLocation.maxY = commonLayoutRef.value ? commonLayoutRef.value.clientHeight : window.screenY
+  live2dLocation.maxX = commonLayoutRef.value ? commonLayoutRef.value.clientWidth : window.screenX
+}
+
+const dragStarted = (e: DragEvent) => {
+  live2dLocation.startX = e.clientX
+  live2dLocation.startY = e.clientY
+  live2dDom.value!.style.opacity = '0.5'
+}
+
+const dragEnded = (e: DragEvent) => {
+  live2dLocation.endX = e.clientX
+  live2dLocation.endY = e.clientY
+  live2dLocation.left += live2dLocation.endX - live2dLocation.startX
+  if(live2dLocation.left < 0) {
+    live2dLocation.left = 0
+  } else if(live2dLocation.left > live2dLocation.maxX - live2dLocation.width){
+    live2dLocation.left = live2dLocation.maxX - live2dLocation.width
+  }
+  live2dLocation.bottom += live2dLocation.startY - live2dLocation.endY
+  if(live2dLocation.bottom < 0) {
+    live2dLocation.bottom = 0
+  } else if(live2dLocation.bottom > live2dLocation.maxY - live2dLocation.height){
+    live2dLocation.bottom = live2dLocation.maxY - live2dLocation.height
+  }
+  live2dDom.value!.style.opacity = "1"
+  live2dDom.value!.style.left = live2dLocation.left + "px"
+  live2dDom.value!.style.bottom = live2dLocation.bottom + "px"
+  console.log("结束拖拽：", live2dLocation, e.clientX)
+}
+
 onMounted(() => {
   startSakura()
   imageCarousel()
+
+  live2dDom.value = document.getElementById("live2dContainer")
+  if (live2dDom.value) {
+    // let timer = setTimeout(() => {
+      initLive2d()
+      // clearTimeout(timer)
+    // }, 2000)
+    live2dDom.value.addEventListener("dragstart", dragStarted)
+    live2dDom.value.addEventListener("dragend", dragEnded)
+  }
 })
 
 onBeforeUnmount(() => {
   stopp()
+  live2dDom.value?.removeEventListener("dragstart", dragStarted)
+  live2dDom.value?.removeEventListener("dragend", dragEnded)
 })
 </script>
 
@@ -193,12 +259,14 @@ onBeforeUnmount(() => {
       width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
       height: 1px;
     }
+
     &::-webkit-scrollbar-thumb {
       /*滚动条里面小方块*/
       border-radius: 10px;
       background-color: skyblue;
       background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
     }
+
     &::-webkit-scrollbar-track {
       /*滚动条里面轨道*/
       box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);

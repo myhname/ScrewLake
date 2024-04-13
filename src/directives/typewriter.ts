@@ -7,7 +7,7 @@ export default {
          * @param {*} binding
          */
         function formatBinding(binding: any) {
-            let trackData = ""
+            let trackData: any = ""
             let eventMode = "click"
             if (typeof binding.value === "object") {
                 if ("event" in binding.value) {
