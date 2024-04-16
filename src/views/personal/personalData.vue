@@ -9,7 +9,7 @@
       <p v-typewriter="{ delay: 100}"> 虽生如草芥，也愿随风而起，追云逐日，俯瞰山海 </p>
       <h3 class="personalized-details-title title-font">个人资料</h3>
       <div class="personalized-details">
-        <template v-for="(item, index) in personalizedDetailsList" :key="key">
+        <template v-for="(item, index) in personalizedDetailsList" :key="index">
           <div class="personalized-details-item">
             <p class="detail-title">{{ item.title }}</p>
             <p class="detail-context">{{ item.context }}</p>
@@ -61,6 +61,7 @@ const personalizedDetailsList = reactive<
     padding: 30px;
     text-align: center;
     //text-shadow: 0 0 15px #fff, 0 0 30px #fff;
+    backdrop-filter: blur(4px);
 
     .avatar-container {
       width: 126px;

@@ -16,7 +16,6 @@
       <Main/>
     </div>
 
-
     <div class="layout-background-img">
       <template v-for="(item, index) in backgroundImgList" :key="index">
         <transition name="backgroundImg" mode="out-in" enter-active-class="animate__animated animate__fadeIn"
