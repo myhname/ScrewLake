@@ -1,6 +1,6 @@
 <template>
   <div class="personal-data-container">
-    <div class="personal-data-card card-item">
+    <div class="personal-data-card card-item-about">
       <div class="avatar-container">
         <img src="../../assets/image/不可以瑟瑟.jpg" alt=""/>
         <div class="ripple-effect-bg"></div>
@@ -16,12 +16,26 @@
           </div>
         </template>
       </div>
+      <div class="technology-stack"> 相关技术</div>
+      <div class="tech-list"> {{ techList.join("、") }}</div>
+      <div class="personalized-logs-title title-font"> 关于博客 </div>
+      <div class="tech-list" v-html="aboutBlog"></div>
+      <h3 class="personalized-logs-title title-font">更新日志</h3>
+      <div class="logs-list-container" :class="{ 'hidden-logs': !showLogs }">
+        <template v-for="(item, index) in logsList" :key="index">
+          <div class="logs-item">
+            <div class="technology-stack"> {{ item.time }} </div>
+            <div class="tech-list"> {{ item.context }} </div>
+          </div>
+        </template>
+      </div>
+      <div class="logs-show-control" @click="changeLogsShow"> {{ showLogs ? '收起日志' : '点击展示更多日志' }} </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import {ref, reactive} from "vue";
 
 const personalizedDetailsList = reactive<
     Array<{
@@ -43,6 +57,23 @@ const personalizedDetailsList = reactive<
   },
 ])
 
+const techList = reactive([
+  "JavaScript", "CSS", "HTML", "Vue.js"
+])
+
+const aboutBlog = ref("<p>练手 + 记录</p>")
+
+const showLogs = ref(false)
+const logsList = reactive([
+  {time: "2024-04-16", context: "开始构建博客"},
+  {time: "2024-04-26", context: "笔记目录首页"},
+  {time: "2024-05-05", context: "个人结束"},
+])
+
+const changeLogsShow = () => {
+  showLogs.value = !showLogs.value
+}
+
 </script>
 
 <style scoped lang="less">
@@ -56,7 +87,7 @@ const personalizedDetailsList = reactive<
 
   .personal-data-card {
     width: 80%;
-    height: 800px;
+    //height: 800px;
     margin: 0 auto;
     padding: 30px;
     text-align: center;
@@ -150,9 +181,45 @@ const personalizedDetailsList = reactive<
         }
       }
     }
+
+    .technology-stack {
+      font-size: 17px;
+      border-bottom: solid 2px #605e5e;
+      width: 60%;
+      margin: auto;
+      padding-bottom: 5px;
+      margin-bottom: 5px;
+    }
+
+    .personalized-logs-title {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .logs-list-container {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 20px;
+      overflow: hidden;
+      transition: all 0.5s ease-in-out;
+
+      .technology-stack {
+        font-size: 14px;
+      }
+    }
+
+    .hidden-logs {
+      height: 85px;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .logs-show-control {
+      color: darkgrey;
+    }
   }
 
-  .card-item {
+  .card-item-about {
     background-color: rgba(255, 255, 255, 0.35);
     border: 1px solid #e4e7ed;
     border-radius: 5px;

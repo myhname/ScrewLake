@@ -14,7 +14,10 @@
 </template>
 
 <script setup lang="ts">
+import  {ref} from "vue"
 import { RouterView } from 'vue-router'
+
+const runTime = ref("0天0时0分0秒")
 </script>
 
 <style scoped>
