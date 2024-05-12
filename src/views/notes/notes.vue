@@ -7,18 +7,18 @@
       <div class="left-person-msg card-item" id="leftPersonMsg">
         <div class="background-img">
           <div class="name-and-signature">
-            <span class="user-name">
+            <span class="user-name font-3">
               {{ state.userName }}
             </span>
-            <span class="user-signature">
+            <span class="user-signature font-5">
               {{ state.userSignature }}
             </span>
           </div>
         </div>
         <div class="resource-tags">
           <div class="resource-tag-item" v-for="(tagItem, tagIndex) in state.resourceTagsList" :key="tagIndex">
-            <span class="resource-tag-label"> {{ tagItem.label }} </span>
-            <span class="resource-tag-number"> {{ tagItem.value }} </span>
+            <span class="resource-tag-label font-3"> {{ tagItem.label }} </span>
+            <span class="resource-tag-number font-4"> {{ tagItem.value }} </span>
           </div>
         </div>
       </div>
@@ -29,10 +29,10 @@
               <div class="img-item" :style="'background-image: url(' + note.coverImg + ');'"></div>
             </div>
             <div class="note-cover">
-              <p class="note-title">
+              <p class="note-title font-2">
                 {{ note.title }}
               </p>
-              <div class="note-msg">
+              <div class="note-msg font-4">
                 <div class="note-time">
                   <el-icon><Calendar /></el-icon>
                   <span class="create-time"> {{ note.createTime }}</span>
@@ -46,7 +46,7 @@
                   <span> {{ note.statistics[2].value }} </span>
                 </div>
               </div>
-              <div class="note-description">
+              <div class="note-description font-3">
                 {{ note.description }}
               </div>
               <div class="note-tags">
@@ -290,7 +290,7 @@ const initNoteList = () => {
     }
   })
 
-  let height = 5 + notesList.value.length * 165
+  let height = 20 + notesList.value.length * 180
   let noteTopDom = document.getElementById("noteListBox")
   if(noteTopDom && height > 1230){
     noteTopDom.style.height = height + 'px'
@@ -352,6 +352,7 @@ onBeforeUnmount(()=>{
 
 .notes-container {
   position: relative;
+  color: #fffdef;
 
   .left-person-msg {
     position: sticky;
@@ -361,6 +362,8 @@ onBeforeUnmount(()=>{
     left: 8%;
     width: 300px;
     height: 300px;
+    border-radius: 5px;
+    overflow: hidden;
 
     .background-img {
       height: 80%;
@@ -379,12 +382,10 @@ onBeforeUnmount(()=>{
         align-items: center;
 
         .user-name {
-          font-size: 16px;
           color: #f2ecec;
         }
 
         .user-signature {
-          font-size: 10px;
           color: #c8c8c8;
           margin-top: 2px;
         }
@@ -395,7 +396,8 @@ onBeforeUnmount(()=>{
       height: 20%;
       display: flex;
       flex-direction: row;
-      background-color: #fff;
+      background-color: rgb(122 109 109 / 40%);
+      color: #e8e8e8;
       position: relative;
 
       .resource-tag-item {
@@ -407,18 +409,9 @@ onBeforeUnmount(()=>{
         justify-content: space-around;
         align-items: center;
         border-right: 1px solid #d3d3d3;
-        color: #443030;
 
         &:last-child {
           border-right: none;
-        }
-
-        .resource-tag-label {
-          font-size: 16px;
-        }
-
-        .resource-tag-number {
-          font-size: 14px;
         }
       }
     }
@@ -436,16 +429,29 @@ onBeforeUnmount(()=>{
     .notes-toc-box {
       flex: 1;
       min-height: 1230px;
-      padding: 15px 10px;
+      padding: 20px 15px;
       display: flex;
       flex-direction: column;
-      row-gap: 15px;
+      row-gap: 30px;
       //color: #ddd;
 
       .note-item {
         height: 150px;
         display: flex;
         position: relative;
+        //border: 1px solid;
+        //border-radius: 5px;
+        //overflow: hidden;
+
+        &::after {
+          content: "";
+          width: 100%;
+          height: 1px;
+          position: absolute;
+          left: 0;
+          bottom: -15px;
+          background-color: #e4e7ed;
+        }
 
         &:hover {
           background-color: #ababab4a;
@@ -455,6 +461,7 @@ onBeforeUnmount(()=>{
         .note-img {
           width: 40%;
           position: relative;
+          border-radius: 5px;
           overflow: hidden;
 
           .img-item {
@@ -479,8 +486,8 @@ onBeforeUnmount(()=>{
 
           .note-title {
             margin: 0;
-            font-size: 1.2rem;
-            font-weight: 600;
+            //font-size: 1.2rem;
+            //font-weight: 600;
             line-height: 30px;
           }
 
@@ -489,8 +496,9 @@ onBeforeUnmount(()=>{
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
-            font-size: 12px;
+            //font-size: 12px;
             margin: 5px 0;
+            color: #dcd7d7;
 
             .note-time {
               display: flex;
@@ -509,8 +517,8 @@ onBeforeUnmount(()=>{
 
           .note-description {
             flex: 1;
-            padding: 5px;
-            text-indent: 2rem;
+            padding: 5px 0;
+            //text-indent: 2rem;
           }
 
           .note-tags {
@@ -555,7 +563,9 @@ onBeforeUnmount(()=>{
 
         .technology-title {
           height: 60px;
-          background-color: #fff;
+          background-color: rgba(255, 255, 255, 0.1);
+          border-top: 1px solid #838181;
+          border-radius: 3px;
         }
 
       }

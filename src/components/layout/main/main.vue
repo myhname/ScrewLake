@@ -23,6 +23,7 @@ const runTime = ref("0天0时0分0秒")
 <style scoped>
 .main{
   min-height: 100%;
+  min-width: 1500px;
   position: relative;
   padding: 0  0 50px 0;
 }

@@ -54,7 +54,7 @@ const live2dLocation = reactive({
 })
 
 const backgroundImgList = ref<Array<string>>([
-  "/src/assets/image/bg1.jpg",
+  "/src/assets/image/bg6.jpg",
   "/src/assets/image/bg2.jpg",
   "/src/assets/image/bg3.jpg",
   "/src/assets/image/bg4.jpg",
@@ -199,7 +199,7 @@ onBeforeUnmount(() => {
   height: 100%;
   position: relative;
   overflow: hidden;
-  min-width: 800px;
+  //min-width: 1500px;
   min-height: 500px;
 
   display: flex;
@@ -250,7 +250,7 @@ onBeforeUnmount(() => {
   .main-layout {
     flex: 1;
     position: relative;
-    overflow-x: hidden;
+    overflow-x: auto;
     overflow-y: auto;
 
     &::-webkit-scrollbar {

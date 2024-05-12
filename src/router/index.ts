@@ -31,6 +31,15 @@ const router = createRouter({
           },
           children: [],
         },
+        {
+          name: "notes/testMd",
+          path: "/notes/testMd",
+          component: () => import("@/views/notes/components/TestMd.vue"),
+          meta: {
+            title: "个人介绍",
+          },
+          children: [],
+        },
       ],
     },
     {

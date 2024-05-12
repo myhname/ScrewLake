@@ -11,26 +11,28 @@
       <div class="personalized-details">
         <template v-for="(item, index) in personalizedDetailsList" :key="index">
           <div class="personalized-details-item">
-            <p class="detail-title">{{ item.title }}</p>
-            <p class="detail-context">{{ item.context }}</p>
+            <p class="detail-title font-3">{{ item.title }}</p>
+            <p class="detail-context font-2">{{ item.context }}</p>
           </div>
         </template>
       </div>
       <div class="technology-stack"> 相关技术</div>
       <div class="tech-list"> {{ techList.join("、") }}</div>
-      <div class="personalized-logs-title title-font"> 关于博客 </div>
-      <div class="tech-list" v-html="aboutBlog"></div>
+      <div class="personalized-logs-title title-font"> 关于博客</div>
+      <div class="tech-list font-3" v-html="aboutBlog"></div>
       <h3 class="personalized-logs-title title-font">更新日志</h3>
       <div class="logs-list-container" :class="{ 'hidden-logs': !showLogs }">
         <template v-for="(item, index) in logsList" :key="index">
           <div class="logs-item">
-            <div class="technology-stack"> {{ item.time }} </div>
-            <div class="tech-list"> {{ item.context }} </div>
+            <div class="technology-stack font-4"> {{ item.time }}</div>
+            <div class="tech-list font-3"> {{ item.context }}</div>
           </div>
         </template>
       </div>
-      <div class="logs-show-control" @click="changeLogsShow"> {{ showLogs ? '收起日志' : '点击展示更多日志' }} </div>
+      <div class="logs-show-control" @click="changeLogsShow"> {{ showLogs ? '收起日志' : '点击展示更多日志' }}</div>
     </div>
+
+<!--    <div class="test-boder"></div>-->
   </div>
 </template>
 
@@ -77,13 +79,14 @@ const changeLogsShow = () => {
 </script>
 
 <style scoped lang="less">
-@titleColor: #50bfe3;
+@titleColor: #00d3fb;
 
 .personal-data-container {
   //min-height: 1350px;
   position: relative;
   //background-color: black;
   padding: 30px 0;
+  color: #fff;
 
   .personal-data-card {
     width: 80%;
@@ -92,7 +95,7 @@ const changeLogsShow = () => {
     padding: 30px;
     text-align: center;
     //text-shadow: 0 0 15px #fff, 0 0 30px #fff;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(10px);
 
     .avatar-container {
       width: 126px;
@@ -151,7 +154,7 @@ const changeLogsShow = () => {
     }
 
     .personalized-signature {
-      font-size: 17px;
+      //font-size: 17px;
       margin: 30px 5%;
       padding-bottom: 30px;
       border-bottom: dashed 2px #6a6363;
@@ -173,17 +176,17 @@ const changeLogsShow = () => {
         .detail-title {
           padding: 5px 80px;
           border-bottom: solid 2px #605e5e;
-          font-size: 14px;
+          //font-size: 14px;
         }
 
         .detail-context {
-          font-size: 18px;
+          //font-size: 18px;
         }
       }
     }
 
     .technology-stack {
-      font-size: 17px;
+      //font-size: 17px;
       border-bottom: solid 2px #605e5e;
       width: 60%;
       margin: auto;
@@ -220,7 +223,7 @@ const changeLogsShow = () => {
   }
 
   .card-item-about {
-    background-color: rgba(255, 255, 255, 0.35);
+    background-color: rgba(0,0,0,0.45);
     border: 1px solid #e4e7ed;
     border-radius: 5px;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
@@ -296,4 +299,24 @@ const changeLogsShow = () => {
     opacity: 0;
   }
 }
+
+
+//.test-boder {
+//  width: 200px;
+//  height: 200px;
+//  //background-color: red;
+//  border-top: 12px solid #000000;
+//  border-radius: 50%;
+//  position: relative;
+//  filter: drop-shadow(0 0 2px red) drop-shadow(0 0 5px red) drop-shadow(0 0 10px red) drop-shadow(0 0 20px red);;
+//
+//  //&::before {
+//  //  position: absolute;
+//  //  left: 0;
+//  //  top: 0;
+//  //  right: 0;
+//  //  bottom: 0;
+//  //
+//  //}
+//}
 </style>

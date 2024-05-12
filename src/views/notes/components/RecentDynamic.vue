@@ -4,8 +4,8 @@
       <div class="recent-dynamic-item" @click="pushTo(item.url)">
         <div class="img" :style="'background-image: url(' + item.img + ');'"></div>
         <div class="msg">
-          <p class="title">{{ item.context }}</p>
-          <p class="information">{{ item.creator }} | {{ item.type }} | {{ item.createTime }}</p>
+          <p class="title font-3">{{ item.context }}</p>
+          <p class="information font-4">{{ item.creator }} | {{ item.type }} | {{ item.createTime }}</p>
         </div>
       </div>
     </template>
@@ -109,9 +109,12 @@ const pushTo = (target: string) => {
       padding: 5px;
       border-bottom: 0.3px solid #b7b7b7;
 
+      .title {
+        color: #f1fafa;
+      }
+
       p {
         margin: 0;
-        font-size: 16px;
         color: #ddd;
 
         &:last-child {
