@@ -17,13 +17,15 @@
     </div>
 
     <div class="layout-background-img">
-      <template v-for="(item, index) in backgroundImgList" :key="index">
-        <transition name="backgroundImg" mode="out-in" enter-active-class="animate__animated animate__fadeIn"
-                    leave-active-class="animate__animated animate__fadeOut">
-          <div v-show="index === showBackgroudImgIndex" class="background-img-item"
-               :style="'background-image: url(' + item + ');'"></div>
-        </transition>
-      </template>
+      <div class="bg-down background-img-item" id="bgDown"></div>
+      <div class="bg-up background-img-item" id="bgUp"></div>
+      <!--      <template v-for="(item, index) in backgroundImgList" :key="index">-->
+      <!--        <transition name="backgroundImg" mode="out-in" enter-active-class="animate__animated animate__fadeIn"-->
+      <!--                    leave-active-class="animate__animated animate__fadeOut">-->
+      <!--          <div v-show="index === showBackgroundImgIndex" class="background-img-item"-->
+      <!--               :style="'background-image: url(' + item + ');'"></div>-->
+      <!--        </transition>-->
+      <!--      </template>-->
     </div>
   </div>
 </template>
@@ -53,6 +55,8 @@ const live2dLocation = reactive({
   height: 0,
 })
 
+const domUp = ref<HTMLElement>()
+const domDown = ref<HTMLElement>()
 const backgroundImgList = ref<Array<string>>([
   "/src/assets/image/bg6.jpg",
   "/src/assets/image/bg2.jpg",
@@ -60,7 +64,8 @@ const backgroundImgList = ref<Array<string>>([
   "/src/assets/image/bg4.jpg",
   "/src/assets/image/bg5.jpg",
 ])
-const showBackgroudImgIndex = ref<number>(0)
+const showBackgroundImgIndex = ref<number>(0)
+const bgChangeTimer = ref<number>()
 
 /**
  * 头部标题栏滚动事件监听
@@ -77,12 +82,25 @@ const containerScrolling = (event: any) => {
  */
 const imageCarousel = () => {
   let timer = setInterval(() => {
-    if (showBackgroudImgIndex.value < (backgroundImgList.value.length - 1)) {
-      showBackgroudImgIndex.value += 1
+    if (showBackgroundImgIndex.value < (backgroundImgList.value.length - 1)) {
+      showBackgroundImgIndex.value += 1
     } else {
-      showBackgroudImgIndex.value = 0
+      showBackgroundImgIndex.value = 0
     }
   }, 100 * 1000)
+}
+
+const changeBgImg = () => {
+  domDown.value!.style.backgroundImage = "url('" + backgroundImgList.value[showBackgroundImgIndex.value] + "')"
+  showBackgroundImgIndex.value += 1
+  if(showBackgroundImgIndex.value >= backgroundImgList.value.length) {
+    showBackgroundImgIndex.value = 0
+  }
+  domUp.value!.classList.remove("bg-animation")
+  requestAnimationFrame(()=>{
+    domUp.value!.style.backgroundImage = "url('" + backgroundImgList.value[showBackgroundImgIndex.value] + "')"
+    domUp.value!.classList.add("bg-animation")
+  })
 }
 
 /**
@@ -153,15 +171,15 @@ const dragEnded = (e: DragEvent) => {
   live2dLocation.endX = e.clientX
   live2dLocation.endY = e.clientY
   live2dLocation.left += live2dLocation.endX - live2dLocation.startX
-  if(live2dLocation.left < 0) {
+  if (live2dLocation.left < 0) {
     live2dLocation.left = 0
-  } else if(live2dLocation.left > live2dLocation.maxX - live2dLocation.width){
+  } else if (live2dLocation.left > live2dLocation.maxX - live2dLocation.width) {
     live2dLocation.left = live2dLocation.maxX - live2dLocation.width
   }
   live2dLocation.bottom += live2dLocation.startY - live2dLocation.endY
-  if(live2dLocation.bottom < 0) {
+  if (live2dLocation.bottom < 0) {
     live2dLocation.bottom = 0
-  } else if(live2dLocation.bottom > live2dLocation.maxY - live2dLocation.height){
+  } else if (live2dLocation.bottom > live2dLocation.maxY - live2dLocation.height) {
     live2dLocation.bottom = live2dLocation.maxY - live2dLocation.height
   }
   live2dDom.value!.style.opacity = "1"
@@ -177,18 +195,32 @@ onMounted(() => {
   live2dDom.value = document.getElementById("live2dContainer")
   if (live2dDom.value) {
     // let timer = setTimeout(() => {
-      initLive2d()
-      // clearTimeout(timer)
+    initLive2d()
+    // clearTimeout(timer)
     // }, 2000)
     live2dDom.value.addEventListener("dragstart", dragStarted)
     live2dDom.value.addEventListener("dragend", dragEnded)
   }
+
+  domUp.value = document.getElementById("bgUp")!
+  domUp.value!.style.backgroundImage = "url('" + backgroundImgList.value[showBackgroundImgIndex.value] + "')"
+  domUp.value!.classList.add("bg-animation")
+  console.log("ddd", domUp.value!.classList)
+
+  domDown.value = document.getElementById("bgDown")!
+
+  bgChangeTimer.value = setInterval(()=>{
+    changeBgImg()
+  }, 5 * 60 * 1000)
 })
 
 onBeforeUnmount(() => {
   stopp()
   live2dDom.value?.removeEventListener("dragstart", dragStarted)
   live2dDom.value?.removeEventListener("dragend", dragEnded)
+  if(bgChangeTimer.value) {
+    clearInterval(bgChangeTimer.value)
+  }
 })
 </script>
 
@@ -283,6 +315,7 @@ onBeforeUnmount(() => {
     z-index: -1;
 
     .background-img-item {
+      position: absolute;
       width: 100%;
       height: 100%;
       background-repeat: no-repeat;
@@ -292,10 +325,30 @@ onBeforeUnmount(() => {
   }
 }
 
-.animate__animated.animate__bounceInDown,
-.animate__animated.animate__backOutUp,
-.animate__animated.animate__fadeIn,
-.animate__animated.animate__fadeOut {
-  --animate-duration: 2s;
+//.animate__animated.animate__bounceInDown,
+//.animate__animated.animate__backOutUp,
+//.animate__animated.animate__fadeIn,
+//.animate__animated.animate__fadeOut {
+//  --animate-duration: 2s;
+//}
+
+.bg-animation {
+  //mask: radial-gradient(#000 cale(var(--x) * 1%), transparent cale(var(--x) * 1%));
+  //mask-size: 40px 40px;
+  mask-repeat:no-repeat;
+  animation: bgChange 2s linear;
+}
+
+.for-change(@i) when (@i <= 100) {
+  @var: @i * 1%;
+  @{var} {
+    mask: radial-gradient(#000 @var, transparent @var);
+    mask-size: 50px 50px;
+  }
+  .for-change(@i + 1);
+}
+
+@keyframes bgChange {
+  .for-change(0);
 }
 </style>
