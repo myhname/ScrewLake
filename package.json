@@ -24,6 +24,7 @@
     "element-plus": "^2.4.4",
     "highlight.js": "^11.9.0",
     "less": "^4.2.0",
+    "md-editor-v3": "^4.15.0",
     "mitt": "^3.0.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",

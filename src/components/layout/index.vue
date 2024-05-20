@@ -336,7 +336,7 @@ onBeforeUnmount(() => {
   //mask: radial-gradient(#000 cale(var(--x) * 1%), transparent cale(var(--x) * 1%));
   //mask-size: 40px 40px;
   mask-repeat:no-repeat;
-  animation: bgChange 2s linear;
+  animation: bgChange 1s linear;
 }
 
 .for-change(@i) when (@i <= 100) {
@@ -344,6 +344,7 @@ onBeforeUnmount(() => {
   @{var} {
     mask: radial-gradient(#000 @var, transparent @var);
     mask-size: 50px 50px;
+    filter: brightness(@var);
   }
   .for-change(@i + 1);
 }

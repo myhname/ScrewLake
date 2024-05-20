@@ -1,4 +1,21 @@
-# ScrewLake
+<template>
+  <div class="md-preview" ref="mdContainer">
+    <MdPreview :editorId="id" :modelValue="text" />
+    <MdCatalog :editorId="id" :scrollElement="scrollElement" />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { MdPreview, MdCatalog } from 'md-editor-v3';
+// preview.css相比style.css少了编辑器那部分样式
+import 'md-editor-v3/lib/preview.css';
+
+const id = 'preview-only';
+const text = ref('# Hello Editor');
+const scrollElement = document.documentElement;
+
+const markdown = ref(`# ScrewLake
 
 个人博客项目，螺丝湖水怪的居所——Personal blog project, the residence of the Screw Lake Monster
 
@@ -61,15 +78,11 @@
 2. 2024/3/14
    - 音乐播放器
    - 桌宠
-   - 首页布局完成4
+   - 首页布局完成`)
 
 
-1. 2024.5.20
-   - 鼠标点击特效：波浪线+彩球
-   - 博客笔记展示页：展示为主要目的，干脆就不透明背景得了，使用组件——editor-md-v3
-2. 2024.5.21 - 2024.5.22
-   - java接口实现
-3. 2024.5.23 - 2024.5.24
-   - 接口联调
-4. 2024.5.25 - 2024.5.26
-   - 编辑 or 新建笔记 or 日志
+</script>
+
+<style>
+
+</style>
