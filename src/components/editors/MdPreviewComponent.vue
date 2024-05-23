@@ -1,7 +1,7 @@
 <template>
   <div class="md-preview" ref="mdContainer">
-    <MdPreview :editorId="id" :modelValue="text" />
-    <MdCatalog :editorId="id" :scrollElement="scrollElement" />
+    <MdPreview :editorId="id" :modelValue="markdown" :theme="'dark'" :previewTheme="'mk-cute'" />
+<!--    <MdCatalog :editorId="id" :scrollElement="scrollElement" />-->
   </div>
 </template>
 
@@ -12,7 +12,6 @@ import { MdPreview, MdCatalog } from 'md-editor-v3';
 import 'md-editor-v3/lib/preview.css';
 
 const id = 'preview-only';
-const text = ref('# Hello Editor');
 const scrollElement = document.documentElement;
 
 const markdown = ref(`# ScrewLake
@@ -83,6 +82,16 @@ const markdown = ref(`# ScrewLake
 
 </script>
 
-<style>
+<style scoped lang="less">
+.md-preview {
+  width: 100%;
+}
 
+#preview-only {
+  background-color: rgba(0, 0, 0, 0.75);
+  border: 1px solid #e4e7ed;
+  border-radius: 5px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+}
 </style>

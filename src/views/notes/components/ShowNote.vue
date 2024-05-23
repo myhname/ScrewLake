@@ -1,14 +1,17 @@
 <template>
   <div class="test-md-container">
-    <div class="note-show">
-      <md-preview-component></md-preview-component>
-    </div>
+      <div class="note-container">
+        <md-preview-component class="left-preview-container"></md-preview-component>
+
+        <data-overview class="right-msg-container" ></data-overview>
+      </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import {computed, ref} from 'vue'
 import MdPreviewComponent from "@/components/editors/MdPreviewComponent.vue";
+import DataOverview from  "./DataOverview.vue"
 
 
 const markdown = ref(`# ScrewLake
@@ -83,10 +86,27 @@ const markdown = ref(`# ScrewLake
 .test-md-container {
   position: relative;
   width: 100%;
-  padding: 0 10%;
+  //padding: 20px 5% 20px 8%;
+  display: flex;
 
-  .note-show {
+  .note-container {
+    position: relative;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
 
+    .left-preview-container {
+      width: 70vw;
+    }
+
+    .right-msg-container {
+      position: relative;
+      top: 0;
+      left: 0;
+    }
   }
+
+//
 }
 </style>
