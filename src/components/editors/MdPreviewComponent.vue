@@ -1,8 +1,8 @@
 <template>
   <div class="md-preview" ref="mdContainer">
     <MdPreview :editorId="id" :modelValue="markdown" :theme="'dark'" :previewTheme="'mk-cute'" />
-<!--    <MdCatalog :editorId="id" :scrollElement="scrollElement" />-->
   </div>
+  <MdCatalog class="note-toc" :editorId="id" :scrollElement="scrollElement" />
 </template>
 
 <script setup lang="ts">
@@ -93,5 +93,16 @@ const markdown = ref(`# ScrewLake
   border-radius: 5px;
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(10px);
+}
+
+.note-toc {
+  position: sticky;
+  top: 10px;
+
+  background-color: rgba(0, 0, 0, 0.45);
+  border: 1px solid #e4e7ed;
+  border-radius: 5px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(2px);
 }
 </style>

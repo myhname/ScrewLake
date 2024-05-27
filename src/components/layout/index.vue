@@ -35,6 +35,7 @@ import {ref, onMounted, onBeforeUnmount, reactive} from "vue"
 import Main from "./main/main.vue"
 import Header from "./header/header.vue"
 import {startSakura, stopp} from "@/utils/sakuraPlus"
+import emitter from '@/utils/eventBus'
 
 const commonLayoutRef = ref<HTMLElement>()
 const expandHeader = ref(true)
@@ -212,6 +213,11 @@ onMounted(() => {
   bgChangeTimer.value = setInterval(()=>{
     changeBgImg()
   }, 5 * 60 * 1000)
+
+  emitter.on('clickNoteToc', (value) => {
+    console.log(("接收："), value)
+    scrollToLocation(Number(value), 50)
+  })
 })
 
 onBeforeUnmount(() => {
@@ -221,6 +227,7 @@ onBeforeUnmount(() => {
   if(bgChangeTimer.value) {
     clearInterval(bgChangeTimer.value)
   }
+  emitter.off('clickNoteToc')
 })
 </script>
 

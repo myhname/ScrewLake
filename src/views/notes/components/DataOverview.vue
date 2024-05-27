@@ -37,11 +37,6 @@ const state = reactive({
 
 <style scoped lang="less">
 .left-person-msg {
-  position: sticky;
-  top: 10px;
-  //position: fixed;
-  //top: 95px;
-  left: 8%;
   width: 300px;
   height: 300px;
   border-radius: 5px;

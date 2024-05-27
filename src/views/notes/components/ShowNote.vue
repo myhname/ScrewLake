@@ -1,19 +1,35 @@
 <template>
   <div class="test-md-container">
-      <div class="note-container">
-        <md-preview-component class="left-preview-container"></md-preview-component>
+    <div class="note-container">
+      <!--        <md-preview-component class="left-preview-container"></md-preview-component>-->
+      <MdPreview class="left-preview-container" :editorId="id" :modelValue="markdown" :theme="'dark'"
+                 :previewTheme="'mk-cute'"/>
 
-        <data-overview class="right-msg-container" ></data-overview>
+      <div class="right-msg-container">
+        <data-overview></data-overview>
+        <div class="note-toc">
+          <el-scrollbar max-height="300px">
+            <MdCatalog :editorId="id" :scrollElement="scrollElement" @onClick="clickToc"/>
+          </el-scrollbar>
+        </div>
+
       </div>
+
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {computed, ref} from 'vue'
-import MdPreviewComponent from "@/components/editors/MdPreviewComponent.vue";
-import DataOverview from  "./DataOverview.vue"
+import {computed, onMounted, ref} from 'vue'
+import {MdPreview, MdCatalog} from 'md-editor-v3';
+// preview.css相比style.css少了编辑器那部分样式
+import 'md-editor-v3/lib/preview.css';
+import DataOverview from "./DataOverview.vue"
+// import MdPreviewComponent from "@/components/editors/MdPreviewComponent.vue";
+import emitter from '@/utils/eventBus'
 
-
+const id = 'preview-only';
+const scrollElement = document.documentElement;
 const markdown = ref(`# ScrewLake
 
 个人博客项目，螺丝湖水怪的居所——Personal blog project, the residence of the Screw Lake Monster
@@ -78,7 +94,34 @@ const markdown = ref(`# ScrewLake
    - 音乐播放器
    - 桌宠
    - 首页布局完成`)
+const tocTitleDivList = ref<HTMLCollectionOf<HTMLElement>>()
+const currHightTitle = ref(-1)
 
+const clickToc = (e: MouseEvent, t: any) => {
+  console.log("点击目录", e, t)
+  let PageId = document.getElementById(t.text)
+  console.log("dddd", PageId)
+  if(PageId) {
+    // window.scrollTo({
+    //   top: PageId.offsetTop,
+    //   behavior: "smooth"
+    // })
+    emitter.emit('clickNoteToc', PageId.offsetTop)
+  }
+
+//   高亮
+  if(!tocTitleDivList.value || !tocTitleDivList.value.length) {
+    tocTitleDivList.value = document.getElementsByClassName("md-editor-catalog-link")!
+  }
+  console.log(("目录类"), tocTitleDivList.value)
+  console.log("字节点",)
+  if(currHightTitle.value != -1) {
+    tocTitleDivList.value![currHightTitle.value].children[0].classList.remove("highlight-title")
+  }
+  currHightTitle.value = Number(t.index - 1)
+  tocTitleDivList.value![currHightTitle.value].children[0].classList.add("highlight-title")
+
+}
 
 </script>
 
@@ -100,13 +143,38 @@ const markdown = ref(`# ScrewLake
       width: 70vw;
     }
 
+    #preview-only {
+      background-color: rgba(0, 0, 0, 0.75);
+      border: 1px solid #e4e7ed;
+      border-radius: 5px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(10px);
+    }
+
     .right-msg-container {
-      position: relative;
-      top: 0;
-      left: 0;
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+      row-gap: 15px;
+
+      .note-toc {
+        position: sticky;
+        top: 10px;
+
+        color: #fff;
+        background-color: rgba(0, 0, 0, 0.6);
+        border: 1px solid #e4e7ed;
+        border-radius: 5px;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
+        backdrop-filter: blur(8px);
+      }
     }
   }
+}
+</style>
 
-//
+<style lang="less">
+.highlight-title {
+  color: #01b4ff!important;
 }
 </style>
