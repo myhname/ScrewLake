@@ -160,13 +160,14 @@ const clickToc = (e: MouseEvent, t: any) => {
       .note-toc {
         position: sticky;
         top: 10px;
+        padding: 10px;
 
         color: #fff;
-        background-color: rgba(0, 0, 0, 0.6);
+        background-color: rgba(0, 0, 0, 0.45);
         border: 1px solid #e4e7ed;
         border-radius: 5px;
         box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
-        backdrop-filter: blur(8px);
+        backdrop-filter: blur(2px);
       }
     }
   }

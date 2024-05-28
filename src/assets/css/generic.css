@@ -36,3 +36,12 @@ body {
 .font-5 {
     font-size: 10px;
 }
+
+.note-btn.el-button--primary.is-text {
+    border: 1px solid;
+}
+
+.note-btn.el-button.is-text:not(.is-disabled):hover {
+    background-color: #2d3239;
+    border: 1px solid;
+}

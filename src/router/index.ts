@@ -40,6 +40,15 @@ const router = createRouter({
           },
           children: [],
         },
+        {
+          name: "systemManage",
+          path: "/systemManage",
+          component: () => import("@/views/systemManage/systemManage.vue"),
+          meta: {
+            title: "系统管理",
+          },
+          children: [],
+        },
       ],
     },
     {

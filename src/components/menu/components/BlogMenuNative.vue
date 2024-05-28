@@ -60,7 +60,7 @@
         icon: "icon_home",
       },
       {
-        key: 1,
+        key: 2,
         name: "notes",
         path: "/notes",
         meta: {
@@ -68,6 +68,15 @@
         },
         icon: "a-bijibenbiji1",
       },
+      {
+        key: 3,
+        name: "systemManage",
+        path: "/systemManage",
+        meta: {
+          title: "系统管理",
+        },
+        icon: "guanliyuan_jiaoseguanli",
+      }
       // {
       //   key: 1,
       //   name: 'index',
