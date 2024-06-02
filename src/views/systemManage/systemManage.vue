@@ -35,7 +35,7 @@ const handleClick = (name: TabPaneName) => {
 }
 
 onMounted(() => {
-  activeName.value = systemMenuList[0].key
+  activeName.value = systemMenuList[1].key
 })
 
 </script>

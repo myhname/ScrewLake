@@ -1,0 +1,141 @@
+<template>
+  <el-dialog v-if="props.showNoteDialog" v-model="props.showNoteDialog" width="50%" modal-class="note-dialog" @close="handleClose">
+    <template #header="{ close, titleId, titleClass }">
+      <div class="dialog-header">
+        <h2> {{ props.type === 'add' ? '新增' : '编辑' }}笔记 </h2>
+      </div>
+    </template>
+    <el-form
+        ref="ruleFormRef"
+        :model="noteForm"
+        :rules="rules"
+        label-width="auto"
+        class="note-ruleForm"
+        status-icon
+    >
+      <el-form-item label="标题：" prop="title">
+        <el-input v-model="noteForm.title" placeholder="请输入文章标题" maxlength="20" />
+      </el-form-item>
+      <el-form-item label="标签：" prop="tagsList">
+        <el-select v-model="noteForm.tagsList" placeholder="请选择标签" multiple :multiple-limit="3">
+          <template v-for="(item, index) in tagsList" :key="index">
+            <el-option :label="item" :value="item" />
+          </template>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="简介：" prop="description">
+        <el-input v-model="noteForm.description" placeholder="请输入文章简介" :rows="3" type="textarea" maxlength="100" show-word-limit />
+      </el-form-item>
+      <el-form-item label="文章：" prop="content">
+        <el-input v-model="noteForm.content" placeholder="请上传文章" />
+      </el-form-item>
+    </el-form>
+
+    <template #footer>
+      <el-button @click="handleClose">取消</el-button>
+      <el-button type="primary" @click="submit(ruleFormRef)" :loading="loading">确定</el-button>
+    </template>
+  </el-dialog>
+</template>
+
+<script setup lang="ts">
+import {ref, reactive, watch} from "vue";
+import type { ComponentSize, FormInstance, FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus'
+
+const props = defineProps({
+  showNoteDialog: {
+    type: Boolean,
+    required: true
+  },
+  type: {
+    type: String,
+    default: "add"
+  },
+  formData: {
+    type: Object
+  }
+})
+
+const emits = defineEmits(["update:showNoteDialog"])
+
+interface RuleForm {
+  id: number | string,
+  title: string,
+  tagsList: Array<string>,
+  description: string,
+  content: string,
+}
+
+const ruleFormRef = ref<FormInstance>()
+const noteForm = reactive<RuleForm>({
+  id: "",
+  title: "",
+  tagsList: [],
+  description: "",
+  content: "",
+})
+const rules = reactive<FormRules<RuleForm>>({
+  title: { required: true, message: '请输入标题', trigger: 'blur' },
+  tagsList: { required: true, message: '请选择文章分类', trigger: 'change' },
+  description: { required: true, message: '请输入文章描述', trigger: 'blur' },
+  content: { required: true, message: '请上传文章内容', trigger: 'blur' },
+})
+const loading = ref(false)
+const tagsList = reactive([
+  "Vue", "JS特效", "那些年，踩过的坑"
+])
+
+const handleClose = () => {
+  reset()
+  emits("update:showNoteDialog", false)
+}
+
+const submit = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  loading.value = false
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      console.log('submit!')
+      handleClose()
+    } else {
+      console.log("校验失败：", fields)
+      ElMessage.warning(fields)
+    }
+  }).finally(()=>{
+    loading.value = true
+  })
+}
+
+const reset = () => {
+  noteForm.tagsList = []
+  noteForm.id = ""
+  noteForm.content = ""
+  noteForm.title = ""
+  noteForm.description = ""
+  loading.value = false
+}
+
+watch(
+    () => props.showNoteDialog,
+    () => {
+      if(props.showNoteDialog) {
+        if(props.type === 'edit') {
+          Object.keys(noteForm).forEach((item) =>{
+            noteForm[item] = props.formData[item]
+          })
+        } else {
+          reset()
+        }
+      }
+    }
+)
+
+</script>
+
+<style scoped lang="less">
+.note-dialog {
+  width: 70%;
+  margin: auto;
+}
+</style>
