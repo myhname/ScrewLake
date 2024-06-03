@@ -1,5 +1,6 @@
 <template>
-  <el-dialog v-if="props.showNoteDialog" v-model="props.showNoteDialog" width="50%" modal-class="note-dialog" @close="handleClose">
+  <el-dialog v-if="props.showNoteDialog" v-model="props.showNoteDialog" width="50%" modal-class="note-dialog"
+             @close="handleClose">
     <template #header="{ close, titleId, titleClass }">
       <div class="dialog-header">
         <h2> {{ props.type === 'add' ? '新增' : '编辑' }}笔记 </h2>
@@ -14,20 +15,39 @@
         status-icon
     >
       <el-form-item label="标题：" prop="title">
-        <el-input v-model="noteForm.title" placeholder="请输入文章标题" maxlength="20" />
+        <el-input v-model="noteForm.title" placeholder="请输入文章标题" maxlength="20"/>
       </el-form-item>
       <el-form-item label="标签：" prop="tagsList">
         <el-select v-model="noteForm.tagsList" placeholder="请选择标签" multiple :multiple-limit="3">
           <template v-for="(item, index) in tagsList" :key="index">
-            <el-option :label="item" :value="item" />
+            <el-option :label="item" :value="item"/>
           </template>
         </el-select>
       </el-form-item>
       <el-form-item label="简介：" prop="description">
-        <el-input v-model="noteForm.description" placeholder="请输入文章简介" :rows="3" type="textarea" maxlength="100" show-word-limit />
+        <el-input v-model="noteForm.description" placeholder="请输入文章简介" :rows="3" type="textarea" maxlength="100"
+                  show-word-limit/>
       </el-form-item>
       <el-form-item label="文章：" prop="content">
-        <el-input v-model="noteForm.content" placeholder="请上传文章" />
+        <!--        <el-input v-model="noteForm.content" placeholder="请上传文章" />-->
+        <el-upload
+            ref="upload"
+            v-model:file-list="fileList"
+            class="upload-demo"
+            action=""
+            :http-request="uploadFile"
+            :before-upload="beforeUpload"
+            :before-remove="beforeRemove"
+            :limit="1"
+            :on-exceed="handleExceed"
+        >
+          <el-button type="primary">点击选择文件</el-button>
+          <template #tip>
+            <div class="el-upload__tip">
+              仅支持md/txt格式文件且小于20MB
+            </div>
+          </template>
+        </el-upload>
       </el-form-item>
     </el-form>
 
@@ -40,8 +60,8 @@
 
 <script setup lang="ts">
 import {ref, reactive, watch} from "vue";
-import type { ComponentSize, FormInstance, FormRules } from 'element-plus'
-import { ElMessage } from 'element-plus'
+import type {ComponentSize, FormInstance, FormRules, UploadInstance, UploadProps, UploadRawFile} from 'element-plus'
+import {ElMessage,ElMessageBox,genFileId} from 'element-plus'
 
 const props = defineProps({
   showNoteDialog: {
@@ -76,15 +96,17 @@ const noteForm = reactive<RuleForm>({
   content: "",
 })
 const rules = reactive<FormRules<RuleForm>>({
-  title: { required: true, message: '请输入标题', trigger: 'blur' },
-  tagsList: { required: true, message: '请选择文章分类', trigger: 'change' },
-  description: { required: true, message: '请输入文章描述', trigger: 'blur' },
-  content: { required: true, message: '请上传文章内容', trigger: 'blur' },
+  title: {required: true, message: '请输入标题', trigger: 'blur'},
+  tagsList: {required: true, message: '请选择文章分类', trigger: 'change'},
+  description: {required: true, message: '请输入文章描述', trigger: 'blur'},
+  content: {required: true, message: '请上传文章内容', trigger: 'blur'},
 })
 const loading = ref(false)
 const tagsList = reactive([
   "Vue", "JS特效", "那些年，踩过的坑"
 ])
+const fileList = ref([])
+const upload = ref<UploadInstance>()
 
 const handleClose = () => {
   reset()
@@ -102,7 +124,7 @@ const submit = async (formEl: FormInstance | undefined) => {
       console.log("校验失败：", fields)
       ElMessage.warning(fields)
     }
-  }).finally(()=>{
+  }).finally(() => {
     loading.value = true
   })
 }
@@ -116,12 +138,48 @@ const reset = () => {
   loading.value = false
 }
 
+//  ---------------- 文件上传 ----------------------
+const uploadFile = () => {
+
+}
+
+const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
+  console.log("ddd", rawFile)
+  let type = rawFile.name.split(".").pop()
+  console.log("文件上传", type)
+  if (type != 'md' && type != 'txt') {
+    ElMessage.error('仅支持md/txt格式文件!')
+    return false
+  } else if (rawFile.size / 1024 / 1024 > 20) {
+    ElMessage.error('文件大小请不要超过20MB!')
+    return false
+  }
+  return true
+}
+
+const beforeRemove: UploadProps['beforeRemove'] = (uploadFile, uploadFiles) => {
+  console.log("删除", uploadFile, uploadFiles)
+  return ElMessageBox.confirm(
+      `是否取消上传 ${uploadFile.name} ?`
+  ).then(
+      () => true,
+      () => false
+  )
+}
+
+const handleExceed: UploadProps['onExceed'] = (files) => {
+  upload.value!.clearFiles()
+  const file = files[0] as UploadRawFile
+  file.uid = genFileId()
+  upload.value!.handleStart(file)
+}
+
 watch(
     () => props.showNoteDialog,
     () => {
-      if(props.showNoteDialog) {
-        if(props.type === 'edit') {
-          Object.keys(noteForm).forEach((item) =>{
+      if (props.showNoteDialog) {
+        if (props.type === 'edit') {
+          Object.keys(noteForm).forEach((item) => {
             noteForm[item] = props.formData[item]
           })
         } else {

@@ -6,9 +6,9 @@
       </template>
     </el-tabs>
     <div class="manage-container">
-      <user-center v-if="activeName === systemMenuList[0].key"></user-center>
-      <note-manage v-if="activeName === systemMenuList[1].key" ></note-manage>
-      <log-manage v-if="activeName === systemMenuList[2].key" ></log-manage>
+      <note-manage v-if="activeName === systemMenuList[0].key" ></note-manage>
+      <log-manage v-if="activeName === systemMenuList[1].key" ></log-manage>
+      <user-center v-if="activeName === systemMenuList[2].key"></user-center>
       <system-setting v-if="activeName === systemMenuList[3].key" ></system-setting>
     </div>
   </div>
@@ -24,9 +24,9 @@ import SystemSetting from "@/views/systemManage/components/SystemSetting.vue";
 
 const activeName = ref()
 const systemMenuList = reactive([
-  {label: "个人中心", key: "userCenter"},
   {label: "笔记管理", key: "noteManage"},
   {label: "日志管理", key: "logManage"},
+  {label: "个人中心", key: "userCenter"},
   {label: "系统设置", key: "systemSetting"},
 ])
 
@@ -35,7 +35,7 @@ const handleClick = (name: TabPaneName) => {
 }
 
 onMounted(() => {
-  activeName.value = systemMenuList[1].key
+  activeName.value = systemMenuList[0].key
 })
 
 </script>
