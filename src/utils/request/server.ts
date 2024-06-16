@@ -125,6 +125,7 @@ const instance = axios.create({
     // 请求的base地址 TODO:这块以后根据不同的模块调不同的api
     baseURL: import.meta.env.BASE_URL !== '/' ? import.meta.env.BASE_URL + api : api, //import.meta.env.BASE_URL,
     // 表示跨域请求时是否需要使用凭证
+    // baseURL: 'http://127.0.0.1:8080/blog',
     withCredentials: false,
 })
 

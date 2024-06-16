@@ -2,7 +2,7 @@
 
 // 请求返回值，result的具体类型就没必要了，几乎每个都不一样，登录接口是这种形式，而且后端还参杂了两种返回格式
 interface ResReturn {
-    code: number
+    status: number
     // message?: string
     // result?: any
     // success?: boolean

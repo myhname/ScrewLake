@@ -71,6 +71,7 @@ import ArtWordByEcharts from "@/views/notes/components/ArtWordByEcharts.vue";
 import RecentDynamic from "@/views/notes/components/RecentDynamic.vue";
 import DataOverview from "@/views/notes/components/DataOverview.vue";
 import { computeRunTime } from "@/utils/timeCompute.ts"
+import {createStarCanvas, stopMouseMoveStar} from "@/utils/mouseMoveStar.ts"
 
 const runTime = ref("")
 let timer: null | number = null
@@ -300,6 +301,7 @@ const showNote = () => {
 
 onMounted(()=>{
   initNoteList()
+  createStarCanvas()
 
   let targets: HTMLCollectionOf<Element> = document.getElementsByClassName("note-item")
   console.log("获取元素：", targets, targets[0] )
@@ -322,6 +324,7 @@ onBeforeUnmount(()=>{
   if (timer) {
     clearInterval(timer)
   }
+  stopMouseMoveStar()
 })
 
 </script>

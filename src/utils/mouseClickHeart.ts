@@ -112,10 +112,9 @@ export function createHeartCanvas() {
   mycanvas = document.createElement("canvas")
   mycanvas.width = screenWidth
   mycanvas.height = screenHeight
-  mycanvas.setAttribute("style", "position: absolute;left: 0;top: 0;pointer-events: none;z-index: 99;")
+  mycanvas.setAttribute("style", "position: absolute;left: 0;top: 0;pointer-events: none;z-index: 999;")
   mycanvas.setAttribute("id", "canvas_mouseEffect")
   document.getElementsByTagName("body")[0].appendChild(mycanvas)
-
 }
 
 // 销毁画布
@@ -124,7 +123,7 @@ export function stopMouseEffect() {
   mycanvas = null
 }
 
-// 点击触发
+// 点击触发，调用的时候需要监听鼠标点击事件，传入坐标
 export function mouseClick(clientX: number, clientY: number) {
   console.log("鼠标点击", clientX, clientY)
   if (!mycanvas) {

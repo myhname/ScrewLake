@@ -67,20 +67,23 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
         },
         envPrefix: 'VITE_', // 'APP_',
         preview: {
-            port: 8080,
+            port: 8088,
             open: true,
         },
         // 本地服务
         server: {
             host: '0.0.0.0', // ip
             port: 9099, // 端口号
-            open: true, // 是否自动在浏览器中打开
+            open: false, // 是否自动在浏览器中打开
             https: false, // 是否开启 https
             proxy: {
-                'api': {
-                    target: ' 127.0.0.1:9099',
+                '/api': {
+                    target: 'http://localhost:8080/',
                     changeOrigin: true,
-                    // rewrite: path => path.replace(/^\/api/, 'data-sense')
+                    rewrite: path => {
+                        console.log(path.replace(/^\/api/, 'blog'), 'asd')
+                        return path.replace(/^\/api/, 'blog')
+                    }
                 }
             }
         }

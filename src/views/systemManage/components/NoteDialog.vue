@@ -62,6 +62,8 @@
 import {ref, reactive, watch} from "vue";
 import type {ComponentSize, FormInstance, FormRules, UploadInstance, UploadProps, UploadRawFile} from 'element-plus'
 import {ElMessage,ElMessageBox,genFileId} from 'element-plus'
+import { editNote } from "@/api/notes.ts"
+// import axiosInstance from "@/utils/request/testAjax.ts"
 
 const props = defineProps({
   showNoteDialog: {
@@ -115,18 +117,55 @@ const handleClose = () => {
 
 const submit = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
-  loading.value = false
+  loading.value = true
   await formEl.validate((valid, fields) => {
     if (valid) {
       console.log('submit!')
+      loading.value = false
       handleClose()
     } else {
-      console.log("校验失败：", fields)
-      ElMessage.warning(fields)
+      console.log("校验失败：", Object.values(fields)[0][0].message)
+      ElMessage.warning(Object.values(fields)[0][0].message)
+      loading.value = false
     }
-  }).finally(() => {
-    loading.value = true
   })
+  let params = {
+    title: "测试.txt",
+    authority: "myh",
+    name: "测试文章",
+    type: "txt",
+    description: "测试接口",
+    createTime: "2024-03-12 12:22:34",
+    updateTime: "2024-03-12 12:22:34",
+    url: "路径",
+    commentNum: 0,
+    voteUpNum: 0,
+    imageUrl: null,
+    tagsList: "",
+    viewNum: 0,
+  }
+  console.log("参数：", params)
+  editNote("notes/newNote", params).then((res)=>{
+    if(res.status === 200) {
+
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err: string)=>{
+    ElMessage.error((err))
+  }).finally(()=>{
+
+  })
+
+  // try {
+  //   const response = await axiosInstance.post('/notes/newNote', params);
+  //   console.log('Response:', response.data);
+  //   // 处理响应数据
+  // } catch (error) {
+  //   console.error('Error:', error);
+  //   // 处理错误
+  // }
+
 }
 
 const reset = () => {
