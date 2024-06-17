@@ -22,6 +22,13 @@ export const deleteNote = (url: string, params: any) => deleteAction(url, params
 export const getNotesList = (url: string, params: any) => postAction(url, params)
 
 /**
+ * 获取笔记总数 - 没研究明白，没有成功的在一个接口中返回不总数、分页信息和列表
+ * @param url notes/getAll
+ * @param params
+ */
+export const getAllArticle = (url: string, params: any) => postAction(url, params)
+
+/**
  * 获取文章内容
  * @param url notes/getNoteContent
  * @param params

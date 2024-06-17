@@ -19,7 +19,7 @@
       </el-form-item>
     </el-form>
 
-    <Table class="note-manage-table" :columns="state.columns" :table-data="state.tableData" :show-index="true" :is-border="true" :show-page="true" :page-size="state.page.pageSize" :curr-page="state.page.currPage" :total="state.page.total">
+    <Table class="note-manage-table" :columns="state.columns" :table-data="state.tableData" :show-index="true" :is-border="true" :show-page="true" :page-size="state.page.pageSize" :curr-page="state.page.currPage" :total="state.page.total" @table-list-change="tableListChange">
       <template #Btn="scope">
         <el-button :type="'primary'" text :icon="View" @click="viewNote(scope.row)" > 查看 </el-button>
         <el-button :type="'primary'" text :icon="View" @click="editNote(scope.row)" > 编辑 </el-button>
@@ -32,12 +32,14 @@
 </template>
 
 <script setup lang="ts">
-import {ref, reactive} from "vue"
+import {ref, reactive, onMounted} from "vue"
 import {Plus, Search, View, } from "@element-plus/icons-vue"
 import type {FormInstance} from 'element-plus'
 import Table from "@/components/Table.vue"
 import router from "@/router";
+import {ElMessage} from 'element-plus'
 import NoteDialog from "@/views/systemManage/components/NoteDialog.vue";
+import { getNotesList, getAllArticle } from "@/api/notes.ts"
 
 interface NoteTableData {
   id?: number
@@ -129,24 +131,8 @@ const showDialog = reactive({
 
 const queryNoteList = () => {
   resetPage()
-  if (state.tableData.length) {
-    state.tableData.length = 0
-  } else {
-    state.tableData = [
-      {
-        id: 1,
-        title: "111",
-        tagsList: ["a", "b"] as Array<string>,
-        description: "12e",
-        commentNum: 0,
-        voteNum: 0,
-        viewNum: 0,
-        createTime: "23-ddd",
-        updateTime: "dw22",
-        isShow: true,
-      },
-    ]
-  }
+  getAll()
+  getList()
 }
 
 const resetPage = () => {
@@ -174,6 +160,48 @@ const changeNoteStatus = (data: NoteTableData) => {
 //    TODO: 请求
   data.isShow = !data.isShow
 }
+
+const tableListChange = (value: {pageSize: number, currPage: number}) => {
+  console.log("分页", value)
+  state.page.currPage = value.currPage
+  state.page.pageSize = value.pageSize
+  getList()
+}
+
+// -------------------- 请求数据 ---------------------
+const getList = () => {
+  let params = {
+    ...state.formData,
+    pageSize: state.page.pageSize,
+    currPage: state.page.currPage,
+  }
+  getNotesList("notes/getNotes", params).then((res)=>{
+    if(res.status===200){
+        state.tableData = res.data
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err: any)=>{
+    ElMessage.error(err)
+  }).finally(()=>{})
+}
+
+const getAll = () => {
+  getAllArticle("notes/getAll", state.formData).then((res)=>{
+    if(res.status===200){
+      state.page.total = res.data
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err: any)=>{
+    ElMessage.error(err)
+  }).finally(()=>{})
+}
+
+onMounted(()=>{
+  getList()
+  getAll()
+})
 
 </script>
 

@@ -1,50 +1,52 @@
 <template>
-  <el-table class="table-container" :data="props.tableData" style="width: 100%" :border="props.isBorder"
-            :stripe="props.isStripe">
-    <el-table-column v-if="props.multiple" type="selection" width="55"></el-table-column>
-    <el-table-column v-if="props.showIndex" type="index" width="55"></el-table-column>
-    <template v-for="item in props.columns" :key="item">
-      <el-table-column :prop="item.prop" :label="item.label" :width="item.width"
-                       :align="item.prop === 'action' ? 'center' : item.align"
-                       :fixed="item.prop === 'action' ? 'right' : item.fixed">
-        <template v-if="item.slotName === 'Tag'" #default="scope">
-          <slot :name="item.prop" :row="scope.row">
-            <template v-if="typeof scope.row[item.prop] === 'object' && scope.row[item.prop].length">
-              <template v-for="(tagItem, i) in scope.row[item.prop]" :key="i">
-                <el-tag :type="tagItem.type ?? 'danger'"
-                        effect="plain"
-                        round>
-                  {{ item.label ?? item }}
-                </el-tag>
-                <!--                <br />-->
-              </template>
+  <div class="table-container">
+    <el-table class="table-container" :data="props.tableData" style="width: 100%" :border="props.isBorder"
+              :stripe="props.isStripe">
+      <el-table-column v-if="props.multiple" type="selection" width="55"></el-table-column>
+      <el-table-column v-if="props.showIndex" type="index" width="55"></el-table-column>
+      <template v-for="item in props.columns" :key="item">
+        <el-table-column :prop="item.prop" :label="item.label" :width="item.width"
+                         :align="item.prop === 'action' ? 'center' : item.align"
+                         :fixed="item.prop === 'action' ? 'right' : item.fixed">
+          <template v-if="item.slotName === 'Tag'" #default="scope">
+            <slot :name="item.prop" :row="scope.row">
+              <template v-if="typeof scope.row[item.prop] === 'object' && scope.row[item.prop].length">
+                <template v-for="(tagItem, i) in scope.row[item.prop]" :key="i">
+                  <el-tag :type="tagItem.type ?? 'danger'"
+                          effect="plain"
+                          round>
+                    {{ item.label ?? item }}
+                  </el-tag>
+                  <!--                <br />-->
+                </template>
 
-            </template>
-            <template v-else>
-              <span> - </span>
-            </template>
-          </slot>
-        </template>
-        <template v-else #default="scope">
-          <slot :name="item.slotName ?? item.prop" :row="scope.row">
-            {{ scope.row[item.prop] }}
-          </slot>
-        </template>
-      </el-table-column>
-    </template>
-  </el-table>
-  <el-pagination
-      class="table-pagination"
-      :popper-class="'table-pagination-popper'"
-      v-if="props.showPage"
-      v-model:current-page="props.currPage"
-      v-model:page-size="props.pageSize"
-      :page-sizes="[10, 20, 30, 50, 100]"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="props.total"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-  />
+              </template>
+              <template v-else>
+                <span> - </span>
+              </template>
+            </slot>
+          </template>
+          <template v-else #default="scope">
+            <slot :name="item.slotName ?? item.prop" :row="scope.row">
+              {{ scope.row[item.prop] }}
+            </slot>
+          </template>
+        </el-table-column>
+      </template>
+    </el-table>
+    <el-pagination
+        class="table-pagination"
+        :popper-class="'table-pagination-popper'"
+        v-if="props.showPage"
+        :current-page="props.currPage"
+        :page-size="props.pageSize"
+        :page-sizes="[10, 20, 30, 50, 100]"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="props.total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -97,11 +99,17 @@ watch(
 )
 
 const emits = defineEmits(["table-list-change"])
-const handleSizeChange = () => {
-  emits("table-list-change")
+const handleSizeChange = (value: number) => {
+  emits("table-list-change", {
+    pageSize: value,
+    currPage: props.currPage
+  })
 }
-const handleCurrentChange = () => {
-  emits("table-list-change")
+const handleCurrentChange = (value: number) => {
+  emits("table-list-change", {
+    pageSize: props.pageSize,
+    currPage: value
+  })
 }
 
 </script>
