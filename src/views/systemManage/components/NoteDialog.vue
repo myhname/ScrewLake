@@ -130,22 +130,27 @@ const submit = async (formEl: FormInstance | undefined) => {
     }
   })
   let params = {
-    title: "测试.txt",
+    title: noteForm.title,
     authority: "myh",
     name: "测试文章",
     type: "txt",
-    description: "测试接口",
-    createTime: "2024-03-12 12:22:34",
-    updateTime: "2024-03-12 12:22:34",
+    description: noteForm.description,
+    // createTime: "2024-03-12 12:22:34",
+    // updateTime: "2024-03-12 12:22:34",
     url: "路径",
     commentNum: 0,
     voteUpNum: 0,
     imageUrl: null,
-    tagsList: "",
+    tagsList: noteForm.tagsList.join(","),
     viewNum: 0,
+  } as any
+  let url = "notes/newNote"
+  if(props.type === "edit") {
+    params.id = noteForm.id
+    url = "notes/updateNote"
   }
   console.log("参数：", params)
-  editNote("notes/newNote", params).then((res)=>{
+  editNote(url, params).then((res)=>{
     if(res.status === 200) {
 
     } else {

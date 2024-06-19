@@ -15,7 +15,7 @@
                   <el-tag :type="tagItem.type ?? 'danger'"
                           effect="plain"
                           round>
-                    {{ item.label ?? item }}
+                    {{ tagItem }}
                   </el-tag>
                   <!--                <br />-->
                 </template>

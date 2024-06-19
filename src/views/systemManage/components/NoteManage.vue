@@ -13,33 +13,46 @@
           </template>
         </el-select>
       </el-form-item>
+      <el-form-item label="状态：" prop="status">
+        <el-select v-model="state.formData.status" placeholder="" clearable
+                   :popper-class="'dark-selected-option'">
+          <template v-for="(item, index) in state.statusOption" :key="index">
+            <el-option :label="item.label" :value="item.value"></el-option>
+          </template>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button class="note-btn" type="primary" text :icon="Search" @click="queryNoteList">查询</el-button>
         <el-button class="note-btn" type="primary" text :icon="Plus" @click="addShowDialog">新增</el-button>
       </el-form-item>
     </el-form>
 
-    <Table class="note-manage-table" :columns="state.columns" :table-data="state.tableData" :show-index="true" :is-border="true" :show-page="true" :page-size="state.page.pageSize" :curr-page="state.page.currPage" :total="state.page.total" @table-list-change="tableListChange">
+    <Table class="note-manage-table" :columns="state.columns" :table-data="state.tableData" :show-index="true"
+           :is-border="true" :show-page="true" :page-size="state.page.pageSize" :curr-page="state.page.currPage"
+           :total="state.page.total" @table-list-change="tableListChange">
       <template #Btn="scope">
-        <el-button :type="'primary'" text :icon="View" @click="viewNote(scope.row)" > 查看 </el-button>
-        <el-button :type="'primary'" text :icon="View" @click="editNote(scope.row)" > 编辑 </el-button>
-        <el-button :type="'primary'" text :icon="View" @click="changeNoteStatus(scope.row)" > {{ scope.row.isShow ? '隐藏' : '展示' }} </el-button>
+        <el-button :type="'primary'" text :icon="View" @click="viewNote(scope.row)"> 查看</el-button>
+        <el-button :type="'primary'" text :icon="View" @click="editNote(scope.row)"> 编辑</el-button>
+        <el-button :type="'primary'" text :icon="View" @click="changeNoteStatus(scope.row)">
+          {{ scope.row.isShow ? '隐藏' : '展示' }}
+        </el-button>
       </template>
     </Table>
   </div>
 
-  <note-dialog v-model:show-note-dialog="showDialog.isShow" :type="showDialog.type" :form-data="showDialog.formData"></note-dialog>
+  <note-dialog v-model:show-note-dialog="showDialog.isShow" :type="showDialog.type"
+               :form-data="showDialog.formData"></note-dialog>
 </template>
 
 <script setup lang="ts">
 import {ref, reactive, onMounted} from "vue"
-import {Plus, Search, View, } from "@element-plus/icons-vue"
+import {Plus, Search, View,} from "@element-plus/icons-vue"
 import type {FormInstance} from 'element-plus'
 import Table from "@/components/Table.vue"
 import router from "@/router";
 import {ElMessage} from 'element-plus'
 import NoteDialog from "@/views/systemManage/components/NoteDialog.vue";
-import { getNotesList, getAllArticle } from "@/api/notes.ts"
+import {getNotesList, getAllArticle, changeNoteStatusById} from "@/api/notes.ts"
 
 interface NoteTableData {
   id?: number
@@ -59,8 +72,13 @@ const state = reactive({
   formData: {
     title: "",
     tagsList: [] as Array<string>,
+    status: null,
   },
   tagsOption: ["tag1", "tag2", "tag3", "tag4"],
+  statusOption: [
+    {label: "显示中", value: 1},
+    {label: "已隐藏", value: 0}
+  ],
 
   columns: [
     {
@@ -158,10 +176,20 @@ const editNote = (data: NoteTableData) => {
 
 const changeNoteStatus = (data: NoteTableData) => {
 //    TODO: 请求
-  data.isShow = !data.isShow
+  changeNoteStatusById(`notes/changeNoteStatus?id=${data.id!}`, data.isShow ? 0 : 1).then((res) => {
+    if (res.status === 200) {
+      getList()
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err: string) => {
+    ElMessage.error((err))
+  }).finally(() => {
+
+  })
 }
 
-const tableListChange = (value: {pageSize: number, currPage: number}) => {
+const tableListChange = (value: { pageSize: number, currPage: number }) => {
   console.log("分页", value)
   state.page.currPage = value.currPage
   state.page.pageSize = value.pageSize
@@ -175,30 +203,39 @@ const getList = () => {
     pageSize: state.page.pageSize,
     currPage: state.page.currPage,
   }
-  getNotesList("notes/getNotes", params).then((res)=>{
-    if(res.status===200){
-        state.tableData = res.data
+  getNotesList("notes/getNotes", params).then((res) => {
+    if (res.status === 200) {
+      state.tableData = res.data
+      state.tableData.forEach(item => {
+        item.tagsList = item.tagsList.toString().split(",")
+        if(item.tagsList[0] === "") {
+          item.tagsList = []
+        }
+        console.log("标签：", item.tagsList)
+      })
     } else {
       ElMessage.warning(res.msg)
     }
-  }).catch((err: any)=>{
+  }).catch((err: any) => {
     ElMessage.error(err)
-  }).finally(()=>{})
+  }).finally(() => {
+  })
 }
 
 const getAll = () => {
-  getAllArticle("notes/getAll", state.formData).then((res)=>{
-    if(res.status===200){
+  getAllArticle("notes/getAll", state.formData).then((res) => {
+    if (res.status === 200) {
       state.page.total = res.data
     } else {
       ElMessage.warning(res.msg)
     }
-  }).catch((err: any)=>{
+  }).catch((err: any) => {
     ElMessage.error(err)
-  }).finally(()=>{})
+  }).finally(() => {
+  })
 }
 
-onMounted(()=>{
+onMounted(() => {
   getList()
   getAll()
 })

@@ -9,10 +9,10 @@ export const editNote = (url: string, params: any) => postAction(url, params)
 
 /**
  * 删除笔记
- * @param url notes/deleteNote
+ * @param url notes/changeNoteStatus?id=
  * @param params
  */
-export const deleteNote = (url: string, params: any) => deleteAction(url, params)
+export const changeNoteStatusById = (url: string, params: any) => postAction(url, params)
 
 /**
  * 获取笔记列表：目录 or 管理
