@@ -1,7 +1,7 @@
 // 跟随鼠标移动洒落星星
 
-const screenWidth: number = window.screen.width
-const screenHeight: number = window.screen.height
+const screenWidth: number = window.innerWidth
+const screenHeight: number = window.innerHeight
 
 const starColor = ["#ffff00", "#66fff", "#3399ff", "#99ff00", "#ff9900"]
 let timeoutList: Array<number> = []

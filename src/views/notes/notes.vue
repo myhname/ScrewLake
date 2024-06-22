@@ -7,7 +7,7 @@
       <data-overview></data-overview>
       <div class="notes-toc-box card-item" id="noteListBox">
         <template v-for="(note, index) in notesList" :key="note.id">
-          <div class="note-item" :id="'noteItem' + index" :style="note.flexDirection" @click="showNote">
+          <div class="note-item" :id="'noteItem' + index" :style="note.flexDirection" @click="showNote(note)">
             <div class="note-img">
               <div class="img-item" :style="'background-image: url(' + note.coverImg + ');'"></div>
             </div>
@@ -17,15 +17,17 @@
               </p>
               <div class="note-msg font-4">
                 <div class="note-time">
-                  <el-icon><Calendar /></el-icon>
+                  <el-icon>
+                    <Calendar/>
+                  </el-icon>
                   <span class="create-time"> {{ note.createTime }}</span>
                 </div>
                 <div class="note-statistics">
-                  <EyeOutlined />
+                  <EyeOutlined/>
                   <span> {{ note.statistics[0].value }} |</span>
-                  <MessageOutlined />
+                  <MessageOutlined/>
                   <span> {{ note.statistics[1].value }} |</span>
-                  <LikeOutlined />
+                  <LikeOutlined/>
                   <span> {{ note.statistics[2].value }} </span>
                 </div>
               </div>
@@ -33,8 +35,8 @@
                 {{ note.description }}
               </div>
               <div class="note-tags">
-                <TagsOutlined />
-                <template  v-for="(tag, tagIndex) in note.tags" :key="tagIndex">
+                <TagsOutlined/>
+                <template v-for="(tag, tagIndex) in note.tags" :key="tagIndex">
                   <span class="tag-item"> #{{ tag.label }} </span>
                 </template>
               </div>
@@ -45,18 +47,18 @@
       <!--   右侧粘性定位，座右铭等个性信息   -->
       <div class="right-sticky">
         <div class="recent-dynamic card-item">
-          <recent-dynamic />
+          <recent-dynamic/>
         </div>
         <div class="flow-cnt card-item">
           <div class="technology-tags">
-            <word-cloud />
+            <word-cloud/>
           </div>
           <div class="technology-title">
             <art-word-by-echarts :id="'artWordTechnology'" :context="'聚沙成塔'" :font-size="45"/>
           </div>
         </div>
-<!--        <div class="motto card-item" id="mottoCard"></div>-->
-<!--        <div class="contact-information card-item"></div>-->
+        <!--        <div class="motto card-item" id="mottoCard"></div>-->
+        <!--        <div class="contact-information card-item"></div>-->
       </div>
     </div>
   </div>
@@ -64,201 +66,46 @@
 
 <script setup lang="ts">
 import {onMounted, onBeforeUnmount, ref, reactive} from "vue";
-import { EyeOutlined, MessageOutlined, LikeOutlined, TagsOutlined } from '@ant-design/icons-vue';
+import {EyeOutlined, MessageOutlined, LikeOutlined, TagsOutlined} from '@ant-design/icons-vue';
 import router from "@/router";
 import WordCloud from "@/views/notes/components/WordCloud.vue";
 import ArtWordByEcharts from "@/views/notes/components/ArtWordByEcharts.vue";
 import RecentDynamic from "@/views/notes/components/RecentDynamic.vue";
 import DataOverview from "@/views/notes/components/DataOverview.vue";
-import { computeRunTime } from "@/utils/timeCompute.ts"
+import {computeRunTime} from "@/utils/timeCompute.ts"
 import {createStarCanvas, stopMouseMoveStar} from "@/utils/mouseMoveStar.ts"
+import {getNotesList} from "@/api/notes.ts"
+import {ElMessage} from "element-plus";
 
 const runTime = ref("")
 let timer: null | number = null
 const fromTime = new Date("2024-04-02 00:00:00").getTime()
 
 const notesList = ref<Array<NoteList>>([
-  {
-    id: 1,
-    title: "样例1",
-    coverImg: "/src/assets/image/bg1.jpg",
-    description:
-        "布局样式的示例，写两套啊得，不急xwxwhw",
-    createTime: "2024-01-31 10:30:21",
-    updateTime: "2024-01-31 14:28:21",
-    tags: [
-      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
-      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
-    ],
-    statistics: [
-      { label: "浏览", value: 123, icon: ""},
-      { label: "回复", value: 456, icon: ""},
-      { label: "点赞", value: 111, icon: ""},
-    ],
-  },
-  {
-    id: 2,
-    title: "样例2",
-    coverImg: "/src/assets/image/ta.jpg",
-    description: "布局样式的示例，写两套啊得，不急",
-    createTime: "2024-01-31 10:30:21",
-    updateTime: "2024-01-31 14:28:21",
-    tags: [
-      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
-      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
-    ],
-    statistics: [
-      { label: "浏览", value: 123, icon: ""},
-      { label: "回复", value: 456, icon: ""},
-      { label: "点赞", value: 111, icon: ""},
-    ],
-  },
-  {
-    id: 1,
-    title: "样例1",
-    coverImg: "/src/assets/image/bg1.jpg",
-    description:
-        "布局样式的示例，写两套啊得，不急xwxwhw",
-    createTime: "2024-01-31 10:30:21",
-    updateTime: "2024-01-31 14:28:21",
-    tags: [
-      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
-      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
-    ],
-    statistics: [
-      { label: "浏览", value: 123, icon: ""},
-      { label: "回复", value: 456, icon: ""},
-      { label: "点赞", value: 111, icon: ""},
-    ],
-  },
-  {
-    id: 2,
-    title: "样例2",
-    coverImg: "/src/assets/image/ta.jpg",
-    description: "布局样式的示例，写两套啊得，不急",
-    createTime: "2024-01-31 10:30:21",
-    updateTime: "2024-01-31 14:28:21",
-    tags: [
-      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
-      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
-    ],
-    statistics: [
-      { label: "浏览", value: 123, icon: ""},
-      { label: "回复", value: 456, icon: ""},
-      { label: "点赞", value: 111, icon: ""},
-    ],
-  },
-  {
-    id: 1,
-    title: "样例1",
-    coverImg: "/src/assets/image/bg1.jpg",
-    description:
-        "布局样式的示例，写两套啊得，不急xwxwhw",
-    createTime: "2024-01-31 10:30:21",
-    updateTime: "2024-01-31 14:28:21",
-    tags: [
-      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
-      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
-    ],
-    statistics: [
-      { label: "浏览", value: 123, icon: ""},
-      { label: "回复", value: 456, icon: ""},
-      { label: "点赞", value: 111, icon: ""},
-    ],
-  },
-  {
-    id: 2,
-    title: "样例2",
-    coverImg: "/src/assets/image/ta.jpg",
-    description: "布局样式的示例，写两套啊得，不急",
-    createTime: "2024-01-31 10:30:21",
-    updateTime: "2024-01-31 14:28:21",
-    tags: [
-      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
-      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
-    ],
-    statistics: [
-      { label: "浏览", value: 123, icon: ""},
-      { label: "回复", value: 456, icon: ""},
-      { label: "点赞", value: 111, icon: ""},
-    ],
-  },
-  {
-    id: 1,
-    title: "样例1",
-    coverImg: "/src/assets/image/bg1.jpg",
-    description:
-        "布局样式的示例，写两套啊得，不急xwxwhw",
-    createTime: "2024-01-31 10:30:21",
-    updateTime: "2024-01-31 14:28:21",
-    tags: [
-      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
-      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
-    ],
-    statistics: [
-      { label: "浏览", value: 123, icon: ""},
-      { label: "回复", value: 456, icon: ""},
-      { label: "点赞", value: 111, icon: ""},
-    ],
-  },
-  {
-    id: 2,
-    title: "样例2",
-    coverImg: "/src/assets/image/ta.jpg",
-    description: "布局样式的示例，写两套啊得，不急",
-    createTime: "2024-01-31 10:30:21",
-    updateTime: "2024-01-31 14:28:21",
-    tags: [
-      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
-      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
-    ],
-    statistics: [
-      { label: "浏览", value: 123, icon: ""},
-      { label: "回复", value: 456, icon: ""},
-      { label: "点赞", value: 111, icon: ""},
-    ],
-  },
-  {
-    id: 1,
-    title: "样例1",
-    coverImg: "/src/assets/image/bg1.jpg",
-    description:
-        "布局样式的示例，写两套啊得，不急xwxwhw",
-    createTime: "2024-01-31 10:30:21",
-    updateTime: "2024-01-31 14:28:21",
-    tags: [
-      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
-      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
-    ],
-    statistics: [
-      { label: "浏览", value: 123, icon: ""},
-      { label: "回复", value: 456, icon: ""},
-      { label: "点赞", value: 111, icon: ""},
-    ],
-  },
-  {
-    id: 2,
-    title: "样例2",
-    coverImg: "/src/assets/image/ta.jpg",
-    description: "布局样式的示例，写两套啊得，不急",
-    createTime: "2024-01-31 10:30:21",
-    updateTime: "2024-01-31 14:28:21",
-    tags: [
-      { label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)" },
-      { label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)" },
-    ],
-    statistics: [
-      { label: "浏览", value: 123, icon: ""},
-      { label: "回复", value: 456, icon: ""},
-      { label: "点赞", value: 111, icon: ""},
-    ],
-  },
+  // {
+  //   id: 1,
+  //   title: "样例1",
+  //   coverImg: "/src/assets/image/bg1.jpg",
+  //   description:
+  //       "布局样式的示例，写两套啊得，不急xwxwhw",
+  //   createTime: "2024-01-31 10:30:21",
+  //   updateTime: "2024-01-31 14:28:21",
+  //   tags: [
+  //     {label: "测试", color: "rgba(230, 162, 60)", backgroundColor: "rgba(230, 162, 60, 0.2)"},
+  //     {label: "样例", color: "rgba(79, 166, 255)", backgroundColor: "rgba(79, 166, 255, 0.2)"},
+  //   ],
+  //   statistics: [
+  //     {label: "浏览", value: 123, icon: ""},
+  //     {label: "回复", value: 456, icon: ""},
+  //     {label: "点赞", value: 111, icon: ""},
+  //   ],
+  // },
 ])
 
 const initNoteList = () => {
   notesList.value.forEach((note, index) => {
     note.isOmit = note.description.length > 200;
-    if(index % 2 === 0) {
+    if (index % 2 === 0) {
       note.flexDirection = "flex-direction: row;"
     } else {
       note.flexDirection = "flex-direction: row-reverse;"
@@ -267,7 +114,7 @@ const initNoteList = () => {
 
   let height = 20 + notesList.value.length * 180
   let noteTopDom = document.getElementById("noteListBox")
-  if(noteTopDom && height > 1230){
+  if (noteTopDom && height > 1230) {
     noteTopDom.style.height = height + 'px'
   }
 }
@@ -279,11 +126,11 @@ const clickNoteTag = (tagLabel: string) => {
 /**
  * 监听元素是否进出可视区域
  */
-const intersectionObserver = new IntersectionObserver((entries, observer)=>{
+const intersectionObserver = new IntersectionObserver((entries, observer) => {
   console.log("检测可视区域：", entries, "右侧第二个元素", observer)
   entries.forEach(item => {
-    console.log("变化：", item.isIntersecting, item.target, item.target.classList )
-    if(item.isIntersecting) {
+    console.log("变化：", item.isIntersecting, item.target, item.target.classList)
+    if (item.isIntersecting) {
       item.target.className += " xx"
       item.target.style.transform = "matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)"
       item.target.style.opacity = 1
@@ -295,31 +142,87 @@ const intersectionObserver = new IntersectionObserver((entries, observer)=>{
   })
 })
 
-const showNote = () => {
-  router.push("/notes/showMd")
+const showNote = (data: NoteList) => {
+  router.push("/notes/showMd?id=" + data.id)
 }
 
-onMounted(()=>{
-  initNoteList()
-  createStarCanvas()
+const getList = () => {
+  let params = {
+    title: "",
+    tagsList: [],
+    status: 1,
+    pageSize: 5000,
+    currPage: 1,
+  }
+  getNotesList("notes/getNotes", params).then((res) => {
+    if (res.status === 200) {
+      notesList.value = []
+      res.data.forEach((item: any) => {
+        let currTags = [] as Array<LabelData>
+        let arr = item.tagsList.toString().split(",")
+        arr.forEach((tag: string) => {
+          currTags.push({
+            label: tag,
+            color: "rgba(230, 162, 60)",
+            backgroundColor: "rgba(230, 162, 60, 0.2)"
+          })
+        })
+        let imgUrl = import.meta.env.VITE_BASE_IMG_PATH
+        if(item.imageUrl) {
+          imgUrl += item.imageUrl
+        } else {
+          imgUrl += "uploads/noteImg/default.jpg"
+        }
+        notesList.value.push({
+          id: item.id,
+          title: item.title,
+          coverImg: imgUrl,
+          description: item.description,
+          createTime: item.createTime,
+          updateTime: item.updateTime,
+          tags: currTags,
+          statistics: [
+            {label: "浏览", value: item.viewNum, icon: ""},
+            {label: "回复", value: item.commentNum, icon: ""},
+            {label: "点赞", value: item.voteNum, icon: ""},
+          ]
+        })
+      })
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err: any) => {
+    ElMessage.error(err)
+  }).finally(() => {
+    initNoteList()
+    startIntersectionObserver()
+  })
+}
 
+const startIntersectionObserver = () => {
   let targets: HTMLCollectionOf<Element> = document.getElementsByClassName("note-item")
-  console.log("获取元素：", targets, targets[0] )
-  for (let i in targets){
+  console.log("获取元素：", targets, targets[0])
+  for (let i in targets) {
     console.log(targets[i], targets[i] instanceof HTMLElement)
-    if(targets[i] instanceof HTMLElement) {
+    if (targets[i] instanceof HTMLElement) {
       intersectionObserver.observe(targets[i])
     }
   }
+}
+
+onMounted(() => {
+  getList()
+  createStarCanvas()
 
   if (!timer) {
     timer = setInterval(() => {
       runTime.value = computeRunTime(fromTime)
     }, 1000)
   }
+
 })
 
-onBeforeUnmount(()=>{
+onBeforeUnmount(() => {
   intersectionObserver.disconnect()
   if (timer) {
     clearInterval(timer)
@@ -493,7 +396,7 @@ onBeforeUnmount(()=>{
 }
 
 .ground-effects {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   bottom: 0;

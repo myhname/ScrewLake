@@ -41,7 +41,7 @@
   </div>
 
   <note-dialog v-model:show-note-dialog="showDialog.isShow" :type="showDialog.type"
-               :form-data="showDialog.formData"></note-dialog>
+               :form-data="showDialog.formData" @change-list="getList"></note-dialog>
 </template>
 
 <script setup lang="ts">

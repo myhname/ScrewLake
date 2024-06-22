@@ -53,14 +53,14 @@ const initWordCloudSpan = () => {
       dom: spanDom,
       top: 0,
       left: 0,
-      vX: Math.random() * 0.5 + 0.5,
-      vY: Math.random() * 0.5 + 0.5,
+      vX: Math.random() * 0.5 + 0.1,
+      vY: Math.random() * 0.5 + 0.1,
     })
   })
 }
 
 const wordFly = () => {
-  state.wordSpanList.forEach((item, index) => {
+  state.wordSpanList.forEach((item) => {
     if (item.dom.offsetLeft + item.left + item.vX + item.dom.offsetWidth > state.containerWidth || item.dom.offsetLeft + item.left + item.vX < 0) {
       item.vX *= -1
     }

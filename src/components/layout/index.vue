@@ -314,7 +314,7 @@ onBeforeUnmount(() => {
   }
 
   .layout-background-img {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;

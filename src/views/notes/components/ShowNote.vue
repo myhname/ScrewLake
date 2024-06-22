@@ -25,77 +25,18 @@ import {MdPreview, MdCatalog} from 'md-editor-v3';
 // preview.css相比style.css少了编辑器那部分样式
 import 'md-editor-v3/lib/preview.css';
 import DataOverview from "./DataOverview.vue"
+import { useRoute } from "vue-router";
+import { ElMessage } from "element-plus";
 // import MdPreviewComponent from "@/components/editors/MdPreviewComponent.vue";
 import emitter from '@/utils/eventBus'
+import { getNoteContent } from "@/api/notes.ts"
 
+const route = useRoute()
 const id = 'preview-only';
 const scrollElement = document.documentElement;
-const markdown = ref(`# ScrewLake
-
-个人博客项目，螺丝湖水怪的居所——Personal blog project, the residence of the Screw Lake Monster
-
-## 项目开发记录
-
-### 已完成模块/功能
-
-2024/3/10
-
-1. 整体
-   - 路由切换效果：淡入淡出
-   - 主体内容背景轮播切换
-2. 封面
-   - 樱花飘落
-   - 旋转六面体
-   - 双击/点击箭头进入
-3. 头部菜单栏
-   - 伸缩动画
-
-### 待改进
-
-颜色、风格问题不急，先实现功能问题
-
-1. 轮播/路由切换效果优化：淡出有效，淡入有点突然
-2. 图片优化：有两张轮播的背景图片清晰度不是很够，而且多张图的风格不搭
-3. ~~头部菜单栏背景颜色、背景模糊效果~~，这个需要找好图片之后再适配一下
-
-### 未完成
-
-功能点：
-
-1. 封面点击箭头向下滚动进入：这个一直有点Bug，同淡出效果一样，滚动移除可以平滑实现，滚动进入不行
-2. 菜单栏的方法
-   - 点击跳转其它网站
-   - 点击头像跳转个人/网站介绍页面
-
-模块：
-
-- 笔记目录页
-- 笔记内容展示
-- 个人/网站介绍
-- 日志
-- 组件库
-- 留言板
-- 聊天室
-
-有些部分需要配合后端，不急
-
-### 开发计划
-
-计划赶不上变化.jpg
-
-1. 2024/3/11：完成度 70%
-   - ~~返回顶部效果~~
-   - 首页内容块布局整理，进行基础布局
-     - 50% only
-   - ~~滚动条优化~~
-   - 鼠标点击 爱心 + 文字
-   - 计划外：可视区域进出监听动画demo
-2. 2024/3/14
-   - 音乐播放器
-   - 桌宠
-   - 首页布局完成`)
+const markdown = ref<string>()
 const tocTitleDivList = ref<HTMLCollectionOf<HTMLElement>>()
-const currHightTitle = ref(-1)
+const currHeightTitle = ref(-1)
 
 const clickToc = (e: MouseEvent, t: any) => {
   console.log("点击目录", e, t)
@@ -115,13 +56,31 @@ const clickToc = (e: MouseEvent, t: any) => {
   }
   console.log(("目录类"), tocTitleDivList.value)
   console.log("字节点",)
-  if(currHightTitle.value != -1) {
-    tocTitleDivList.value![currHightTitle.value].children[0].classList.remove("highlight-title")
+  if(currHeightTitle.value != -1) {
+    tocTitleDivList.value![currHeightTitle.value].children[0].classList.remove("highlight-title")
   }
-  currHightTitle.value = Number(t.index - 1)
-  tocTitleDivList.value![currHightTitle.value].children[0].classList.add("highlight-title")
+  currHeightTitle.value = Number(t.index - 1)
+  tocTitleDivList.value![currHeightTitle.value].children[0].classList.add("highlight-title")
 
 }
+
+const getContext = (id: string) => {
+  getNoteContent("notes/getNoteContent?id=" + id).then((res)=>{
+    if(res.status === 200){
+      markdown.value = res.data
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err: any)=>{
+    ElMessage.error(err)
+  }).finally(()=>{})
+}
+
+onMounted(()=>{
+  if(route.query && route.query.id) {
+    getContext(String(route.query.id))
+  }
+})
 
 </script>
 

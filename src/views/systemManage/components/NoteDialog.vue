@@ -28,8 +28,27 @@
         <el-input v-model="noteForm.description" placeholder="请输入文章简介" :rows="3" type="textarea" maxlength="100"
                   show-word-limit/>
       </el-form-item>
-      <el-form-item label="文章：" prop="content">
-        <!--        <el-input v-model="noteForm.content" placeholder="请上传文章" />-->
+      <el-form-item label="列表封面图片：" prop="imageUrl">
+        <el-upload
+            ref="upload"
+            v-model:file-list="imgList"
+            class="upload-demo"
+            action=""
+            :http-request="uploadImg"
+            :before-upload="beforeUploadImg"
+            :before-remove="beforeRemove"
+            :limit="1"
+            :on-exceed="handleExceed"
+        >
+          <el-button type="primary">点击选择图片</el-button>
+          <template #tip>
+            <div class="el-upload__tip">
+              仅支持jpg/jpeg/png格式图片
+            </div>
+          </template>
+        </el-upload>
+      </el-form-item>
+      <el-form-item label="文章：" prop="url">
         <el-upload
             ref="upload"
             v-model:file-list="fileList"
@@ -62,7 +81,7 @@
 import {ref, reactive, watch} from "vue";
 import type {ComponentSize, FormInstance, FormRules, UploadInstance, UploadProps, UploadRawFile} from 'element-plus'
 import {ElMessage,ElMessageBox,genFileId} from 'element-plus'
-import { editNote } from "@/api/notes.ts"
+import { editNote, uploadNote } from "@/api/notes.ts"
 // import axiosInstance from "@/utils/request/testAjax.ts"
 
 const props = defineProps({
@@ -79,14 +98,15 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(["update:showNoteDialog"])
+const emits = defineEmits(["update:showNoteDialog", "change-list"])
 
 interface RuleForm {
   id: number | string,
   title: string,
   tagsList: Array<string>,
   description: string,
-  content: string,
+  imageUrl: string,
+  url: string,
 }
 
 const ruleFormRef = ref<FormInstance>()
@@ -95,13 +115,14 @@ const noteForm = reactive<RuleForm>({
   title: "",
   tagsList: [],
   description: "",
-  content: "",
+  imageUrl: "",
+  url: "",
 })
 const rules = reactive<FormRules<RuleForm>>({
   title: {required: true, message: '请输入标题', trigger: 'blur'},
   tagsList: {required: true, message: '请选择文章分类', trigger: 'change'},
   description: {required: true, message: '请输入文章描述', trigger: 'blur'},
-  content: {required: true, message: '请上传文章内容', trigger: 'blur'},
+  url: {required: true, message: '请上传文章内容', trigger: 'blur'},
 })
 const loading = ref(false)
 const tagsList = reactive([
@@ -109,6 +130,8 @@ const tagsList = reactive([
 ])
 const fileList = ref([])
 const upload = ref<UploadInstance>()
+// 图片
+const imgList = ref([])
 
 const handleClose = () => {
   reset()
@@ -120,47 +143,49 @@ const submit = async (formEl: FormInstance | undefined) => {
   loading.value = true
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log('submit!')
-      loading.value = false
-      handleClose()
+      console.log('submit!', noteForm, noteForm.url.split(".").pop())
+      let params = {
+        title: noteForm.title,
+        authority: "ScrewLakeMonster",
+        name: noteForm.title,
+        type: noteForm.url.split(".").pop(),
+        description: noteForm.description,
+        // createTime: "2024-03-12 12:22:34",
+        // updateTime: "2024-03-12 12:22:34",
+        url: noteForm.url,
+        commentNum: 0,
+        voteUpNum: 0,
+        imageUrl: noteForm.imageUrl,
+        tagsList: noteForm.tagsList.join(","),
+        viewNum: 0,
+      } as any
+      let url = "notes/newNote"
+      if(props.type === "edit") {
+        params.id = noteForm.id
+        url = "notes/updateNote"
+      }
+      console.log("参数：", params)
+      editNote(url, params).then((res)=>{
+        if(res.status === 200) {
+          ElMessage.success("新增成功")
+          loading.value = false
+          emits("change-list")
+          handleClose()
+        } else {
+          ElMessage.warning(res.msg)
+        }
+      }).catch((err: string)=>{
+        ElMessage.error((err))
+      }).finally(()=>{
+
+      })
     } else {
       console.log("校验失败：", Object.values(fields)[0][0].message)
       ElMessage.warning(Object.values(fields)[0][0].message)
       loading.value = false
     }
   })
-  let params = {
-    title: noteForm.title,
-    authority: "myh",
-    name: "测试文章",
-    type: "txt",
-    description: noteForm.description,
-    // createTime: "2024-03-12 12:22:34",
-    // updateTime: "2024-03-12 12:22:34",
-    url: "路径",
-    commentNum: 0,
-    voteUpNum: 0,
-    imageUrl: null,
-    tagsList: noteForm.tagsList.join(","),
-    viewNum: 0,
-  } as any
-  let url = "notes/newNote"
-  if(props.type === "edit") {
-    params.id = noteForm.id
-    url = "notes/updateNote"
-  }
-  console.log("参数：", params)
-  editNote(url, params).then((res)=>{
-    if(res.status === 200) {
 
-    } else {
-      ElMessage.warning(res.msg)
-    }
-  }).catch((err: string)=>{
-    ElMessage.error((err))
-  }).finally(()=>{
-
-  })
 
   // try {
   //   const response = await axiosInstance.post('/notes/newNote', params);
@@ -176,22 +201,69 @@ const submit = async (formEl: FormInstance | undefined) => {
 const reset = () => {
   noteForm.tagsList = []
   noteForm.id = ""
-  noteForm.content = ""
+  noteForm.url = ""
   noteForm.title = ""
   noteForm.description = ""
+  noteForm.imageUrl = ""
   loading.value = false
+  fileList.value = []
+  imgList.value = []
 }
 
 //  ---------------- 文件上传 ----------------------
-const uploadFile = () => {
+const uploadFile = (rawFile: any) => {
+  console.log("文件：", rawFile)
+  let file: File = rawFile.file
+  let formData = new FormData()
+  formData.append("file", file)
+  uploadNote("notes/uploadNote", formData).then((res)=>{
+    if(res.status === 200 ) {
+      ElMessage.success("文件上传成功")
+      noteForm.url = res.data
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err: any)=>{
+    ElMessage.error(err)
+  }).finally(()=>{})
+}
 
+const uploadImg = (rawFile: any) => {
+  console.log("文件：", rawFile)
+  let file: File = rawFile.file
+  let formData = new FormData()
+  formData.append("file", file)
+  uploadNote("notes/uploadImg", formData).then((res)=>{
+    if(res.status === 200 ) {
+      ElMessage.success("文件上传成功")
+      noteForm.imageUrl = res.data
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err: any)=>{
+    ElMessage.error(err)
+  }).finally(()=>{})
 }
 
 const beforeUpload: UploadProps['beforeUpload'] = (rawFile) => {
   console.log("ddd", rawFile)
   let type = rawFile.name.split(".").pop()
   console.log("文件上传", type)
-  if (type != 'md' && type != 'txt') {
+  if (!["md", "txt"].includes(type!)) {
+    ElMessage.error('仅支持md/txt格式文件!')
+    return false
+  } else if (rawFile.size / 1024 / 1024 > 20) {
+    ElMessage.error('文件大小请不要超过20MB!')
+    return false
+  }
+  return true
+}
+
+const beforeUploadImg: UploadProps['beforeUpload'] = (rawFile) => {
+  console.log("ddd", rawFile)
+  let type = rawFile.name.split(".").pop()
+  console.log("文件上传", type)
+  if (!["jpg", "jpeg", "png"].includes(type!)) {
     ElMessage.error('仅支持md/txt格式文件!')
     return false
   } else if (rawFile.size / 1024 / 1024 > 20) {
