@@ -37,7 +37,9 @@
 </template>
 
 <script setup lang="ts">
-import {ref, reactive} from "vue";
+import {ref, reactive,onMounted} from "vue";
+import {ElMessage} from 'element-plus'
+import { getLogsList } from "@/api/logs.ts"
 
 const personalizedDetailsList = reactive<
     Array<{
@@ -75,6 +77,38 @@ const logsList = reactive([
 const changeLogsShow = () => {
   showLogs.value = !showLogs.value
 }
+
+// -------------------- 请求数据 ---------------------
+const getList = () => {
+  let params = {
+    title: "",
+    status: 1,
+    pageSize: 1000,
+    currPage: 1,
+  }
+  getLogsList("logs/getLogs", params).then((res) => {
+    if (res.status === 200) {
+      logsList.length = 0
+      if(res.data.records && res.data.records.length) {
+        res.data.records.forEach((item: any) => {
+          logsList.push({
+            time: item.createTime,
+            context: item.context,
+          })
+        })
+      }
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err: any) => {
+    ElMessage.error(err)
+  }).finally(() => {
+  })
+}
+
+onMounted(()=>{
+  getList()
+})
 
 </script>
 

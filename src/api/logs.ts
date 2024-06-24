@@ -5,14 +5,14 @@ import { postAction, deleteAction } from "@/utils/request/request.ts"
  * @param url logs/newLog or logs/updateLog
  * @param params
  */
-export const editLog = (url: string, params: any) => postAction(url, params)
+export const editLogs = (url: string, params: any) => postAction(url, params)
 
 /**
  * 删除日志
- * @param url logs/deleteLog
+ * @param url logs/changeLogsStatus
  * @param params
  */
-export const deleteLog = (url: string, params: any) => deleteAction(url, params)
+export const changLogsStatus = (url: string, params: any) => postAction(url, params)
 
 /**
  * 获取日志列表：介绍 or 管理

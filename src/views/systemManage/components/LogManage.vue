@@ -1,8 +1,16 @@
 <template>
   <div class="log-manage-container">
     <el-form ref="ruleFormRef" :inline="true" label-width="auto" :model="state.formData" class="operation-container">
-      <el-form-item label="内容：" prop="content">
-        <el-input v-model="state.formData.content" placeholder="" clearable/>
+      <el-form-item label="内容：" prop="context">
+        <el-input v-model="state.formData.context" placeholder="" clearable/>
+      </el-form-item>
+      <el-form-item label="状态：" prop="status">
+        <el-select v-model="state.formData.status" placeholder="" clearable
+                   :popper-class="'dark-selected-option'">
+          <template v-for="(item, index) in state.statusOption" :key="index">
+            <el-option :label="item.label" :value="item.value"></el-option>
+          </template>
+        </el-select>
       </el-form-item>
       <el-form-item>
         <el-button class="note-btn" type="primary" text :icon="Search" @click="queryNoteList">查询</el-button>
@@ -15,15 +23,15 @@
            :total="state.page.total">
       <template #CanEdit="scope">
         <template v-if="scope.row.isEdit">
-          <el-input v-model="scope.row.content" @blur="editFinish(scope.row)" @keyup.enter="editFinish(scope.row)"></el-input>
+          <el-input v-model="scope.row.context" @blur="editFinish(scope.row)" @keyup.enter="editFinish(scope.row)"></el-input>
         </template>
         <template v-else>
-          <span> {{ scope.row.content }} </span>
+          <span @dblclick="editLog(scope.row)" > {{ scope.row.context }} </span>
         </template>
       </template>
       <template #Btn="scope">
         <el-button :type="'primary'" text :icon="View" @click="editLog(scope.row)"> 编辑</el-button>
-        <el-button :type="'primary'" text :icon="View" @click="changeNoteStatus(scope.row)">
+        <el-button :type="'primary'" text :icon="View" @click="changeLogStatus(scope.row)">
           {{ scope.row.isShow ? '隐藏' : '展示' }}
         </el-button>
       </template>
@@ -32,14 +40,16 @@
 </template>
 
 <script setup lang="ts">
-import {ref, reactive} from "vue"
+import {ref, reactive, onMounted} from "vue"
 import {Plus, Search, View,} from "@element-plus/icons-vue"
 import type {FormInstance} from 'element-plus'
 import Table from "@/components/Table.vue";
+import {ElMessage} from 'element-plus'
+import { editLogs, changLogsStatus, getLogsList } from "@/api/logs.ts"
 
 interface LogTableData {
   id?: number
-  content: string
+  context: string
   createTime: string
   updateTime: string
   isShow: boolean
@@ -49,12 +59,17 @@ interface LogTableData {
 const ruleFormRef = ref<FormInstance>()
 const state = reactive({
   formData: {
-    content: "",
+    context: "",
+    status: null,
   },
+  statusOption: [
+    {label: "显示中", value: 1},
+    {label: "已隐藏", value: 0}
+  ],
 
   columns: [
     {
-      prop: "content",
+      prop: "context",
       label: "内容",
       align: "center",
       slotName: "CanEdit",
@@ -79,7 +94,7 @@ const state = reactive({
   tableData: [
     {
       id: 1,
-      content: "dddd",
+      context: "dddd",
       createTime: "23-ddd",
       updateTime: "dw22",
       isShow: true,
@@ -95,20 +110,7 @@ const state = reactive({
 
 const queryNoteList = () => {
   resetPage()
-  if (state.tableData.length) {
-    state.tableData.length = 0
-  } else {
-    state.tableData = [
-      {
-        id: 1,
-        content: "dddd",
-        createTime: "23-ddd",
-        updateTime: "dw22",
-        isShow: true,
-        isEdit: false,
-      },
-    ]
-  }
+  getList()
 }
 
 const resetPage = () => {
@@ -118,7 +120,7 @@ const resetPage = () => {
 
 const addShowDialog = () => {
   state.tableData.push({
-    content: "",
+    context: "",
     createTime: "",
     updateTime: "",
     isShow: true,
@@ -132,12 +134,63 @@ const editLog = (data: LogTableData) => {
 
 const editFinish = (data: LogTableData) => {
   data.isEdit = false
+  let url = "logs/newLog"
+  let params = {
+    context: data.context
+  } as any
+  if(data.id) {
+    params.id = data.id
+    url = "logs/updateLog"
+  }
+  editLogs(url, params).then((res)=>{
+    if(res.status === 200) {
+      getList()
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err:any)=>{
+    ElMessage.error(err)
+  }).finally(()=>{})
 }
 
-const changeNoteStatus = (data: LogTableData) => {
+const changeLogStatus = (data: LogTableData) => {
 //    TODO: 请求
-  data.isShow = !data.isShow
+//   data.isShow = !data.isShow
+  changLogsStatus("logs/changeLogsStatus?id=" + data.id, data.isShow ? 0 : 1).then((res)=>{
+    if(res.status === 200) {
+      getList()
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err:any)=>{
+    ElMessage.error(err)
+  }).finally(()=>{})
 }
+
+// -------------------- 请求数据 ---------------------
+const getList = () => {
+  let params = {
+    title: state.formData.context,
+    status: state.formData.status,
+    pageSize: state.page.pageSize,
+    currPage: state.page.currPage,
+  }
+  getLogsList("logs/getLogs", params).then((res) => {
+    if (res.status === 200) {
+      state.tableData = res.data.records
+      state.page.total = res.data.total
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err: any) => {
+    ElMessage.error(err)
+  }).finally(() => {
+  })
+}
+
+onMounted(()=>{
+  getList()
+})
 
 </script>
 

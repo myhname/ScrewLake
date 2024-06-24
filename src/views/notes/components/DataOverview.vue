@@ -20,18 +20,42 @@
 </template>
 
 <script setup lang="ts">
-import {reactive} from "vue";
+import {reactive, onMounted} from "vue";
+import {getAllArticle} from "@/api/notes.ts"
+import {ElMessage} from "element-plus";
 
 const state = reactive({
   userName: "螺丝湖水怪之家",
   userSignature: "时代的一粒沙，也想随风向天空去",
   resourceTagsList: [
-    { label: "笔记", value: 10, },
-    { label: "组件", value: 18, },
-    { label: "项目", value: 101, },
-    { label: "图片", value: 10, },
+    { label: "笔记", value: 0, },
+    { label: "组件", value: 0, },
+    { label: "项目", value: 0, },
+    { label: "图片", value: 0, },
   ] as Array<LabelData>,
 })
+
+const getAll = () => {
+  getAllArticle("notes/getAll", {
+    title: "",
+    tagsList: [],
+    status: null,
+  }).then((res) => {
+    if (res.status === 200) {
+      state.resourceTagsList[0].value = res.data
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err: any) => {
+    ElMessage.error(err)
+  }).finally(() => {
+  })
+}
+
+onMounted(() => {
+  getAll()
+})
+
 
 </script>
 

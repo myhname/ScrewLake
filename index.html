@@ -14,15 +14,15 @@
             left: 0;
             bottom: 0;
             z-index: 99;
-            //display: flex;
-            flex-direction: column-reverse;
+        //display: flex; flex-direction: column-reverse;
             overflow: hidden;
             display: none;
             opacity: 0;
             transition: opacity 2s ease-in-out;
         }
+
         .waifu {
-            position: relative!important;
+            position: relative !important;
             width: 200px;
             height: 200px;
         }
@@ -189,6 +189,18 @@
                 "text": ["这几天是<span style=\"color:#0099cc;\">圣诞节</span>，主人肯定又去剁手买买买了~"]
             }
         ]
+    });
+</script>
+
+<script type="text/javascript">
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+            document.title = "呜呜呜~，不要离开我"
+            // 在这里可以触发其它事件或调用特定函数
+        } else {
+            document.title = "欢迎来到：螺丝湖-水怪之家"
+            // 在这里可以触发其它事件或调用特定函数
+        }
     });
 </script>
 </body>
