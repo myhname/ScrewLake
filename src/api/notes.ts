@@ -41,3 +41,10 @@ export const getNoteContent = (url: string, params?: any) => getAction(url, para
  * @param params
  */
 export const uploadNote = (url: string, params: any) => fileUploadAction(url, params)
+
+/**
+ * 阅读笔记
+ * @param url notes/view
+ * @param params
+ */
+export const viewTracks = (url: string, params: any) => postAction(url, params)

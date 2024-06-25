@@ -29,7 +29,7 @@ import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 // import MdPreviewComponent from "@/components/editors/MdPreviewComponent.vue";
 import emitter from '@/utils/eventBus'
-import { getNoteContent } from "@/api/notes.ts"
+import { getNoteContent, viewTracks } from "@/api/notes.ts"
 
 const route = useRoute()
 const id = 'preview-only';
@@ -76,9 +76,22 @@ const getContext = (id: string) => {
   }).finally(()=>{})
 }
 
+const view = (id: number) => {
+  viewTracks("notes/view", id).then((res)=>{
+    if(res.status === 200){
+
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  }).catch((err: any)=>{
+    ElMessage.error(err)
+  }).finally(()=>{})
+}
+
 onMounted(()=>{
   if(route.query && route.query.id) {
     getContext(String(route.query.id))
+    view(Number(route.query.id))
   }
 })
 
