@@ -76,6 +76,7 @@ import {computeRunTime} from "@/utils/timeCompute.ts"
 import {createStarCanvas, stopMouseMoveStar} from "@/utils/mouseMoveStar.ts"
 import {getNotesList} from "@/api/notes.ts"
 import {ElMessage} from "element-plus";
+import notesData from "@/data/notesData.json"
 
 const runTime = ref("")
 let timer: null | number = null
@@ -154,49 +155,53 @@ const getList = () => {
     pageSize: 5000,
     currPage: 1,
   }
-  getNotesList("notes/getNotes", params).then((res) => {
-    if (res.status === 200) {
-      notesList.value = []
-      res.data.forEach((item: any) => {
-        let currTags = [] as Array<LabelData>
-        let arr = item.tagsList.toString().split(",")
-        arr.forEach((tag: string) => {
-          currTags.push({
-            label: tag,
-            color: "rgba(230, 162, 60)",
-            backgroundColor: "rgba(230, 162, 60, 0.2)"
-          })
-        })
-        let imgUrl = import.meta.env.VITE_BASE_IMG_PATH
-        if(item.imageUrl) {
-          imgUrl += item.imageUrl
-        } else {
-          imgUrl += "uploads/noteImg/default.jpg"
-        }
-        notesList.value.push({
-          id: item.id,
-          title: item.title,
-          coverImg: imgUrl,
-          description: item.description,
-          createTime: item.createTime,
-          updateTime: item.updateTime,
-          tags: currTags,
-          statistics: [
-            {label: "浏览", value: item.viewNum, icon: ""},
-            {label: "回复", value: item.commentNum, icon: ""},
-            {label: "点赞", value: item.voteNum, icon: ""},
-          ]
-        })
-      })
-    } else {
-      ElMessage.warning(res.msg)
-    }
-  }).catch((err: any) => {
-    ElMessage.error(err)
-  }).finally(() => {
-    initNoteList()
-    startIntersectionObserver()
-  })
+  // getNotesList("notes/getNotes", params).then((res) => {
+  //   if (res.status === 200) {
+  //     notesList.value = []
+  //     res.data.forEach((item: any) => {
+  //       let currTags = [] as Array<LabelData>
+  //       let arr = item.tagsList.toString().split(",")
+  //       arr.forEach((tag: string) => {
+  //         currTags.push({
+  //           label: tag,
+  //           color: "rgba(230, 162, 60)",
+  //           backgroundColor: "rgba(230, 162, 60, 0.2)"
+  //         })
+  //       })
+  //       let imgUrl = import.meta.env.VITE_BASE_IMG_PATH
+  //       if(item.imageUrl) {
+  //         imgUrl += item.imageUrl
+  //       } else {
+  //         imgUrl += "uploads/noteImg/default.jpg"
+  //       }
+  //       notesList.value.push({
+  //         id: item.id,
+  //         title: item.title,
+  //         coverImg: imgUrl,
+  //         description: item.description,
+  //         createTime: item.createTime,
+  //         updateTime: item.updateTime,
+  //         tags: currTags,
+  //         statistics: [
+  //           {label: "浏览", value: item.viewNum, icon: ""},
+  //           {label: "回复", value: item.commentNum, icon: ""},
+  //           {label: "点赞", value: item.voteNum, icon: ""},
+  //         ]
+  //       })
+  //     })
+  //   } else {
+  //     ElMessage.warning(res.msg)
+  //   }
+  // }).catch((err: any) => {
+  //   ElMessage.error(err)
+  // }).finally(() => {
+  //   initNoteList()
+  //   startIntersectionObserver()
+  // })
+
+  notesList.value = notesData as Array<NoteList>
+  initNoteList()
+  startIntersectionObserver()
 }
 
 const startIntersectionObserver = () => {

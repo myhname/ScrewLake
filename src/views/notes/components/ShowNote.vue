@@ -30,6 +30,8 @@ import { ElMessage } from "element-plus";
 // import MdPreviewComponent from "@/components/editors/MdPreviewComponent.vue";
 import emitter from '@/utils/eventBus'
 import { getNoteContent, viewTracks } from "@/api/notes.ts"
+import notesData from "@/data/notesData.json"
+import { fetchMarkdown } from "@/utils/readMdFile.ts"
 
 const route = useRoute()
 const id = 'preview-only';
@@ -65,15 +67,25 @@ const clickToc = (e: MouseEvent, t: any) => {
 }
 
 const getContext = (id: string) => {
-  getNoteContent("notes/getNoteContent?id=" + id).then((res)=>{
-    if(res.status === 200){
-      markdown.value = res.data
-    } else {
-      ElMessage.warning(res.msg)
+  // getNoteContent("notes/getNoteContent?id=" + id).then((res)=>{
+  //   if(res.status === 200){
+  //     markdown.value = res.data
+  //   } else {
+  //     ElMessage.warning(res.msg)
+  //   }
+  // }).catch((err: any)=>{
+  //   ElMessage.error(err)
+  // }).finally(()=>{})
+  (notesData as Array<{id: number, title: string}>).forEach((item) => {
+    if(item.id.toString() === id) {
+      fetchMarkdown(item.title).then((res: any) => {
+        console.log("读取文件", res)
+        markdown.value = res
+      }).catch((err: any)=>{
+        ElMessage.error(err)
+      }).finally(()=>{})
     }
-  }).catch((err: any)=>{
-    ElMessage.error(err)
-  }).finally(()=>{})
+  })
 }
 
 const view = (id: number) => {
@@ -91,7 +103,7 @@ const view = (id: number) => {
 onMounted(()=>{
   if(route.query && route.query.id) {
     getContext(String(route.query.id))
-    view(Number(route.query.id))
+    // view(Number(route.query.id))
   }
 })
 

@@ -23,6 +23,7 @@
 import {reactive, onMounted} from "vue";
 import {getAllArticle} from "@/api/notes.ts"
 import {ElMessage} from "element-plus";
+import notesData from "@/data/notesData.json"
 
 const state = reactive({
   userName: "螺丝湖水怪之家",
@@ -36,20 +37,21 @@ const state = reactive({
 })
 
 const getAll = () => {
-  getAllArticle("notes/getAll", {
-    title: "",
-    tagsList: [],
-    status: null,
-  }).then((res) => {
-    if (res.status === 200) {
-      state.resourceTagsList[0].value = res.data
-    } else {
-      ElMessage.warning(res.msg)
-    }
-  }).catch((err: any) => {
-    ElMessage.error(err)
-  }).finally(() => {
-  })
+  // getAllArticle("notes/getAll", {
+  //   title: "",
+  //   tagsList: [],
+  //   status: null,
+  // }).then((res) => {
+  //   if (res.status === 200) {
+  //     state.resourceTagsList[0].value = res.data
+  //   } else {
+  //     ElMessage.warning(res.msg)
+  //   }
+  // }).catch((err: any) => {
+  //   ElMessage.error(err)
+  // }).finally(() => {
+  // })
+  state.resourceTagsList[0].value = (notesData as Array<any>).length
 }
 
 onMounted(() => {

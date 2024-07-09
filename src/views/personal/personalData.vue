@@ -2,7 +2,7 @@
   <div class="personal-data-container">
     <div class="personal-data-card card-item-about">
       <div class="avatar-container">
-        <img src="../../assets/image/不可以瑟瑟.jpg" alt=""/>
+        <img src="../../assets/image/凛.jpg" alt=""/>
         <div class="ripple-effect-bg"></div>
         <div class="ripple-effect"></div>
       </div>
@@ -32,14 +32,15 @@
       <div class="logs-show-control" @click="changeLogsShow"> {{ showLogs ? '收起日志' : '点击展示更多日志' }}</div>
     </div>
 
-<!--    <div class="test-boder"></div>-->
+    <!--    <div class="test-boder"></div>-->
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref, reactive,onMounted} from "vue";
+import {ref, reactive, onMounted} from "vue";
 import {ElMessage} from 'element-plus'
-import { getLogsList } from "@/api/logs.ts"
+import {getLogsList} from "@/api/logs.ts"
+import logsData from "@/data/logsData.json"
 
 const personalizedDetailsList = reactive<
     Array<{
@@ -86,27 +87,35 @@ const getList = () => {
     pageSize: 1000,
     currPage: 1,
   }
-  getLogsList("logs/getLogs", params).then((res) => {
-    if (res.status === 200) {
-      logsList.length = 0
-      if(res.data.records && res.data.records.length) {
-        res.data.records.forEach((item: any) => {
-          logsList.push({
-            time: item.createTime,
-            context: item.context,
-          })
-        })
-      }
-    } else {
-      ElMessage.warning(res.msg)
-    }
-  }).catch((err: any) => {
-    ElMessage.error(err)
-  }).finally(() => {
+  // getLogsList("logs/getLogs", params).then((res) => {
+  //   if (res.status === 200) {
+  //     logsList.length = 0
+  //     if(res.data.records && res.data.records.length) {
+  //       res.data.records.forEach((item: any) => {
+  //         logsList.push({
+  //           time: item.createTime,
+  //           context: item.context,
+  //         })
+  //       })
+  //     }
+  //   } else {
+  //     ElMessage.warning(res.msg)
+  //   }
+  // }).catch((err: any) => {
+  //   ElMessage.error(err)
+  // }).finally(() => {
+  // })
+
+  logsList.length = 0
+  logsData.forEach((item: any) => {
+    logsList.push({
+      time: item.createTime,
+      context: item.context,
+    })
   })
 }
 
-onMounted(()=>{
+onMounted(() => {
   getList()
 })
 
@@ -257,7 +266,7 @@ onMounted(()=>{
   }
 
   .card-item-about {
-    background-color: rgba(0,0,0,0.45);
+    background-color: rgba(0, 0, 0, 0.45);
     border: 1px solid #e4e7ed;
     border-radius: 5px;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);

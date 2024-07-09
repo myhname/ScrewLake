@@ -68,15 +68,15 @@
         },
         icon: "a-bijibenbiji1",
       },
-      {
-        key: 3,
-        name: "systemManage",
-        path: "/systemManage",
-        meta: {
-          title: "系统管理",
-        },
-        icon: "guanliyuan_jiaoseguanli",
-      }
+      // {
+      //   key: 3,
+      //   name: "systemManage",
+      //   path: "/systemManage",
+      //   meta: {
+      //     title: "系统管理",
+      //   },
+      //   icon: "guanliyuan_jiaoseguanli",
+      // }
       // {
       //   key: 1,
       //   name: 'index',
