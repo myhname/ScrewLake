@@ -1,0 +1,47 @@
+body {
+    font-family: sans-serif;
+}
+
+.card-item {
+    height: 400px;
+    /*background-color: rgba(51, 54, 61, 0.35);*/
+    background-color: rgba(0, 0, 0, 0.45);
+    border: 1px solid #e4e7ed;
+    border-radius: 5px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(2px);
+}
+
+/* 块标题字体 */
+.font-1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+/* 标题字体 */
+.font-2 {
+    font-size: 19px;
+    font-weight: 450;
+    letter-spacing: 1px;
+}
+/* 正文字体 */
+.font-3 {
+    font-size: 16px
+}
+/* 稍小一点的字体 */
+.font-4 {
+    font-size: 13px;
+}
+/* 最小的字体，再小就情景自定义吧 */
+.font-5 {
+    font-size: 10px;
+}
+
+.note-btn.el-button--primary.is-text {
+    border: 1px solid;
+}
+
+.note-btn.el-button.is-text:not(.is-disabled):hover {
+    background-color: #2d3239;
+    border: 1px solid;
+}
