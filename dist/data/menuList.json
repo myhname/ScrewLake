@@ -1,0 +1,31 @@
+[
+  {
+    "id": 1,
+    "parentId": 0,
+    "name": "index",
+    "path": "/",
+    "component": "/index",
+    "meta": {
+      "title": "首页"
+    },
+    "icon": "icon_home",
+    "redirect": "/notes",
+    "children": [
+      {
+        "id": 4,
+        "parentId": 0,
+        "name": "notes",
+        "path": "/notes",
+        "component": "notes/notes",
+        "meta": {
+          "title": "笔记"
+        },
+        "icon": "icon_allProcess",
+        "redirect": null,
+        "children": [],
+        "level": 1
+      }
+    ],
+    "level": 1
+  }
+]
