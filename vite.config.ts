@@ -28,7 +28,7 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
                 '@': fileURLToPath(new URL('./src', import.meta.url)),
             }
         },
-        base: '/', // 生产服务时的基本公用路径
+        base: '/ScrewLake/', // 生产服务时的基本公用路径
         publicDir: 'public', // 静态资源服务的文件夹，默认“public”
         // 引入第三方配置，强制预构建插件包
         optimizeDeps: {

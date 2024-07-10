@@ -59,11 +59,11 @@ const live2dLocation = reactive({
 const domUp = ref<HTMLElement>()
 const domDown = ref<HTMLElement>()
 const backgroundImgList = ref<Array<string>>([
-  "/src/assets/image/bg6.jpg",
-  "/src/assets/image/bg2.jpg",
-  "/src/assets/image/bg3.jpg",
-  "/src/assets/image/bg4.jpg",
-  "/src/assets/image/bg5.jpg",
+  "./assets/image/bg6.jpg",
+  "./assets/image/bg2.jpg",
+  "./assets/image/bg3.jpg",
+  "./assets/image/bg4.jpg",
+  "./assets/image/bg5.jpg",
 ])
 const showBackgroundImgIndex = ref<number>(0)
 const bgChangeTimer = ref<number>()

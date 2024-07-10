@@ -144,7 +144,7 @@ const intersectionObserver = new IntersectionObserver((entries, observer) => {
 })
 
 const showNote = (data: NoteList) => {
-  router.push("/notes/showMd?id=" + data.id)
+  router.push("/ScrewLake/notes/showMd?id=" + data.id)
 }
 
 const getList = () => {

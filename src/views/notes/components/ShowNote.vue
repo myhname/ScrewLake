@@ -66,7 +66,7 @@ const clickToc = (e: MouseEvent, t: any) => {
 
 }
 
-const getContext = (id: string) => {
+const getContext = async (id: string) => {
   // getNoteContent("notes/getNoteContent?id=" + id).then((res)=>{
   //   if(res.status === 200){
   //     markdown.value = res.data
@@ -76,8 +76,11 @@ const getContext = (id: string) => {
   // }).catch((err: any)=>{
   //   ElMessage.error(err)
   // }).finally(()=>{})
-  (notesData as Array<{id: number, title: string}>).forEach((item) => {
+  for (const item of (notesData as Array<{ id: number, title: string }>)) {
     if(item.id.toString() === id) {
+      const response = await fetch(`./data/notes/${item.title}.md`);
+      console.log(response)
+      console.log("文件路径：", `./src/data/notes/${item.title}.md`)
       fetchMarkdown(item.title).then((res: any) => {
         console.log("读取文件", res)
         markdown.value = res
@@ -85,7 +88,7 @@ const getContext = (id: string) => {
         ElMessage.error(err)
       }).finally(()=>{})
     }
-  })
+  }
 }
 
 const view = (id: number) => {

@@ -17,7 +17,7 @@ import router from "@/router";
 import Cube from "@/components/layout/cover/components/Cube.vue";
 
 const toNotesToc = () => {
-  router.push("/")
+  router.push("/ScrewLake")
 }
 
 onMounted(() => {

@@ -6,16 +6,16 @@ const router = createRouter({
   routes: [
     {
       name: "index",
-      path: "/",
+      path: "/ScrewLake",
       component: () => import("@/components/layout/index.vue"),
       meta: {
         title: "首页",
       },
-      redirect: "/notes",
+      redirect: "/ScrewLake/notes",
       children: [
         {
           name: "notes",
-          path: "/notes",
+          path: "/ScrewLake/notes",
           component: () => import("@/views/notes/notes.vue"),
           meta: {
             title: "笔记目录",
@@ -24,7 +24,7 @@ const router = createRouter({
         },
         {
           name: "personal",
-          path: "/personal",
+          path: "/ScrewLake/personal",
           component: () => import("@/views/personal/personalData.vue"),
           meta: {
             title: "个人介绍",
@@ -33,7 +33,7 @@ const router = createRouter({
         },
         {
           name: "notes/showMd",
-          path: "/notes/showMd",
+          path: "/ScrewLake/notes/showMd",
           component: () => import("@/views/notes/components/ShowNote.vue"),
           meta: {
             title: "笔记展示",
@@ -53,7 +53,7 @@ const router = createRouter({
     },
     {
       name: "cover",
-      path: "/cover",
+      path: "/ScrewLake/cover",
       component: () => import("@/components/layout/cover/cover.vue"),
       meta: {
         title: "封面",

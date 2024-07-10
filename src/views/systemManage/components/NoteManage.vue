@@ -165,7 +165,7 @@ const addShowDialog = () => {
 }
 
 const viewNote = (data: NoteTableData) => {
-  router.push("/notes/showMd?id=" + data.id)
+  router.push("/ScrewLake/notes/showMd?id=" + data.id)
 }
 
 const editNote = (data: NoteTableData) => {

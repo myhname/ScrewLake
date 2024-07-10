@@ -62,7 +62,7 @@ const state: {
     {
       key: 1,
       name: "cover",
-      path: "/cover",
+      path: "/ScrewLake/cover",
       meta: {
         title: "首页",
       },
@@ -71,7 +71,7 @@ const state: {
     {
       key: 2,
       name: "notes",
-      path: "/notes",
+      path: "/ScrewLake/notes",
       meta: {
         title: "笔记",
       },
