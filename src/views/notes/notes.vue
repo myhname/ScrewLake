@@ -72,14 +72,11 @@ import WordCloud from "@/views/notes/components/WordCloud.vue";
 import ArtWordByEcharts from "@/views/notes/components/ArtWordByEcharts.vue";
 import RecentDynamic from "@/views/notes/components/RecentDynamic.vue";
 import DataOverview from "@/views/notes/components/DataOverview.vue";
-import {computeRunTime} from "@/utils/timeCompute.ts"
 import {createStarCanvas, stopMouseMoveStar} from "@/utils/mouseMoveStar.ts"
 import {getNotesList} from "@/api/notes.ts"
 import {ElMessage} from "element-plus";
 import notesData from "@/data/notesData.json"
 
-const runTime = ref("")
-let timer: null | number = null
 const fromTime = new Date("2024-04-02 00:00:00").getTime()
 
 const notesList = ref<Array<NoteList>>([
@@ -218,20 +215,10 @@ const startIntersectionObserver = () => {
 onMounted(() => {
   getList()
   createStarCanvas()
-
-  if (!timer) {
-    timer = setInterval(() => {
-      runTime.value = computeRunTime(fromTime)
-    }, 1000)
-  }
-
 })
 
 onBeforeUnmount(() => {
   intersectionObserver.disconnect()
-  if (timer) {
-    clearInterval(timer)
-  }
   stopMouseMoveStar()
 })
 

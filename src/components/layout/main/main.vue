@@ -1,31 +1,47 @@
 <template>
   <div class="main">
-    <RouterView />
+    <RouterView/>
     <div class="bottom-box">
       <div class="bottom-msg">
         <a href="/cover">螺丝湖观光指北</a>
         &nbsp; | &nbsp;
         <span> 已运行 {{ runTime }} </span>
-        <br />
-        Copyright  2024-04-02 Night Rain ShanXi ICP Prepared
+        <br/>
+        Copyright 2024-04-02 Night Rain ShanXi ICP Prepared
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import  {ref} from "vue"
-import { RouterView } from 'vue-router'
+import {ref, onMounted, onBeforeUnmount} from "vue"
+import {RouterView} from 'vue-router'
+import {computeRunTime} from "@/utils/timeCompute.ts"
 
 const runTime = ref("0天0时0分0秒")
+let timer: null | number = null
+
+onMounted(() => {
+  if (!timer) {
+    timer = setInterval(() => {
+      runTime.value = computeRunTime(new Date(import.meta.env.VITE_START_RUN_TIME).getTime())
+    }, 1000)
+  }
+})
+
+onBeforeUnmount(() => {
+  if (timer) {
+    clearInterval(timer)
+  }
+})
 </script>
 
 <style scoped>
-.main{
+.main {
   min-height: 100%;
   min-width: 1500px;
   position: relative;
-  padding: 0  0 50px 0;
+  padding: 0 0 50px 0;
 }
 
 .bottom-box {

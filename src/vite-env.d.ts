@@ -12,4 +12,5 @@ declare module "*.vue" {
 interface ImportMetaEnv {
   readonly VITE_BASE_API: string
   readonly VITE_BASE_IMG_PATH: string
+  readonly VITE_START_RUN_TIME: string
 }

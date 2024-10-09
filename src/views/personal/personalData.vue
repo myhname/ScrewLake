@@ -256,7 +256,7 @@ onMounted(() => {
     }
 
     .hidden-logs {
-      height: 85px;
+      height: 160px;
       transition: all 0.5s ease-in-out;
     }
 

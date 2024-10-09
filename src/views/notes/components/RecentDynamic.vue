@@ -38,9 +38,9 @@ const recentDynamicList = ref<Array<RecentDynamicData>>([
     creator: "ww",
     createTime: "2024-04-02",
     type: RecentDynamicType.msg,
-    img: "./src/assets/image/fate2.jpg",
+    img: "./assets/image/fate2.jpg",
     context: "留个言呢呢呢",
-    url: "/cover",
+    url: "/ScrewLake/cover",
   },
   {
     creator: "dddd",
@@ -48,7 +48,7 @@ const recentDynamicList = ref<Array<RecentDynamicData>>([
     type: RecentDynamicType.up,
     img: "./assets/image/fate1.jpg",
     context: "【更新文章简介】",
-    url: "/cover",
+    url: "/ScrewLake/cover",
   },
   {
     creator: "aaaa",
@@ -56,7 +56,7 @@ const recentDynamicList = ref<Array<RecentDynamicData>>([
     type: RecentDynamicType.maximumBrowsing,
     img: "./assets/image/fate3.jpg",
     context: "【最多人看嫩】",
-    url: "/cover",
+    url: "/ScrewLake/cover",
   },
   {
     creator: "aaaa",
@@ -64,7 +64,7 @@ const recentDynamicList = ref<Array<RecentDynamicData>>([
     type: RecentDynamicType.notice,
     img: "./assets/image/fate4.jpg",
     context: "留个言呢呢呢",
-    url: "/cover",
+    url: "/ScrewLake/cover",
   },
 ])
 

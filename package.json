@@ -13,7 +13,7 @@
     "build:pro": "vue-tsc && vite build --mode production",
     "preview": "vite preview",
     "test": "vite build --mode test",
-    "deploy": "vite build && git add dist && git commit -m 'deploy' && git subtree push --prefix dist origin static-blog"
+    "deploy": "vite build && git add dist && git commit -m 'deploy' && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
@@ -29,6 +29,7 @@
     "less": "^4.2.0",
     "md-editor-v3": "^4.15.0",
     "mitt": "^3.0.1",
+    "moment": "^2.30.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
     "vue": "^3.3.11",

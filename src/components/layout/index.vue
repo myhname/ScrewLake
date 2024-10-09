@@ -3,8 +3,8 @@
     <transition name="backToTop" enter-active-class="animate__animated animate__bounceInDown"
                 leave-active-class="animate__animated animate__backOutUp">
       <div v-if="!expandHeader" class="back-top" key="boctTop">
-        <div class="rope"></div>
-        <div class="figure" @click="backToTop"></div>
+        <div class="rope" @click="backToTop"></div>
+<!--        <div class="figure" ></div>-->
       </div>
     </transition>
 
@@ -259,18 +259,18 @@ onBeforeUnmount(() => {
 
     .rope {
       flex: 1;
-      width: 20px;
-      background-image: url("../../assets/img/绳子.png");
+      width: 70px;
+      background-image: url("../../assets/img/cat-back-top.png");
       background-size: cover;
     }
 
-    .figure {
-      width: 80px;
-      height: 80px;
-      background-image: url("../../assets/img/克拉拉.jpg");
-      background-size: cover;
-      cursor: pointer;
-    }
+    //.figure {
+    //  width: 80px;
+    //  height: 80px;
+    //  background-image: url("../../assets/img/克拉拉.jpg");
+    //  background-size: cover;
+    //  cursor: pointer;
+    //}
   }
 
   .header-layout {
