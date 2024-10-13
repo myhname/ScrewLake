@@ -3,8 +3,8 @@
     <transition name="backToTop" enter-active-class="animate__animated animate__bounceInDown"
                 leave-active-class="animate__animated animate__backOutUp">
       <div v-if="!expandHeader" class="back-top" key="boctTop">
-        <div class="rope" @click="backToTop"></div>
-<!--        <div class="figure" ></div>-->
+        <div class="rope cursor-pointer" @click="backToTop"></div>
+        <!--        <div class="figure" ></div>-->
       </div>
     </transition>
 
@@ -59,11 +59,11 @@ const live2dLocation = reactive({
 const domUp = ref<HTMLElement>()
 const domDown = ref<HTMLElement>()
 const backgroundImgList = ref<Array<string>>([
-  "./assets/image/bg6.jpg",
-  "./assets/image/bg2.jpg",
-  "./assets/image/bg3.jpg",
-  "./assets/image/bg4.jpg",
-  "./assets/image/bg5.jpg",
+  "/ScrewLake/assets/image/bg6.jpg",
+  "/ScrewLake/assets/image/bg2.jpg",
+  "/ScrewLake/assets/image/bg3.jpg",
+  "/ScrewLake/assets/image/bg4.jpg",
+  "/ScrewLake/assets/image/bg5.jpg",
 ])
 const showBackgroundImgIndex = ref<number>(0)
 const bgChangeTimer = ref<number>()
@@ -94,11 +94,11 @@ const imageCarousel = () => {
 const changeBgImg = () => {
   domDown.value!.style.backgroundImage = "url('" + backgroundImgList.value[showBackgroundImgIndex.value] + "')"
   showBackgroundImgIndex.value += 1
-  if(showBackgroundImgIndex.value >= backgroundImgList.value.length) {
+  if (showBackgroundImgIndex.value >= backgroundImgList.value.length) {
     showBackgroundImgIndex.value = 0
   }
   domUp.value!.classList.remove("bg-animation")
-  requestAnimationFrame(()=>{
+  requestAnimationFrame(() => {
     domUp.value!.style.backgroundImage = "url('" + backgroundImgList.value[showBackgroundImgIndex.value] + "')"
     domUp.value!.classList.add("bg-animation")
   })
@@ -193,15 +193,23 @@ onMounted(() => {
   startSakura()
   imageCarousel()
 
-  live2dDom.value = document.getElementById("live2dContainer")
-  if (live2dDom.value) {
-    // let timer = setTimeout(() => {
-    initLive2d()
-    // clearTimeout(timer)
-    // }, 2000)
-    live2dDom.value.addEventListener("dragstart", dragStarted)
-    live2dDom.value.addEventListener("dragend", dragEnded)
+  try {
+    live2dDom.value = document.getElementById("live2dContainer")
+    if (live2dDom.value) {
+      // let timer = setTimeout(() => {
+      initLive2d()
+      // clearTimeout(timer)
+      // }, 2000)
+      live2dDom.value.addEventListener("dragstart", dragStarted)
+      live2dDom.value.addEventListener("dragend", dragEnded)
+    }
+  } catch (err) {
+    console.error(err)
+  } finally {
+
   }
+
+  console.log("window.location.origin", window.location.origin)
 
   domUp.value = document.getElementById("bgUp")!
   domUp.value!.style.backgroundImage = "url('" + backgroundImgList.value[showBackgroundImgIndex.value] + "')"
@@ -210,10 +218,10 @@ onMounted(() => {
 
   domDown.value = document.getElementById("bgDown")!
 
-  bgChangeTimer.value = setInterval(()=>{
+  bgChangeTimer.value = setInterval(() => {
+    console.log("切换背景图片")
     changeBgImg()
   }, 5 * 60 * 1000)
-
   emitter.on('clickNoteToc', (value) => {
     console.log(("接收："), value)
     scrollToLocation(Number(value), 50)
@@ -224,7 +232,7 @@ onBeforeUnmount(() => {
   stopp()
   live2dDom.value?.removeEventListener("dragstart", dragStarted)
   live2dDom.value?.removeEventListener("dragend", dragEnded)
-  if(bgChangeTimer.value) {
+  if (bgChangeTimer.value) {
     clearInterval(bgChangeTimer.value)
   }
   emitter.off('clickNoteToc')
@@ -259,9 +267,11 @@ onBeforeUnmount(() => {
 
     .rope {
       flex: 1;
-      width: 70px;
+      width: 60px;
       background-image: url("../../assets/img/cat-back-top.png");
-      background-size: cover;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
     }
 
     //.figure {
@@ -342,7 +352,7 @@ onBeforeUnmount(() => {
 .bg-animation {
   //mask: radial-gradient(#000 cale(var(--x) * 1%), transparent cale(var(--x) * 1%));
   //mask-size: 40px 40px;
-  mask-repeat:no-repeat;
+  mask-repeat: no-repeat;
   animation: bgChange 1s linear;
 }
 

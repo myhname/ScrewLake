@@ -29,7 +29,7 @@
           </div>
         </template>
       </div>
-      <div class="logs-show-control" @click="changeLogsShow"> {{ showLogs ? '收起日志' : '点击展示更多日志' }}</div>
+      <div class="logs-show-control cursor-pointer" @click="changeLogsShow"> {{ showLogs ? '收起日志' : '点击展示更多日志' }}</div>
     </div>
 
     <!--    <div class="test-boder"></div>-->

@@ -12,6 +12,27 @@ body {
     backdrop-filter: blur(2px);
 }
 
+/* 鼠标样式 */
+body, .cursor-normal {
+    cursor: url("../cursor/ani/Normal.ani"), url("../cursor/cur/cursorNormal.cur"), auto;
+}
+
+a, button, .cursor-pointer {
+    cursor: url("../cursor/ani/Link.ani"), url("../cursor/cur/cursorLink.cur"), pointer;
+}
+
+.cursor-all-scroll {
+    cursor:  url("../cursor/ani/Move.ani"), url("../cursor/cur/cursorPoint.cur"), all-scroll;
+}
+
+.cursor-no-drop {
+    cursor:  url("../cursor/ani/Unavailable.ani"), url("../cursor/cur/cursorNo.cur"), no-drop;
+}
+
+span, .cursor-text {
+    cursor:  url("../cursor/ani/Text.ani"), url("../cursor/cur/cursorText.cur"), text;
+}
+
 /* 块标题字体 */
 .font-1 {
     font-size: 22px;

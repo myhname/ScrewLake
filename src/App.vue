@@ -47,8 +47,6 @@
     height: 100vh;
 
     overflow: hidden;
-
-    cursor: url("./assets/cursor.cur"), auto;
   }
 
    //路由切换特效

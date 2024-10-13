@@ -7,9 +7,9 @@
         <span class="menu-title"> {{ item.meta.title }} </span>
       </div>
       <!-- tag: 先不考虑多级和嵌套那些，以目前的情况来说封装一级就够了，之后在拓展原生吧，连悬浮窗都写就有点太麻烦了 -->
-      <div v-else class="menu-groups" :class="{ 'menu-selected': state.selectedKeys[0] === item.path}">
+      <div v-else class="menu-groups cursor-pointer" :class="{ 'menu-selected': state.selectedKeys[0] === item.path}">
         <MyIcons :icon="item.icon" :style="myIconsFont" />
-        <span class="menu-title"> {{ item.meta.title }} </span>
+        <span class="menu-title cursor-pointer"> {{ item.meta.title }} </span>
       </div>
     </template>
   </div>
@@ -158,7 +158,6 @@
       align-items: center;
       column-gap: 3px;
       color: #fff;
-      cursor: url("../../../assets/cursor_link.cur"), auto;
 
       .menu-title {
         font-size: 17px;

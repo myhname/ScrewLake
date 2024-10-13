@@ -1,7 +1,7 @@
 <template>
   <div class="recent-dynamic-container">
     <template v-for="(item, index) in recentDynamicList" :key="index">
-      <div class="recent-dynamic-item" @click="pushTo(item.url)">
+      <div class="recent-dynamic-item cursor-pointer" @click="pushTo(item.url)">
         <div class="img" :style="'background-image: url(' + item.img + ');'"></div>
         <div class="msg">
           <p class="title font-3">{{ item.context }}</p>

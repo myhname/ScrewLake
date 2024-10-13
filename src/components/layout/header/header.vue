@@ -2,7 +2,7 @@
   <div class="header-container" :class="{ 'expand-header': props.expand}">
     <div class="blog-title">
       <div class="avater-name">
-        <div class="blog-avatar" @click="routerToPersonal"></div>
+        <div class="blog-avatar cursor-pointer" @click="routerToPersonal"></div>
         <a href="/ScrewLake">Screw Lake</a>
       </div>
       <transition name="backToTop" enter-active-class="animate__animated animate__fadeIn"
@@ -23,7 +23,7 @@
               <span v-if="index != (tags.length - 1)" class="separator"> / </span>
             </template>
           </div>
-          <div class="search">
+          <div class="search cursor-pointer">
             <el-icon>
               <Search/>
             </el-icon>
@@ -150,7 +150,6 @@ onMounted(()=>{
       }
 
       a {
-        cursor: url("../../../assets/cursor_link.cur"), auto;
         color: #eee;
         transition: color @transitionTime @transitionWay;
       }
@@ -204,7 +203,6 @@ onMounted(()=>{
         column-gap: 3px;
 
         a {
-          cursor: url("../../../assets/cursor_link.cur"), auto;
 
           &:hover {
             color: #3f6bfb;

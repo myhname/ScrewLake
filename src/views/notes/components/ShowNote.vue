@@ -80,7 +80,7 @@ const getContext = async (id: string) => {
     if(item.id.toString() === id) {
       const response = await fetch(`./data/notes/${item.title}.md`);
       console.log(response)
-      console.log("文件路径：", `./src/data/notes/${item.title}.md`)
+      console.log("文件路径：", `./data/notes/${item.title}.md`)
       fetchMarkdown(item.title).then((res: any) => {
         console.log("读取文件", res)
         markdown.value = res
@@ -164,5 +164,12 @@ onMounted(()=>{
 <style lang="less">
 .highlight-title {
   color: #01b4ff!important;
+}
+
+.md-editor-catalog-link span,
+.md-editor-copy-button,
+.md-editor-collapse-tips,
+.md-editor-code-head {
+  cursor: url("../../../assets/cursor/ani/Link.ani"), url("../../../assets/cursor/cur/cursorLink.cur"), pointer!important;
 }
 </style>

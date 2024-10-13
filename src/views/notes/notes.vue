@@ -7,7 +7,7 @@
       <data-overview></data-overview>
       <div class="notes-toc-box card-item" id="noteListBox">
         <template v-for="(note, index) in notesList" :key="note.id">
-          <div class="note-item" :id="'noteItem' + index" :style="note.flexDirection" @click="showNote(note)">
+          <div class="note-item cursor-pointer" :id="'noteItem' + index" :style="note.flexDirection" @click="showNote(note)">
             <div class="note-img">
               <div class="img-item" :style="'background-image: url(' + note.coverImg + ');'"></div>
             </div>
@@ -55,6 +55,7 @@
           </div>
           <div class="technology-title">
             <art-word-by-echarts :id="'artWordTechnology'" :context="'聚沙成塔'" :font-size="45"/>
+            <div class="echarts-dialog"></div>
           </div>
         </div>
         <!--        <div class="motto card-item" id="mottoCard"></div>-->
@@ -379,6 +380,16 @@ onBeforeUnmount(() => {
           background-color: rgba(255, 255, 255, 0.1);
           border-top: 1px solid #838181;
           border-radius: 3px;
+          position: relative;
+
+          .echarts-dialog {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            z-index: 3;
+          }
         }
 
       }

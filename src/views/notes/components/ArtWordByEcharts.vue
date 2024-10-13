@@ -1,5 +1,5 @@
 <template>
-  <div :id="props.id" class="diagram-content" />
+  <div :id="props.id" class="diagram-content"></div>
 </template>
 
 <script setup lang="ts">
@@ -106,5 +106,6 @@ onMounted(() => {
 .diagram-content {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 </style>
