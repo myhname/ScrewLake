@@ -172,4 +172,9 @@ onMounted(()=>{
 .md-editor-code-head {
   cursor: url("../../../assets/cursor/ani/Link.ani"), url("../../../assets/cursor/cur/cursorLink.cur"), pointer!important;
 }
+
+.md-editor-preview figure {
+  display: block;
+  margin: 10px auto;
+}
 </style>

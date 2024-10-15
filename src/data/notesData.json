@@ -21,6 +21,11 @@
         "label": "组件的使用",
         "color": "rgba(79, 166, 255)",
         "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      },
+      {
+        "label": "动画效果",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
       }
     ],
     "statistics": [
@@ -55,12 +60,91 @@
         "backgroundColor": "rgba(230, 162, 60, 0.2)"
       },
       {
-        "label": "css",
+        "label": "组件的使用",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      }
+    ],
+    "statistics": [
+      {
+        "label": "浏览",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "回复",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "点赞",
+        "value": 0,
+        "icon": ""
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "基于Vue3对Element-plus中的Table组件进行二次封装",
+    "coverImg": "./assets/notesImg/3.jpg",
+    "description": "基于vue3 + element-plus 项目环境的 Table 组件封装",
+    "createTime": "2024-10-15 23:29:40",
+    "updateTime": "2024-10-15 23:29:40",
+    "tags": [
+      {
+        "label": "vue",
+        "color": "rgba(230, 162, 60)",
+        "backgroundColor": "rgba(230, 162, 60, 0.2)"
+      },
+      {
+        "label": "组件封装",
         "color": "rgba(79, 166, 255)",
         "backgroundColor": "rgba(79, 166, 255, 0.2)"
       },
       {
         "label": "组件的使用",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      }
+    ],
+    "statistics": [
+      {
+        "label": "浏览",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "回复",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "点赞",
+        "value": 0,
+        "icon": ""
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "樱花飘落及鼠标点击特效的实现",
+    "coverImg": "./assets/notesImg/4.jpg",
+    "description": "使用 TypeScript + Canvas 来实现常见的樱花飘落效果以及鼠标点击特性，两者可以用同样的思路去实现",
+    "createTime": "2024-10-15 23:47:40",
+    "updateTime": "2024-10-15 23:47:40",
+    "tags": [
+      {
+        "label": "TypeScript",
+        "color": "rgba(230, 162, 60)",
+        "backgroundColor": "rgba(230, 162, 60, 0.2)"
+      },
+      {
+        "label": "Canvas",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      },
+      {
+        "label": "动画效果",
         "color": "rgba(79, 166, 255)",
         "backgroundColor": "rgba(79, 166, 255, 0.2)"
       }
