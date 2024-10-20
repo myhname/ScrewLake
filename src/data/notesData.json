@@ -166,5 +166,47 @@
         "icon": ""
       }
     ]
+  },
+  {
+    "id": 5,
+    "title": "项目环境配置笔记",
+    "coverImg": "./assets/notesImg/5.jpg",
+    "description": "使用 vite + vue + ts 来配置一个前端项目开发环境",
+    "createTime": "2024-10-20 13:34:40",
+    "updateTime": "2024-10-20 13:34:40",
+    "tags": [
+      {
+        "label": "TypeScript",
+        "color": "rgba(230, 162, 60)",
+        "backgroundColor": "rgba(230, 162, 60, 0.2)"
+      },
+      {
+        "label": "Vue",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      },
+      {
+        "label": "项目开发",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      }
+    ],
+    "statistics": [
+      {
+        "label": "浏览",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "回复",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "点赞",
+        "value": 0,
+        "icon": ""
+      }
+    ]
   }
 ]
