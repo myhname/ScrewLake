@@ -208,5 +208,47 @@
         "icon": ""
       }
     ]
+  },
+  {
+    "id": 6,
+    "title": "瀑布流+虚拟列表展示图片",
+    "coverImg": "./assets/notesImg/6.jpg",
+    "description": "使用 vite + vue + ts 来配置一个前端项目开发环境",
+    "createTime": "2024-11-18 23:04:40",
+    "updateTime": "2024-11-18 23:04:40",
+    "tags": [
+      {
+        "label": "组件封装",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      },
+      {
+        "label": "瀑布流",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      },
+      {
+        "label": "虚拟列表",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      }
+    ],
+    "statistics": [
+      {
+        "label": "浏览",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "回复",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "点赞",
+        "value": 0,
+        "icon": ""
+      }
+    ]
   }
 ]
