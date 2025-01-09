@@ -1,10 +1,10 @@
 import {reactive} from "vue"
 import store from "../index"
 import {defineStore} from 'pinia'
-import {GlobalParamsType, OptionsDataType, ThemeType} from "@/types/config"
+import {GlobalParamsInterface, OptionsDataInterface, ThemeInterface} from "@/types/config"
 
 export const useConfigStore = defineStore("configStore", () => {
-    const systemState = reactive<GlobalParamsType>({
+    const systemState = reactive<GlobalParamsInterface>({
         isWindowMax: false, // 窗口最大化
         currTitleText: "", // 标题
         promptingMsg: "", // 行为提示
@@ -21,13 +21,13 @@ export const useConfigStore = defineStore("configStore", () => {
     })
 
     // 动态选项
-    const optionsData = reactive<OptionsDataType>({
+    const optionsData = reactive<OptionsDataInterface>({
         imageTypeOptions: [],
         cartoonTagsOptions: [],
         cartoonAuthorOptions: [],
     })
 
-    const themeState = reactive<ThemeType>({
+    const themeState = reactive<ThemeInterface>({
         type: "default",
     })
 

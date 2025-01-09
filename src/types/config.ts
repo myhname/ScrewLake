@@ -1,5 +1,5 @@
 // 系统文件路径配置
-interface SystemConfigType {
+interface SystemConfigInterface {
     dailyRecordDataPath: string
     imageResourcePath: string
     optionsDataPath: string
@@ -7,14 +7,14 @@ interface SystemConfigType {
 }
 
 // 动态选项
-export interface OptionsDataType {
+export interface OptionsDataInterface {
     imageTypeOptions: Array<LabelValue>
     cartoonTagsOptions: Array<LabelValue>
     cartoonAuthorOptions: Array<LabelValue>
 }
 
 // 系统配置
-export interface GlobalParamsType {
+export interface GlobalParamsInterface {
     isWindowMax: boolean // 窗口是否最大化
     currTitleText: string // 标题
     promptingMsg: string // 行为提示
@@ -22,7 +22,7 @@ export interface GlobalParamsType {
     isConnectSever: boolean // 是否连接上后端
     leftBtnIdList: Array<string> // 左侧菜单栏上方动态按钮显示
     isWindowFixed: boolean // 是否固定桌面
-    systemConfig: SystemConfigType // 系统文件配置
+    systemConfig: SystemConfigInterface // 系统文件配置
 }
 
 export enum ThemeTypeEnum {
@@ -31,6 +31,6 @@ export enum ThemeTypeEnum {
 }
 
 // 主题
-export interface ThemeType {
+export interface ThemeInterface {
     type: ThemeTypeEnum
 }

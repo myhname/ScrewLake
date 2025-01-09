@@ -1,10 +1,10 @@
 import {ref} from "vue"
 import {defineStore} from 'pinia'
 import store from "../index"
-import {UserInfoType} from "@/types/user"
+import {UserInfoInterface} from "@/types/user"
 
 export const useUserStore = defineStore("userStore", () => {
-    const userInfo = ref<UserInfoType>({
+    const userInfo = ref<UserInfoInterface>({
         name: "ScrewLake",
     })
 
