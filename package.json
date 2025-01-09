@@ -1,0 +1,80 @@
+{
+  "name": "screw-lake-notes",
+  "private": true,
+  "version": "0.0.0",
+  "author": "螺丝湖水怪",
+  "description": "个人项目开发练习作品 —— 螺丝湖小记",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "dev:pro": "vite --mode production",
+    "build-only": "vite build",
+    "build:pro": "vue-tsc && vite build --mode production",
+    "build-tsc": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "build:test": "vite build --mode test",
+    "deploy": "vite build && git add dist && git commit -m 'deploy' && git subtree push --prefix dist origin gh-pages",
+    "electron:dev": "nodemon --exec electron . --ext .js,.vue,.html,.css",
+    "serve": "electron .",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "lint:fix": "eslint . --ext .ts,.vue --fix",
+    "format": "prettier --write .",
+    "lint": "eslint ./src --ext .vue,.js,.ts",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "Vite",
+    "Vue3",
+    "TypeScript",
+    "Electron"
+  ],
+  "bugs": {
+    "url": "https://github.com/myhname/screw-lake-notes/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/myhname/screw-lake-notes"
+  },
+  "lint-staged": {
+    "*.{vue,ts}": "eslint --fix"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "animate.css": "^4.1.1",
+    "axios": "^1.7.2",
+    "core-js": "^3.38.1",
+    "dayjs": "^1.11.10",
+    "echarts": "^5.5.0",
+    "electron": "^33.0.1",
+    "electron-squirrel-startup": "^1.0.1",
+    "electron-win-state": "^1.1.22",
+    "element-plus": "^2.4.4",
+    "gsap": "^3.12.5",
+    "less": "^4.2.0",
+    "mitt": "^3.0.1",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^4.1.1",
+    "vue": "^3.3.11",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@types/nprogress": "^0.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "@vitejs/plugin-vue": "^4.5.2",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-vue": "^9.32.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8",
+    "vite-plugin-clean": "^1.0.0",
+    "vite-plugin-compression": "^0.5.1",
+    "vue-tsc": "^1.8.25"
+  }
+}

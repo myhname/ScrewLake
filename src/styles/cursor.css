@@ -1,0 +1,80 @@
+:root {
+    --cursor_normal: url("../assets/cursor/ani/Normal.ani"), url("../assets/cursor/cur/cursorNormal.cur"), auto;
+    --cursor-point: url("../assets/cursor/ani/Link.ani"), url("../assets/cursor/cur/cursorLink.cur"), pointer;
+    --cursor_text: url("../assets/cursor/ani/Text.ani"), url("../assets/cursor/cur/cursorText.cur"), text;
+    --cursor_no_drop: url("../assets/cursor/ani/Unavailable.ani"), url("../assets/cursor/cur/cursorNo.cur"), no-drop;
+    --cursor_all_scroll: url("../assets/cursor/ani/Move.ani"), url("../assets/cursor/cur/cursorMove.cur"), all-scroll;
+}
+
+/* 鼠标样式 */
+body,
+.cursor-normal,
+.el-dialog,
+.el-form-item__label,
+.w-e-drop-panel,
+.el-select.cursor-self .el-input__validateIcon,
+.el-select__popper.cursor-self .el-select__selection .el-tag,
+.cursor-self .el-image-viewer__wrapper,
+.cursor-self .el-pager li.is-active, .el-pager li:hover
+{
+    cursor: var(--cursor_normal);
+}
+
+a,
+button,
+.cursor-pointer,
+.el-button.cursor-self,
+.el-button.cursor-self span,
+.el-select.cursor-self .el-select__caret,
+.el-select.cursor-self .el-select__selected-item.el-select__placeholder,
+.el-select.cursor-self span,
+.el-select.cursor-self .el-tag .el-icon,
+.el-select.cursor-self .el-select__wrapper,
+.el-select-dropdown.cursor-self .el-select-dropdown__item,
+.el-select-dropdown.cursor-self .el-select-dropdown__item span,
+.el-select-dropdown.cursor-self .el-scrollbar__thumb,
+.el-input-number.cursor-self span,
+.el-checkbox.cursor-self span,
+.daily-popover .w-e-bar-item button,
+.daily-popover .w-e-panel-content-color li,
+.el-select__selection .el-tag .el-tag__close,
+.cursor-self .el-image__preview,
+.cursor-self .el-image-viewer__btn .el-icon,
+.cursor-self .el-tabs__item,
+.cursor-self .el-tabs__item:hover,
+.cursor-self .el-image-viewer__btn,
+.cursor-pointer .el-tag__content,
+.cursor-self .el-select__wrapper,
+.cursor-self .el-select__wrapper span,
+.cursor-self .el-select__caret,
+.cursor-self .el-pager li,
+.cursor-self .el-pagination button,
+.cursor-self .el-select-dropdown__item,
+.cursor-self .el-scrollbar__thumb
+{
+    cursor: var(--cursor-point);
+}
+
+.cursor-all-scroll {
+    cursor: var(--cursor_all_scroll);
+}
+
+.cursor-no-drop,
+.el-input-number.cursor-self .is-disabled,
+.cursor-self .el-pagination button:disabled
+{
+    cursor: var(--cursor_no_drop);
+}
+
+span,
+.cursor-text,
+.el-input.cursor-self .el-input__wrapper,
+.el-input.cursor-self .el-input__wrapper .el-input__inner,
+.el-input-number.cursor-self .el-input__wrapper,
+.el-input-number.cursor-self .el-input__wrapper .el-input__inner,
+.el-select.cursor-self .el-select__wrapper.is-filterable,
+.cursor-self .el-input__wrapper,
+.cursor-self .el-input__wrapper .el-input__inner
+{
+    cursor: var(--cursor_text);
+}

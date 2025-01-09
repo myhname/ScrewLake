@@ -1,0 +1,165 @@
+import httpAction from './server'
+
+/**
+ * get请求
+ * @param url 请求地址
+ * @param params 请求参数
+ * @returns
+ */
+export function getAction<T>(url: string, params: object = {}) {
+    const resPromise: Promise<ApiResponseData<T>> = new Promise((resolve, reject) => {
+        httpAction({
+            url: url,
+            method: 'get',
+            params: params,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                //'Content-Type':'application/x-www-form-urlencoded',
+                'Access-Control-Allow-Credentials': 'true',
+                'Access-Control-Allow-Methods': '*',
+                'Access-Control-Allow-Headers': '*'
+            }
+        }).then((response: any) => {
+            resolve(response);
+        }).catch((error: any) => {
+            reject(error);
+        });
+    });
+    return resPromise
+}
+
+/**
+ * put请求
+ * @param url 请求地址
+ * @param params 请求参数
+ * @returns
+ */
+export function putAction<T>(url: string, params: object) {
+    const resPromise: Promise<ApiResponseData<T>> = new Promise((resolve, reject) => {
+        httpAction({
+            url: url,
+            method: 'put',
+            data: params,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json;charset=utf-8',
+                'Access-Control-Allow-Credentials': 'true',
+                'Access-Control-Allow-Methods': '*',
+                'Access-Control-Allow-Headers': '*'
+            }
+        }).then((response: any) => {
+            resolve(response);
+        }).catch((error: any) => {
+            reject(error);
+        });
+    });
+    return resPromise
+}
+
+/**
+ * post请求
+ * @param url 请求地址
+ * @param params 请求参数
+ * @returns
+ */
+export function postAction<T>(url: string, params?: object | {} | null) {
+    const resPromise: Promise<ApiResponseData<T>> = new Promise((resolve, reject) => {
+        httpAction({
+            url: url,
+            method: 'post',
+            data: params,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json;charset=utf-8',
+                'Access-Control-Allow-Credentials': 'true',
+                'Access-Control-Allow-Methods': '*',
+                'Access-Control-Allow-Headers': '*'
+            }
+        }).then((response: any) => {
+            resolve(response);
+        }).catch((error: any) => {
+            reject(error);
+        });
+    });
+    return resPromise
+}
+
+/**
+ * delete请求
+ * @param url 请求地址
+ * @param params 请求路径
+ * @returns
+ */
+export function deleteAction<T>(url: string, params: object = {}) {
+    const resPromise: Promise<ApiResponseData<T>> = new Promise((resolve, reject) => {
+        httpAction({
+            url: url,
+            method: 'delete',
+            data: params,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json;charset=utf-8',
+                'Access-Control-Allow-Credentials': 'true',
+                'Access-Control-Allow-Methods': '*',
+                'Access-Control-Allow-Headers': '*'
+            }
+        }).then((response: any) => {
+            resolve(response);
+        }).catch((error: any) => {
+            reject(error);
+        });
+    });
+    return resPromise
+}
+
+/**
+ * 文件上传 -- form-data
+ * @param url 请求地址
+ * @param params 请求参数
+ * @returns
+ */
+export function fileUploadAction<T>(url: string, params?: object | {} | null) {
+    const resPromise: Promise<ApiResponseData<T>> = new Promise((resolve, reject) => {
+        httpAction({
+            url: url,
+            method: 'post',
+            data: params,
+            headers: {'Content-Type': 'multipart/form-data'}
+        }).then((response: any) => {
+            resolve(response);
+        }).catch((error: any) => {
+            reject(error);
+        });
+    });
+    return resPromise
+}
+
+/**
+ * 文件下载
+ * @param url 请求地址
+ * @param params 请求参数
+ * @returns
+ */
+export function fileDownLoadAction<T>(url: string, params: object) {
+    const resPromise: Promise<ApiResponseData<T>> = new Promise((resolve, reject) => {
+        httpAction({
+            url: url,
+            method: 'post',
+            data: params,
+            responseType: "blob", //表明返回服务器返回的数据类型
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Content-Type': 'application/json;charset=utf-8',
+                'Access-Control-Allow-Credentials': 'true',
+                'Access-Control-Allow-Methods': '*',
+                'Access-Control-Allow-Headers': '*'
+            }
+        }).then((response: any) => {
+            resolve(response);
+        }).catch((error: any) => {
+            reject(error);
+        });
+    });
+    return resPromise
+}
+

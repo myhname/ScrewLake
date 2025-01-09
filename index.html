@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/img/electron-icon.jpg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!--  配置安全策略，允许通过 file:// 访问本地图片资源；connect-src 'self' https://bots.qq.com; 允许QQ机器人相关  -->
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self' 'unsafe-inline'; img-src 'self' file: data:; style-src 'self' 'unsafe-inline';connect-src 'self'">
+    <link rel="stylesheet" type="text/css" href="/loading.css">
+    <title> 螺丝湖小记 </title>
+</head>
+<body>
+<div id="app">
+    <div id="loading-mask">
+        <div class="loading-wrapper">
+            <span class="loading-dot loading-dot-spin"><i></i><i></i><i></i><i></i></span>
+        </div>
+    </div>
+</div>
+<script type="module" src="./src/main.ts"></script>
+<!-- 引入electron预处理文件 -->
+<!--<script src="./preload.js"></script>-->
+
+<script type="text/javascript">
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) {
+            document.title = "呜呜呜~，不要离开我"
+            // 在这里可以触发其它事件或调用特定函数
+        } else {
+            document.title = "命运铁道，启动！"
+            // 在这里可以触发其它事件或调用特定函数
+        }
+    });
+</script>
+</body>
+</html>

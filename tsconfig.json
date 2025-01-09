@@ -1,0 +1,88 @@
+{
+  "compilerOptions": {
+    // 启用增量编译模式，并为 TypeScript 生成一个 tsbuildinfo 文件，记录构建信息。
+    "composite": true,
+    // 生成代码的 ECMAScript 目标版本，决定了编译后的代码要兼容的 ECMAScript 版本
+    "target": "ES2020",
+    // 启用新的类字段定义行为，改变类字段初始化行为，确保与 ECMAScript 规范一致
+    "useDefineForClassFields": true,
+    // 生成代码的模块标准，指定使用 ESNext 模块化方案
+    "module": "ESNext",
+    // 编译过程中需要引入的库文件的列表，指定了目标环境下的 API
+    "lib": [
+      "ES2020",
+      // 需要支持的 ECMAScript 版本的库
+      "DOM",
+      // DOM API 库
+      "DOM.Iterable"
+      // DOM 可迭代 API
+    ],
+    // 启用后，跳过对声明文件 (.d.ts) 的类型检查，这通常会提高编译速度
+    "skipLibCheck": true,
+    // 设置为 false 不删除注释，为 true 时会在编译过程中删除注释
+    "removeComments": false,
+    // 是否编译 JS 文件，设置为 true 会编译 .js 文件
+    "allowJs": true,
+    // 基础目录，用于解析相对路径，通常用于设置根目录
+    "baseUrl": "./",
+    // 配置模块路径映射，指定别名，方便在代码中引用文件
+    "paths": {
+      "@/*": [
+        "./src/*"
+        // 将 @ 符号映射到 src 目录
+      ]
+    },
+    // 指定额外的类型声明文件，这里是 vite 客户端的类型声明文件
+    "types": [
+      "vite/client"
+    ],
+    /* Bundler 模式 */
+    // 配置模块解析策略，指定编译器如何解析模块
+    "moduleResolution": "bundler",
+    // 允许导入 TypeScript 扩展名的文件（.ts, .tsx 等）
+    "allowImportingTsExtensions": true,
+    // 允许从默认导入的模块中导入没有默认导出的模块。通常用于与某些 Node.js 库一起使用。
+    "allowSyntheticDefaultImports": true,
+    // 允许解析 JSON 模块，这样可以在 TypeScript 中直接导入 .json 文件
+    "resolveJsonModule": true,
+    // 启用独立模块模式，通常用于 Babel 编译的 TypeScript 文件
+    "isolatedModules": true,
+    // 设置为 true 时 TypeScript 不会输出编译后的文件，通常用于只进行类型检查
+    "noEmit": true,
+    // 处理 JSX 的方式，这里设置为 "preserve" 表示保留 JSX 语法不进行转换
+    "jsx": "preserve",
+    /* Linting 配置 */
+    // 启用所有严格类型检查
+    "strict": true,
+    // 检查代码中未使用的局部变量
+    "noUnusedLocals": true,
+    // 检查函数参数未被使用的情况
+    "noUnusedParameters": true,
+    // 检查 switch 语句是否有遗漏的 break 语句
+    "noFallthroughCasesInSwitch": true
+  },
+  // 指定需要被包含在编译过程中的文件，可以使用 glob 模式
+  "include": [
+    "src/**/*.ts",
+    // 包含所有的 TypeScript 文件
+    "src/*/*.tsx",
+    // 包含所有的 TypeScript JSX 文件
+    "src/*/*.vue",
+    // 包含所有的 Vue 文件
+    "types/*.d.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    // 排除 node_modules 文件夹
+    "dist",
+    // 排除 dist 文件夹
+    "src/**/*.js"
+  ]
+  // 参考其他 tsconfig 文件（通常用于多项目或工作区配置）
+  //  "references": [
+  //    {
+  //      "path": "./tsconfig.node.json"
+  //      // 引用 Node.js 项目的配置文件
+  //    }
+  //  ]
+}

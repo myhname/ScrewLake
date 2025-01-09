@@ -1,0 +1,28 @@
+/* 块标题字体 */
+.font-header {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* 标题字体 */
+.font-title {
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+/* 正文字体 */
+.font-text {
+    font-size: 16px
+}
+
+/* 稍小一点的字体 */
+.font-small {
+    font-size: 13px;
+}
+
+/* 最小的字体，再小就情景自定义吧 */
+.font-tiny {
+    font-size: 10px;
+}
