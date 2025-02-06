@@ -3,7 +3,7 @@
     <div class="blog-title">
       <div class="avater-name">
         <div class="blog-avatar cursor-pointer" @click="routerToPersonal"></div>
-        <a href="/">Screw Lake</a>
+        <a href="/ScrewLake/">Screw Lake</a>
       </div>
       <transition name="backToTop" enter-active-class="animate__animated animate__fadeIn"
                   leave-active-class="animate__animated animate__fadeOut">
