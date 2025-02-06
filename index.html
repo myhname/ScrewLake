@@ -214,11 +214,13 @@
     (function () {
       const urlParams = new URLSearchParams(window.location.search);
       const redirectPath = urlParams.get('redirect');
+      const basePath = '/ScrewLake'; // 请确保与 vite.config.ts 的 base 配置一致
 
       if (redirectPath) {
-        // 如果有 redirect 参数，则使用 History API 重写 URL，交给 Vue Router 处理
-        const basePath = '/ScrewLake'; // 请确保与 vite.config.ts 的 base 配置一致
-        const targetPath = basePath + redirectPath;
+        // 检查 redirectPath 是否已经包含 basePath，避免重复拼接
+        const targetPath = redirectPath.startsWith(basePath) ? redirectPath : `${basePath}${redirectPath}`;
+
+        // 使用 History API 重写 URL，交给 Vue Router 处理
         history.replaceState(null, '', targetPath);
       }
     })();
