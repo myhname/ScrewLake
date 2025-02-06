@@ -8,6 +8,7 @@
     (function () {
       const basePath = '/ScrewLake'; // 请确保与 vite.config.ts 的 base 配置一致
       const currentPath = window.location.pathname;
+      const search = window.location.search;
 
       // 如果路径已经以 basePath 开头，避免重复重定向
       if (currentPath.startsWith(basePath + '/index.html')) {
@@ -15,8 +16,8 @@
         return;
       }
 
-      // 将用户重定向到 index.html，同时保留原始路径
-      const targetUrl = `${basePath}/index.html?redirect=${encodeURIComponent(currentPath)}`;
+      // 将用户重定向到 index.html，同时保留原始路径和查询参数
+      const targetUrl = `${basePath}/index.html?redirect=${encodeURIComponent(currentPath + search)}`;
       window.location.replace(targetUrl);
     })();
   </script>
