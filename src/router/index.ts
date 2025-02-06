@@ -2,20 +2,20 @@ import { createRouter, createWebHistory } from "vue-router"
 
 // tag: 静态路由：首页（带一个重定向的展示介绍界面），登录（封面和登录一个路由），个人中心，组件库，笔记库
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory("/ScrewLake/"),
   routes: [
     {
       name: "index",
-      path: "/ScrewLake",
+      path: "",
       component: () => import("@/components/layout/index.vue"),
       meta: {
         title: "首页",
       },
-      redirect: "/ScrewLake/notes",
+      redirect: "/notes",
       children: [
         {
           name: "notes",
-          path: "/ScrewLake/notes",
+          path: "/notes",
           component: () => import("@/views/notes/notes.vue"),
           meta: {
             title: "笔记目录",
@@ -24,7 +24,7 @@ const router = createRouter({
         },
         {
           name: "personal",
-          path: "/ScrewLake/personal",
+          path: "/personal",
           component: () => import("@/views/personal/personalData.vue"),
           meta: {
             title: "个人介绍",
@@ -33,7 +33,7 @@ const router = createRouter({
         },
         {
           name: "notes/showMd",
-          path: "/ScrewLake/notes/showMd",
+          path: "/notes/showMd",
           component: () => import("@/views/notes/components/ShowNote.vue"),
           meta: {
             title: "笔记展示",
@@ -53,7 +53,7 @@ const router = createRouter({
     },
     {
       name: "cover",
-      path: "/ScrewLake/cover",
+      path: "/cover",
       component: () => import("@/components/layout/cover/cover.vue"),
       meta: {
         title: "封面",
