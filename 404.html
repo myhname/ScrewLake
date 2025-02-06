@@ -10,7 +10,7 @@
       const currentPath = window.location.pathname;
 
       // 如果路径已经以 basePath 开头，避免重复重定向
-      if (currentPath.startsWith(basePath + '/index.html') || currentPath.startsWith(basePath + '/')) {
+      if (currentPath.startsWith(basePath + '/index.html')) {
         console.error('Redirect loop detected. Aborting...');
         return;
       }
