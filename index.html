@@ -4,11 +4,10 @@
     <meta charset="UTF-8"/>
     <link rel="icon" type="image/svg+xml" href="/img/electron-icon.jpg"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <!--  配置安全策略，允许通过 file:// 访问本地图片资源；connect-src 'self' https://bots.qq.com; 允许QQ机器人相关  -->
     <meta http-equiv="Content-Security-Policy"
           content="default-src 'self' 'unsafe-inline'; img-src 'self' file: data:; style-src 'self' 'unsafe-inline';connect-src 'self'">
     <link rel="stylesheet" type="text/css" href="/loading.css">
-    <title> 螺丝湖小记 </title>
+    <title> 螺丝湖-水怪之家 </title>
 </head>
 <body>
 <div id="app">
@@ -19,8 +18,6 @@
     </div>
 </div>
 <script type="module" src="./src/main.ts"></script>
-<!-- 引入electron预处理文件 -->
-<!--<script src="./preload.js"></script>-->
 
 <script type="text/javascript">
     document.addEventListener('visibilitychange', function () {
@@ -28,10 +25,25 @@
             document.title = "呜呜呜~，不要离开我"
             // 在这里可以触发其它事件或调用特定函数
         } else {
-            document.title = "命运铁道，启动！"
+            document.title = "欢迎来到螺丝湖~"
             // 在这里可以触发其它事件或调用特定函数
         }
     });
+</script>
+<script type="text/javascript">
+    (function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectPath = urlParams.get('redirect');
+        const basePath = '/ScrewLake'; // 请确保与 vite.config.ts 的 base 配置一致
+
+        if (redirectPath) {
+            // 检查 redirectPath 是否已经包含 basePath，避免重复拼接
+            const targetPath = redirectPath.startsWith(basePath) ? redirectPath : `${basePath}${redirectPath}`;
+
+            // 使用 History API 重写 URL，交给 Vue Router 处理
+            history.replaceState(null, '', targetPath);
+        }
+    })();
 </script>
 </body>
 </html>

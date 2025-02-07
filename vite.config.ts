@@ -32,7 +32,7 @@ export default ({command, mode}: ConfigEnv): UserConfigExport => {
                 '@': resolve(__dirname, 'src') // 设置 `@` 指向 `src` 目录
             },
         },
-        base: isProduction ? '/prod-base/' : '/', // 公共基础路径, 根据环境调整（生产环境用来区分路径）
+        base: '/ScrewLake/', // 公共基础路径, 根据环境调整（生产环境用来区分路径）
         // 在代码中可以直接通过 __API_BASE_URL__ 使用这个变量，而不需要每次通过 import.meta.env.VITE_API_BASE_URL 获取
         // define: {
         //     __API_BASE_URL__: JSON.stringify(process.env.VITE_API_BASE_URL), // 替代 VITE_ 环境变量

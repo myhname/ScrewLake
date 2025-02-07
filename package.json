@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "author": "螺丝湖水怪",
   "description": "个人项目开发练习作品 —— 螺丝湖小记",
-  "main": "electron/main.js",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
@@ -13,17 +12,7 @@
     "build:pro": "vue-tsc && vite build --mode production",
     "build-tsc": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "build:test": "vite build --mode test",
-    "deploy": "vite build && git add dist && git commit -m 'deploy' && git subtree push --prefix dist origin gh-pages",
-    "electron:dev": "nodemon --exec electron . --ext .js,.vue,.html,.css",
-    "serve": "electron .",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "lint:fix": "eslint . --ext .ts,.vue --fix",
-    "format": "prettier --write .",
-    "lint": "eslint ./src --ext .vue,.js,.ts",
-    "prepare": "husky install"
+    "build:test": "vite build --mode test"
   },
   "keywords": [
     "Vite",
@@ -71,6 +60,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-vue": "^9.32.0",
     "prettier": "^3.4.2",
+    "terser": "^5.38.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
     "vite-plugin-clean": "^1.0.0",
