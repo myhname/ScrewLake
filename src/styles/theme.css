@@ -1,0 +1,8 @@
+/* 默认颜色 */
+:root {
+    --default-font-color: #fff;
+}
+
+.dark-theme {
+    --default-font-color: #fff;
+}

@@ -4,6 +4,8 @@
 @import "./cursor.css";
 /* 字体样式 */
 @import "./font.css";
+/* 主题样式 */
+@import "./theme.css";
 
 body {
     font-family: sans-serif;

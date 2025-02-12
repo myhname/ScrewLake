@@ -16,8 +16,10 @@ export function useTheme() {
 
         // 根据 themeState.type 添加新的类名
         if (theme != ThemeTypeEnum.DEFAULT) {
-            rootElement.classList.add(theme);
+            rootElement.classList.add(`theme-${theme}`);
         }
+
+        console.log("主题：", rootElement, theme)
     };
 
     // 监听 themeState.type 的变化

@@ -8,6 +8,7 @@ interface LabelValue {
     valueUnit?: string
     color?: string
     backgroundColor?: string
+    msg?: string
 }
 
 interface TreeType {

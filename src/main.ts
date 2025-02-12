@@ -17,8 +17,6 @@ import store from "./stores"
 // 引入UI组件
 import {loadElementPlus} from "@/plugins/elementPlus"
 
-// 引入指令
-// import VTypewriter from "@/directives/typewriter"
 import {loadDirectives} from "./directives"
 
 import App from './App.vue'
@@ -28,11 +26,6 @@ app.use(router)
 app.use(store)
 loadDirectives(app)
 loadElementPlus(app)
-
-// app.use(VTypewriter, {
-//   type: "effect",
-//   debug: false
-// })
 
 router.isReady().then(() => {
     app.mount('#app')
