@@ -6,6 +6,104 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "19949527",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "8219255",
+      "name": "文件夹",
+      "font_class": "wenjianjia",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "13638689",
+      "name": "新增",
+      "font_class": "xinzeng",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "25986340",
+      "name": "导入图片",
+      "font_class": "daorutupian",
+      "unicode": "e703",
+      "unicode_decimal": 59139
+    },
+    {
+      "icon_id": "29657620",
+      "name": "导入",
+      "font_class": "daoru",
+      "unicode": "e68c",
+      "unicode_decimal": 59020
+    },
+    {
+      "icon_id": "4425853",
+      "name": "固定",
+      "font_class": "guding",
+      "unicode": "e7a4",
+      "unicode_decimal": 59300
+    },
+    {
+      "icon_id": "24218772",
+      "name": "右箭头,指向右箭头",
+      "font_class": "a-youjiantouzhixiangyoujiantou",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "24218971",
+      "name": "左箭头,指向左箭头",
+      "font_class": "a-zuojiantouzhixiangzuojiantou",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "577359",
+      "name": "设置",
+      "font_class": "shezhi",
+      "unicode": "e74c",
+      "unicode_decimal": 59212
+    },
+    {
+      "icon_id": "1305474",
+      "name": "权限",
+      "font_class": "quanxian",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "2180851",
+      "name": "资源管理,数据库",
+      "font_class": "ziyuanguanli",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "5729762",
+      "name": "我的账户",
+      "font_class": "wodezhanghu",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "7090056",
+      "name": "权限资源管理",
+      "font_class": "quanxianziyuanguanli",
+      "unicode": "e711",
+      "unicode_decimal": 59153
+    },
+    {
+      "icon_id": "21226381",
+      "name": "编辑器",
+      "font_class": "050-edition",
+      "unicode": "e6a0",
+      "unicode_decimal": 59040
+    },
+    {
       "icon_id": "201638",
       "name": "编辑",
       "font_class": "bianji",

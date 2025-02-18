@@ -119,3 +119,6 @@ npm run build:pro
     })();
 </script>
 ```
+
+
+### 2、访问静态资源

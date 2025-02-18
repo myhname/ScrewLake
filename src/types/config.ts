@@ -15,14 +15,7 @@ export interface OptionsDataInterface {
 
 // 系统配置
 export interface GlobalParamsInterface {
-    isWindowMax: boolean // 窗口是否最大化
-    currTitleText: string // 标题
-    promptingMsg: string // 行为提示
-    isNetworked: boolean // 是否有网络
-    isConnectSever: boolean // 是否连接上后端
-    leftBtnIdList: Array<string> // 左侧菜单栏上方动态按钮显示
-    isWindowFixed: boolean // 是否固定桌面
-    systemConfig: SystemConfigInterface // 系统文件配置
+    avatar: string // 头像路径
 }
 
 export enum ThemeTypeEnum {

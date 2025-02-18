@@ -61,8 +61,8 @@ const state: {
   menuList: [
     {
       key: 1,
-      name: "cover",
-      path: "/cover",
+      name: "home",
+      path: "/home",
       meta: {
         title: "首页",
       },

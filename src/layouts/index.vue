@@ -41,12 +41,12 @@ const state = reactive({
 
   showBackgroundImgIndex: 0,
   backgroundImgList: [
-    new URL("/src//assets/img/bg1.jpg", import.meta.url).href,
-    new URL("/src//assets/img/bg2.jpg", import.meta.url).href,
-    new URL("/src//assets/img/bg3.jpg", import.meta.url).href,
-    new URL("/src//assets/img/bg4.jpg", import.meta.url).href,
-    new URL("/src//assets/img/bg5.jpg", import.meta.url).href,
-    new URL("/src//assets/img/bg6.jpg", import.meta.url).href,
+    new URL("/src/assets/img/bg1.jpg", import.meta.url).href,
+    new URL("/src/assets/img/bg2.jpg", import.meta.url).href,
+    new URL("/src/assets/img/bg3.jpg", import.meta.url).href,
+    new URL("/src/assets/img/bg4.jpg", import.meta.url).href,
+    new URL("/src/assets/img/bg5.jpg", import.meta.url).href,
+    new URL("/src/assets/img/bg6.jpg", import.meta.url).href,
   ]
 })
 
@@ -141,7 +141,7 @@ onMounted(() => {
   state.bgChangeTimer = setInterval(() => {
     console.log("切换背景图片")
     changeBgImg()
-  }, 5 * 60 * 1000)
+  }, 5  * 1000)
 
   // 点击目录时滚动事件
   emitter.on('clickNoteToc', (value) => {

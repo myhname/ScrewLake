@@ -2,7 +2,8 @@
   <div class="header-container" :class="{ 'expand-header': props.expand}">
     <div class="blog-title">
       <div class="avatar-name">
-        <div class="blog-avatar cursor-pointer" @click="routerToPersonal"></div>
+        <div class="blog-avatar bg-cover cursor-pointer" @click="routerToPersonal"
+             :style="computedAvatarStyle()"></div>
         <a href="/ScrewLake/">Screw Lake</a>
       </div>
       <transition name="backToTop" enter-active-class="animate__animated animate__fadeIn"
@@ -23,7 +24,7 @@
               <span v-if="index != (state.tags.length - 1)" class="separator"> / </span>
             </template>
           </div>
-          <div class="search cursor-pointer">
+          <div v-if="showSearch" class="search cursor-pointer">
             <el-icon>
               <Search/>
             </el-icon>
@@ -40,10 +41,12 @@
 </template>
 
 <script setup lang="ts">
-import {ref, reactive, onMounted} from "vue"
+import {ref, reactive, onMounted, computed} from "vue"
 import BlogMenuNative from "./BlogMenuNative.vue"
 import MyIcons from "@/components/MyIcons.vue";
-import {useRouter} from "vue-router"
+import {useConfigStore} from "@/stores/modules/config"
+import {getBgUrlStyle} from "@/utils/loadResource.ts"
+import {useRouter, useRoute} from "vue-router"
 
 const props = defineProps({
   expand: {
@@ -54,6 +57,8 @@ const props = defineProps({
 })
 
 const router = useRouter()
+const route = useRoute()
+const configStore = useConfigStore()
 // 获取菜单容器
 const blogMenuRef = ref<HTMLElement>()
 const state = reactive({
@@ -64,7 +69,15 @@ const state = reactive({
     {name: "github", icon: "github", msg: "https://github.com/myhname"},
   ] as Array<LabelValue>
 })
+const showSearch = computed(() => {
+  console.log("计算属性：", route.name)
+  return route.name === "note" || route.name === "sentiment"
+})
 
+const computedAvatarStyle = () => {
+  let src = new URL(configStore.systemState.avatar, import.meta.url).href
+  return getBgUrlStyle(src)
+}
 
 const routerToPersonal = () => {
   router.push("/personal")
@@ -73,6 +86,7 @@ const routerToPersonal = () => {
 onMounted(() => {
   // 使用ref获取到元素对象之后，没有办法直接将修改作用于实际的元素
   console.log("获取容器：", blogMenuRef.value?.clientWidth)
+  // computedAvatarStyle()
   if (blogMenuRef.value?.clientWidth) {
     let currDocument = document.getElementById("blogMenuBox")
     if (currDocument) {
@@ -86,6 +100,7 @@ onMounted(() => {
 <style scoped lang="less">
 @transitionTime: .5s;
 @transitionWay: ease-in-out;
+@highlightColor: #3da4db;
 
 .header-container {
   box-sizing: border-box;
@@ -110,20 +125,20 @@ onMounted(() => {
 
   .blog-title {
     height: 100%;
-    padding-top: 0.3125rem;
-    padding-bottom: 0.3125rem;
-    margin-right: 1rem;
-    font-size: 1.25rem;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-right: 16px;
+    font-size: 20px;
     line-height: inherit;
     white-space: nowrap;
-    word-spacing: 0.5rem;
+    word-spacing: 8px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
     .avatar-name {
-      margin-top: 0;
+      margin-top: 5px;
       margin-bottom: 0;
       transition: margin-top @transitionTime @transitionWay, margin-bottom @transitionTime @transitionWay;
 
@@ -136,10 +151,6 @@ onMounted(() => {
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        background-image: url("../../assets/img/avatar.jpg");
-        background-position: top center;
-        background-size: cover;
-        background-repeat: no-repeat;
       }
 
       a {
@@ -179,15 +190,12 @@ onMounted(() => {
       .tags {
         font-size: 12px;
         color: #2d2c2c;
-        //color: #86867c;
       }
 
       .search {
-        font-size: 1rem;
 
         &:hover {
-          color: #3f6bfb;
-          background-color: #e8e6e6;
+          color: @highlightColor;
         }
       }
 
@@ -198,8 +206,7 @@ onMounted(() => {
         a {
 
           &:hover {
-            color: #3f6bfb;
-            background-color: #e8e6e6;
+            color: @highlightColor;
           }
         }
       }
@@ -210,7 +217,7 @@ onMounted(() => {
 .expand-header {
 
   background-color: rgba(196, 196, 196, .5);
-  font-size: 0.875rem;
+  font-size: 14px;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 
@@ -230,7 +237,7 @@ onMounted(() => {
   }
 
   .blog-menu .blog-menu-container {
-    margin-top: 31px;
+    margin-top: 28px;
     transition: margin-top @transitionTime @transitionWay;
   }
 }
