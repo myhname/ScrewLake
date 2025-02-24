@@ -19,6 +19,10 @@ export const loadResource = (src: string) => {
     })
 }
 
-export const getBgUrlStyle = (src: string) => {
-    return `background-image: url('${src}')`
+/**
+ * 拼接 background-image
+ * @param imgUrl 路径
+ */
+export const bgUrlComputed = (imgUrl: string) => {
+    return `background-image: url(${imgUrl})`
 }

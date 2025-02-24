@@ -15,6 +15,7 @@ export interface OptionsDataInterface {
 
 // 系统配置
 export interface GlobalParamsInterface {
+    homeRouter: string // 首页路径
     avatar: string // 头像路径
 }
 

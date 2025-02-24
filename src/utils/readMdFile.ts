@@ -1,6 +1,6 @@
 export const fetchMarkdown = async (file: string) => {
     try {
-        const response = await fetch(`/ScrewLake/data/notes/${file}.md`);
+        const response = await fetch(`${import.meta.env.BASE_URL}notes/${file}.md`);
         if (!response.ok) {
             throw new Error('Network response was not ok' + response.statusText);
         }

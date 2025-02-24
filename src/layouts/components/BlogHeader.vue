@@ -4,7 +4,7 @@
       <div class="avatar-name">
         <div class="blog-avatar bg-cover cursor-pointer" @click="routerToPersonal"
              :style="computedAvatarStyle()"></div>
-        <a href="/ScrewLake/">Screw Lake</a>
+        <a :href="configStore.systemState.homeRouter">Screw Lake</a>
       </div>
       <transition name="backToTop" enter-active-class="animate__animated animate__fadeIn"
                   leave-active-class="animate__animated animate__fadeOut">
@@ -45,7 +45,7 @@ import {ref, reactive, onMounted, computed} from "vue"
 import BlogMenuNative from "./BlogMenuNative.vue"
 import MyIcons from "@/components/MyIcons.vue";
 import {useConfigStore} from "@/stores/modules/config"
-import {getBgUrlStyle} from "@/utils/loadResource.ts"
+import {bgUrlComputed} from "@/utils/loadResource.ts"
 import {useRouter, useRoute} from "vue-router"
 
 const props = defineProps({
@@ -76,7 +76,7 @@ const showSearch = computed(() => {
 
 const computedAvatarStyle = () => {
   let src = new URL(configStore.systemState.avatar, import.meta.url).href
-  return getBgUrlStyle(src)
+  return bgUrlComputed(src)
 }
 
 const routerToPersonal = () => {
@@ -86,7 +86,6 @@ const routerToPersonal = () => {
 onMounted(() => {
   // 使用ref获取到元素对象之后，没有办法直接将修改作用于实际的元素
   console.log("获取容器：", blogMenuRef.value?.clientWidth)
-  // computedAvatarStyle()
   if (blogMenuRef.value?.clientWidth) {
     let currDocument = document.getElementById("blogMenuBox")
     if (currDocument) {

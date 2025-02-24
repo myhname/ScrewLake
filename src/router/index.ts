@@ -19,6 +19,33 @@ const constantsRoutes: Array<RouteRecordRaw> = [
                 },
                 children: [],
             },
+            {
+                name: "personal",
+                path: "/personal",
+                component: () => import("@/views/Personal/personal.vue"),
+                meta: {
+                    title: "个人介绍",
+                },
+                children: [],
+            },
+            {
+                name: "notes",
+                path: "/notes",
+                component: () => import("@/views/Notes/note.vue"),
+                meta: {
+                    title: "笔记目录",
+                },
+                children: [],
+            },
+            {
+                name: "notes/showMd",
+                path: "/notes/showMd",
+                component: () => import("@/views/Notes/components/ShowNote.vue"),
+                meta: {
+                    title: "笔记展示",
+                },
+                children: [],
+            },
         ],
     },
     {
@@ -43,7 +70,7 @@ const constantsRoutes: Array<RouteRecordRaw> = [
 
 // tag: 静态路由：首页（带一个重定向的展示介绍界面），登录（封面和登录一个路由），个人中心，组件库，笔记库
 const router = createRouter({
-    history: createWebHistory("/ScrewLake/"),
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes: constantsRoutes,
 })
 

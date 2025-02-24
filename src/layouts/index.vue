@@ -141,7 +141,7 @@ onMounted(() => {
   state.bgChangeTimer = setInterval(() => {
     console.log("切换背景图片")
     changeBgImg()
-  }, 5  * 1000)
+  }, 60 * 5  * 1000)
 
   // 点击目录时滚动事件
   emitter.on('clickNoteToc', (value) => {
