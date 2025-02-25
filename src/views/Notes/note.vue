@@ -67,10 +67,10 @@
 <script setup lang="ts">
 import {onMounted, onBeforeUnmount, ref, nextTick} from "vue";
 import router from "@/router";
-import WordCloud from "@/views/Notes/components/WordCloud.vue";
-import ArtWordByEcharts from "@/views/Notes/components/ArtWordByEcharts.vue";
-import RecentDynamic from "@/views/Notes/components/RecentDynamic.vue";
-import DataOverview from "@/views/Notes/components/DataOverview.vue";
+import WordCloud from "@/views/notes/components/WordCloud.vue";
+import ArtWordByEcharts from "@/views/notes/components/ArtWordByEcharts.vue";
+import RecentDynamic from "@/views/notes/components/RecentDynamic.vue";
+import DataOverview from "@/views/notes/components/DataOverview.vue";
 import {createStarCanvas, stopMouseMoveStar} from "@/utils/mouseMoveStar.ts"
 import NotesData from "@/data/notesData.json"
 import type {NoteList} from "@/types/note.ts"

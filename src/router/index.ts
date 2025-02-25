@@ -22,7 +22,7 @@ const constantsRoutes: Array<RouteRecordRaw> = [
             {
                 name: "personal",
                 path: "/personal",
-                component: () => import("@/views/Personal/personal.vue"),
+                component: () => import("@/views/personal/personal.vue"),
                 meta: {
                     title: "个人介绍",
                 },
@@ -31,7 +31,7 @@ const constantsRoutes: Array<RouteRecordRaw> = [
             {
                 name: "notes",
                 path: "/notes",
-                component: () => import("@/views/Notes/note.vue"),
+                component: () => import("@/views/notes/note.vue"),
                 meta: {
                     title: "笔记目录",
                 },
@@ -40,7 +40,7 @@ const constantsRoutes: Array<RouteRecordRaw> = [
             {
                 name: "notes/showMd",
                 path: "/notes/showMd",
-                component: () => import("@/views/Notes/components/ShowNote.vue"),
+                component: () => import("@/views/notes/components/ShowNote.vue"),
                 meta: {
                     title: "笔记展示",
                 },
@@ -51,7 +51,7 @@ const constantsRoutes: Array<RouteRecordRaw> = [
     {
         name: "login",
         path: "/login",
-        component: () => import("@/views/Login/login.vue"),
+        component: () => import("@/views/login/login.vue"),
         meta: {
             title: "封面登录页",
         },
