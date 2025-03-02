@@ -79,7 +79,8 @@ const constantsRoutes: Array<RouteRecordRaw> = [
 
 // tag: 静态路由：首页（带一个重定向的展示介绍界面），登录（封面和登录一个路由），个人中心，组件库，笔记库
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    // import.meta.env.BASE_URL
+    history: createWebHistory("/ScrewLake/"),
     routes: constantsRoutes,
 })
 
