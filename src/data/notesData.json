@@ -250,5 +250,47 @@
         "icon": ""
       }
     ]
+  },
+  {
+    "id": 7,
+    "title": "gsap学习及使用",
+    "coverImg": "notesImg/7.jpg",
+    "description": "简单介绍一下动画库 gsap 的基础使用方法",
+    "createTime": "2025-03-02 22:37:40",
+    "updateTime": "2025-03-02 22:37:40",
+    "tags": [
+      {
+        "label": "gsap",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      },
+      {
+        "label": "动画效果",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      },
+      {
+        "label": "组件的使用",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      }
+    ],
+    "statistics": [
+      {
+        "label": "浏览",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "回复",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "点赞",
+        "value": 0,
+        "icon": ""
+      }
+    ]
   }
 ]
