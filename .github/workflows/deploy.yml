@@ -13,6 +13,8 @@ jobs:
       # 检出代码
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          path: ScrewLake # 指定检出目录
 
       # 设置 Node.js 环境
       - name: Setup Node.js
@@ -20,18 +22,24 @@ jobs:
         with:
           node-version: 18 # 或你的项目要求的版本
 
+      # 进入项目目录
+      - name: Change directory
+        run: cd ScrewLake
+
       # 安装依赖
       - name: Install dependencies
         run: npm install
+        working-directory: ScrewLake
 
       # 执行打包
       - name: Build project
         run: npm run build-only
+        working-directory: ScrewLake
 
       # 部署到 gh-pages 分支
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # 指定打包后的 dist 目录
+          publish_dir: ./ScrewLake/dist # 指定打包后的 dist 目录
           publish_branch: gh-pages # 指定部署的分支
