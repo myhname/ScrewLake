@@ -1,0 +1,37 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - static-re-develop # 只有在推送到 static-re-develop 分支时触发工作流
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 设置 Node.js 环境
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18 # 或你的项目要求的版本
+
+      # 安装依赖
+      - name: Install dependencies
+        run: npm install
+
+      # 执行打包
+      - name: Build project
+        run: npm run build-only
+
+      # 部署到 gh-pages 分支
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist # 指定打包后的 dist 目录
+          publish_branch: gh-pages # 指定部署的分支

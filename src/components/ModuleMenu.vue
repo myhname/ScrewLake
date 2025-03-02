@@ -62,9 +62,9 @@ const props = withDefaults(defineProps<PropsType>(), {
     },
     {
       type: 0,
-      modulePath: "personal",
+      modulePath: "modules",
       bgImg: new URL("/src/assets/img/home-bg5.jpg", import.meta.url).href,
-      title: "简介",
+      title: "组件",
     },
   ])
 })

@@ -77,6 +77,15 @@ const state: {
       },
       icon: "a-bijibenbiji1",
     },
+    {
+      key: 3,
+      name: "modules",
+      path: "/modules",
+      meta: {
+        title: "组件",
+      },
+      icon: "guidang",
+    }
     // {
     //   key: 3,
     //   name: "systemManage",

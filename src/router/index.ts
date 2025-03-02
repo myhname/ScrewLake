@@ -46,6 +46,15 @@ const constantsRoutes: Array<RouteRecordRaw> = [
                 },
                 children: [],
             },
+            {
+                name: "modules",
+                path: "/modules",
+                component: () => import("@/views/modules/modules.vue"),
+                meta: {
+                    title: "组件",
+                },
+                children: [],
+            },
         ],
     },
     {
