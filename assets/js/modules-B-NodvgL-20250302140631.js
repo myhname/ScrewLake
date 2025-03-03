@@ -1,1 +1,0 @@
-import{_ as s,a,o as e}from"./index-DCg-kGuX-20250302140631.js";const o={class:"modules-container"};const n=s({},[["render",function(s,n){return e(),a("div",o)}],["__scopeId","data-v-0e117444"]]);export{n as default};
