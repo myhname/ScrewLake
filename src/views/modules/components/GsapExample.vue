@@ -44,12 +44,31 @@
       <div class="box box-6"></div>
       <el-button class="cursor-self" @click="start7">demo</el-button>
     </div>
+
+    <div class="scroll-trigger-container" id="scrollTriggerContainer">
+      <div class="scroll-first">
+        <div class="card-container">
+          <template v-for="i in 4" :key="i">
+            <div class="card" :class="`card-${i}`">
+              <div class="card-content">{{ i }}</div>
+            </div>
+          </template>
+        </div>
+      </div>
+      <div class="scroll-second">
+        <div class="show-card"></div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import {onMounted} from "vue"
 import gsap from "gsap"
+import {ScrollTrigger} from 'gsap/ScrollTrigger';
+
+// 注册 ScrollTrigger 插件
+gsap.registerPlugin(ScrollTrigger);
 
 // 创建时间线实例
 const tl = gsap.timeline()
@@ -147,13 +166,58 @@ const start7 = () => {
   tl2.reversed(!tl2.reversed())
 }
 
+let tlScroll: gsap.core.Timeline
+const initGsapScroll = () => {
+  tlScroll = gsap.timeline({
+    scrollTrigger: {
+      scroller: "#scrollTriggerContainer", // 指定哪个元素的滚动会触发此动画
+      scrub: true, // 平滑过渡
+      markers: true,
+      trigger: ".scroll-second",
+      start: "top top",
+      end: "bottom bottom",
+    },
+  })
+
+  tlScroll.to(".scroll-first", {
+    translateY: "500px",
+    // background: "red",
+    opacity: 0 /* 使内容区域逐渐消失 */,
+    filter: "blur(5px)" /* 添加模糊效果 */,
+    ease: "none",
+  })
+
+  for (let i = 1; i <= 4; i++) {
+    let translateStr = i > 2 ? "250px" : "-250px"
+    tlScroll.to(
+        `.card-${i}`,
+        {
+          translateX: translateStr,
+          ease: "none",
+        },
+        "<"
+    )
+  }
+
+  tlScroll.to(
+      ".show-card",
+      {
+        width: "90%",
+        ease: "none",
+      },
+      "<"
+  )
+}
+
 onMounted(() => {
   initGsap()
+
+  initGsapScroll()
 })
 </script>
 
 <style scoped lang="less">
-.data-insigh {
+.gsap-example-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -188,5 +252,65 @@ onMounted(() => {
 
 .orange {
   background-color: orange;
+}
+
+.scroll-trigger-container {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .scroll-first {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; /* 确保内容区域占满整个容器 */
+    background-color: black;
+
+    .card-container {
+      box-sizing: border-box; /* 确保 padding 不会影响宽度 */
+      width: 100%;
+      height: 100%;
+      padding: 0 5%;
+      display: flex;
+      flex-direction: row;
+      column-gap: 2%;
+      align-items: center;
+
+      .card {
+        flex: 1;
+        height: 300px;
+        position: relative; /* 为伪元素提供定位上下文 */
+        overflow: hidden; /* 确保内容不会溢出 */
+        box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
+        border: 1px solid #e4e7ed;
+        border-radius: 4px;
+        color: #fff;
+        text-align: center;
+      }
+    }
+  }
+
+  .scroll-second {
+    // margin-top: 20px;
+    box-sizing: border-box;
+    padding-top: 500px;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    height: 1000px;
+
+    .show-card {
+      margin: 0 auto;
+      width: 50%;
+      height: 500px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border: 1px solid #e4e7ed;
+      border-radius: 5px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.12);
+    }
+  }
 }
 </style>
