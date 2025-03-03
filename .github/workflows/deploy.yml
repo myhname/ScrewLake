@@ -41,5 +41,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./ScrewLake/dist # 指定打包后的 dist 目录
+          publish_dir: ./dist # 指定打包后的 dist 目录
           publish_branch: gh-pages # 指定部署的分支
