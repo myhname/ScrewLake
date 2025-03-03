@@ -3,43 +3,30 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - static-re-develop # 只有在推送到 static-re-develop 分支时触发工作流
+      - static-re-develop  # 监听 static-re-develop 分支
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 检出代码
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          path: ScrewLake # 指定检出目录
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      # 设置 Node.js 环境
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18 # 或你的项目要求的版本
+          node-version: 18
 
-      # 进入项目目录
-      - name: Change directory
-        run: cd ScrewLake
-
-      # 安装依赖
       - name: Install dependencies
         run: npm install
-        working-directory: ScrewLake
 
-      # 执行打包
       - name: Build project
-        run: npm run build-only
-        working-directory: ScrewLake
+        run: npm run build-only  # 你的打包命令，需确保 `package.json` 中有对应的 `build` 脚本
 
-      # 部署到 gh-pages 分支
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # 指定打包后的 dist 目录
-          publish_branch: gh-pages # 指定部署的分支
+          publish_dir: ./dist  # 你的打包文件目录，确保与实际构建路径一致
+          branch: gh-pages  # 部署到 gh-pages 分支
