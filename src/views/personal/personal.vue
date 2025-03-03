@@ -316,7 +316,7 @@ const initStateParams = async () => {
     target: "#userCenterDom"
   })
 
-  state.avatar = new URL(configStore.systemState.avatar, import.meta.url).href
+  state.avatar = configStore.systemState.avatar
 
   stopLoading()
 }

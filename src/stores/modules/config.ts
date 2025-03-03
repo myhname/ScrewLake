@@ -6,7 +6,7 @@ import {GlobalParamsInterface, OptionsDataInterface, ThemeInterface, ThemeTypeEn
 export const useConfigStore = defineStore("configStore", () => {
     const systemState = reactive<GlobalParamsInterface>({
         homeRouter: import.meta.env.BASE_URL,
-        avatar: import.meta.env.BASE_URL + "src/assets/img/avatar.jpg"
+        avatar: import.meta.env.BASE_URL + "img/avatar.jpg"
     })
 
     // 动态选项

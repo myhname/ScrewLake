@@ -10,19 +10,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # 确保完整拉取 Git 历史
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
-          cache: 'npm'  # 启用 npm 缓存管理
-
-      - name: Clear npm cache
-        run: npm cache clean --force  # 强制清除 npm 缓存
 
       - name: Install dependencies
         run: npm install
