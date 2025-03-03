@@ -65,11 +65,10 @@
 <script setup lang="ts">
 import {onMounted} from "vue"
 import gsap from "gsap"
-import {ScrollTrigger} from 'gsap/ScrollTrigger';
-
+import {ScrollTrigger} from 'gsap/ScrollTrigger'
 
 // 注册 ScrollTrigger 插件
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger)
 
 // 创建时间线实例
 const tl = gsap.timeline()

@@ -3,13 +3,15 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - static-re-develop
+      - static-re-develop  # 监听 static-re-develop 分支
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -20,11 +22,11 @@ jobs:
         run: npm install
 
       - name: Build project
-        run: npm run build-only  # 使用 build-only 进行构建
+        run: npm run build-only  # 你的打包命令，需确保 `package.json` 中有对应的 `build` 脚本
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          branch: gh-pages
+          publish_dir: ./dist  # 你的打包文件目录，确保与实际构建路径一致
+          branch: gh-pages  # 部署到 gh-pages 分支

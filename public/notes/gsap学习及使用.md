@@ -231,11 +231,14 @@ gsap.to(".box2", {
 ### 1. 注册
 
 ```js
+import {Draggable} from "gsap/Draggable"
 gsap.registerPlugin(Draggable)
 Draggable.create("#yourID")
 ```
 
 ### 2. 使用
+
+官网的demo示例就很好，可以直接去官网看 [Draggable示例](https://gsap.com/docs/v3/Plugins/Draggable/)
 
 ```js
 Draggable.create(".flair--1", {
