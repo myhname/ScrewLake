@@ -13,18 +13,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 确保完整拉取 Git 记录
+          fetch-depth: 0  # 确保完整拉取 Git 历史
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
+          cache: 'npm'  # 启用 npm 缓存管理
+
+      - name: Clear npm cache
+        run: npm cache clean --force  # 强制清除 npm 缓存
 
       - name: Install dependencies
         run: npm install
 
       - name: Build project
-        run: npm run build-only  # Vite 构建
+        run: npm run build-only  # 使用 build-only 进行构建
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
