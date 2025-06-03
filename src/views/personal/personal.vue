@@ -7,12 +7,12 @@
     <!--  首屏，用户简介  -->
     <div class="personal-data">
       <div class="personal-avatar">
-        <img :src="state.avatar" alt="用户头像"/>
+        <img :src="configStore.systemState.avatar" alt="用户头像"/>
         <div class="ripple-effect-bg"></div>
         <div class="ripple-effect"></div>
       </div>
       <p class="personalized-signature text-shadow">
-        <span v-if="state.signature" v-typewriter="{ delay: 100 }">{{ state.signature }}</span>
+        <span v-if="userStore.userInfo.signature" v-typewriter="{ delay: 100 }">{{ userStore.userInfo.signature }}</span>
         <span class="opacity-animation" :style="'--animation-delay: 3s'">_</span>
       </p>
       <div class="personal-card-container">
@@ -77,6 +77,7 @@ import SnowfallManager from '@/utils/snowfallManager';
 import {createStarCanvas, stopMouseMoveStar} from "@/utils/mouseFollowed"
 import {bgUrlComputed} from "@/utils/loadResource"
 import {useConfigStore} from "@/stores/modules/config"
+import {useUserStore} from "@/stores/modules/user"
 import {startLoading, stopLoading} from "@/hooks/loadingInstance"
 import gsap from "gsap"
 import {ScrollTrigger} from "gsap/ScrollTrigger"
@@ -89,6 +90,7 @@ let tlDetail: gsap.core.Timeline
 let tlModule: gsap.core.Timeline
 const snowfallManager = new SnowfallManager({color: '#cccccc'});
 const configStore = useConfigStore()
+const userStore = useUserStore()
 const state = reactive({
   screenMsg: {
     width: 0,
@@ -98,7 +100,6 @@ const state = reactive({
 
   bgImg: new URL("/src/assets/img/user-center-bg.jpg", import.meta.url).href,
   avatar: "",
-  signature: "",
   personalizedDetailsList: [
     {
       title: "职业",
@@ -361,7 +362,7 @@ onBeforeUnmount(() => {
 <style scoped lang="less">
 .user-center-container {
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 85px);
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;

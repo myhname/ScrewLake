@@ -292,5 +292,89 @@
         "icon": ""
       }
     ]
+  },
+  {
+    "id": 8,
+    "title": "SDK封装",
+    "coverImg": "notesImg/8.jpg",
+    "description": "简单介绍一下vue3 + vite + ts 项目组件 sdk 的导出和使用",
+    "createTime": "2025-06-03 22:37:40",
+    "updateTime": "2025-06-03 22:37:40",
+    "tags": [
+      {
+        "label": "sdk",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      },
+      {
+        "label": "vue3",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      },
+      {
+        "label": "组件的使用",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      }
+    ],
+    "statistics": [
+      {
+        "label": "浏览",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "回复",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "点赞",
+        "value": 0,
+        "icon": ""
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "title": "全局css样式替换之PostCSS",
+    "coverImg": "notesImg/9.jpg",
+    "description": "使用 PostCSS 在项目中全局替换 CSS 样式，实现鼠标样式个性化设置",
+    "createTime": "2025-06-03 23:37:40",
+    "updateTime": "2025-06-03 23:37:40",
+    "tags": [
+      {
+        "label": "PostCSS",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      },
+      {
+        "label": "vue3",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      },
+      {
+        "label": "CSS",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      }
+    ],
+    "statistics": [
+      {
+        "label": "浏览",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "回复",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "点赞",
+        "value": 0,
+        "icon": ""
+      }
+    ]
   }
 ]

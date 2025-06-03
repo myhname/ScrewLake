@@ -132,3 +132,5 @@ npm run build:pro
 ```html
 <div :style="computedStyle()"></div>
 ```
+
+2. windows（严格来说是 dos） 系统文件夹不区分大小写，所以如果已经上传git仓库的文件夹，本地更改大小写之后，不会同步到git，坑死我了，找了半天才找到这个问题
