@@ -376,5 +376,42 @@
         "icon": ""
       }
     ]
+  },
+  {
+    "id": 10,
+    "title": "使用githubPages部署静态页面及自动化",
+    "coverImg": "notesImg/10.png",
+    "description": "使用 githubPages 部署静态页面及自动化",
+    "createTime": "2026-01-18 11:51:47",
+    "updateTime": "2026-01-18 11:51:47",
+    "tags": [
+      {
+        "label": "系统工程化",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      },
+      {
+        "label": "Vue",
+        "color": "rgba(79, 166, 255)",
+        "backgroundColor": "rgba(79, 166, 255, 0.2)"
+      }
+    ],
+    "statistics": [
+      {
+        "label": "浏览",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "回复",
+        "value": 0,
+        "icon": ""
+      },
+      {
+        "label": "点赞",
+        "value": 0,
+        "icon": ""
+      }
+    ]
   }
 ]
